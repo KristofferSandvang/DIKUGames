@@ -13,6 +13,9 @@ using DIKUArcade.Events;
 
 namespace Galaga {
     public class Game : DIKUGame, IGameEventProcessor {
+        private AnimationContainer enemyExplosions;
+        private List<Image> explosionStrides;
+        private const int EXPLOSION_LENGTH_MS = 500;
         private IBaseImage playerShotImage;
         private EntityContainer<PlayerShot> playerShots;
         private EntityContainer<Enemy> enemies;
@@ -41,6 +44,10 @@ namespace Galaga {
 
             playerShots = new EntityContainer<PlayerShot>();
             playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
+
+            enemyExplosions = new AnimationContainer(numEnemies);
+            explosionStrides = ImageStride.CreateStrides(8,
+                Path.Combine("Assets", "Images", "Explosion.png"));
         } 
         public void KeyPress(KeyboardKey key) {
             // TODO: switch on key string and set the player's move direction
@@ -86,6 +93,13 @@ namespace Galaga {
                             Message = "close",
                         } );
                     break;
+                case KeyboardKey.Space:
+                    eventBus.RegisterEvent(
+                        new GameEvent {
+                            EventType = GameEventType.InputEvent,
+                            Message = "shotFired",
+                        } );
+                    break;
             }
         }
 
@@ -106,7 +120,11 @@ namespace Galaga {
                         break;
                     case "stopMoveRight":
                         player.SetMoveRight(false);
-                        break;    
+                        break;
+                    case "shotFired":
+                        playerShots.AddEntity(new PlayerShot(
+                            player.getPosition(), playerShotImage));
+                        break;   
                     default:
                         break;
                 }
@@ -116,12 +134,23 @@ namespace Galaga {
         public override void Render() {
             player.Render();
             enemies.RenderEntities();
+            playerShots.RenderEntities();
+            enemyExplosions.RenderAnimations();
         }
 
         public override void Update() {
+            IterateShots();
             eventBus.ProcessEventsSequentially();
             player.move();
         }
+        public void AddExplosion(Vec2F position, Vec2F extent) {
+            enemyExplosions.AddAnimation(
+                new StationaryShape(position, extent),
+                EXPLOSION_LENGTH_MS,
+                new ImageStride(EXPLOSION_LENGTH_MS/8, explosionStrides)
+            );
+        }
+
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {
             switch (action){
                 case KeyboardAction.KeyPress:
@@ -132,6 +161,24 @@ namespace Galaga {
                     break;
             }
         }
+
+        private void IterateShots() {
+            playerShots.Iterate(shot => {
+                float shotY = shot.Shape.Position.Y;
+                shot.Shape.Move();
+                if (shotY < 0.0f && shotY > 1.0f) {
+                    shot.DeleteEntity();
+                } else {
+                    enemies.Iterate(enemy => {
+                        if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision) {
+                            enemy.DeleteEntity();
+                            shot.DeleteEntity();
+                            AddExplosion(enemy.Shape.Position, enemy.Shape.Extent);
+                        } 
+                    });
+                }
+            });
+        }
     }
-}
+} 
 

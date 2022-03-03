@@ -42,7 +42,9 @@ namespace Galaga {
                 shape.Move(); 
             } 
         }
-
+        public Vec2F getPosition() {
+            return shape.Position;
+        }
         public void Render() {
             entity.RenderEntity();
         }
