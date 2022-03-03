@@ -6,16 +6,19 @@ using DIKUArcade.Input;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
+using DIKUArcade.Physics;
 using System.Security.Principal;
 using System.Collections.Generic;
 using DIKUArcade.Events;
 
 namespace Galaga {
     public class Game : DIKUGame, IGameEventProcessor {
+        private IBaseImage playerShotImage;
+        private EntityContainer<PlayerShot> playerShots;
+        private EntityContainer<Enemy> enemies;
         private Player player;
         private GameEventBus eventBus;
         public Game(WindowArgs windowArgs) : base(windowArgs) {
-            // TODO: Set key event handler (inherited window field of DIKUGame class)
             eventBus = new GameEventBus();
             eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent });
 
@@ -24,69 +27,37 @@ namespace Galaga {
             eventBus.Subscribe(GameEventType.InputEvent, this);
 
             player = new Player(
-                new DynamicShape(new Vec2F(0.80f, 0.1f), new Vec2F(0.1f, 0.1f)),
+                new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
                 new Image(Path.Combine("Assets", "Images", "Player.png")));
-        }
-        private void KeyHandler(KeyboardAction action, KeyboardKey key) {
-            if (action == KeyboardAction.KeyRelease) {
-                switch (key) {
-                    case KeyboardKey.Left:
-                        new GameEvent {
-                            EventType = GameEventType.InputEvent,
-                            Message = "Left",
-                        };
-                        break;
-                    case KeyboardKey.A:
-                        new GameEvent {
-                            EventType = GameEventType.InputEvent,
-                            Message = "Left",
-                        };
-                        break;
-                    case KeyboardKey.Right:
-                        new GameEvent {
-                            EventType = GameEventType.InputEvent,
-                            Message = "Right",
-                        };
-                        break;
-                    case KeyboardKey.D:
-                        new GameEvent {
-                            EventType = GameEventType.InputEvent,
-                            Message = "Right",
-                        };
-                        break;
-                    case KeyboardKey.Escape:
-                        new GameEvent {
-                            EventType = GameEventType.InputEvent,
-                            Message = "Close",
-                        };
-                        break;
-                    default:
-                        break;
-                }
+
+            var images = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
+            const int numEnemies = 8;
+            enemies = new EntityContainer<Enemy>(numEnemies);
+            for (int i = 0; i < numEnemies; i++) {
+                enemies.AddEntity(new Enemy(
+                    new DynamicShape(new Vec2F(0.1f + (float)i * 0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
+                    new ImageStride(80, images)));
             }
-            throw new NotImplementedException();
-        }
-        // der bliver ikke automatisk registreret events for tastetryk, 
-        // så de popper ikke op i ProcessEvents af sig selv. 
-        // I skal selv lave dem i KeyHandler, det er den metode, 
-        // der får tastetrykkene
-        /// fordi I har sat den som KeyEventHandler 
-        // Not 100% sure what this does. 
-        //TODO: Outcomment  
+
+            playerShots = new EntityContainer<PlayerShot>();
+            playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
+        } 
         public void KeyPress(KeyboardKey key) {
             // TODO: switch on key string and set the player's move direction
             switch (key) {
                 case KeyboardKey.Left: 
-                    player.SetMoveLeft(true); //Not 100% sure this corrrect. 
-                    break;
-                case KeyboardKey.A:
-                    player.SetMoveLeft(true); //Not 100% sure this corrrect. 
+                    eventBus.RegisterEvent(
+                        new GameEvent {
+                            EventType = GameEventType.InputEvent,
+                            Message = "moveLeft",
+                        } );
                     break;
                 case KeyboardKey.Right:
-                    player.SetMoveRight(true);
-                    break;
-                case KeyboardKey.D:
-                    player.SetMoveRight(true);
+                    eventBus.RegisterEvent(
+                        new GameEvent {
+                            EventType = GameEventType.InputEvent,
+                            Message = "moveRight",
+                        } );
                     break;
             }
         }
@@ -95,43 +66,72 @@ namespace Galaga {
             // TODO: Close window if escape is pressed
             switch (key) {
                 case KeyboardKey.Left:
-                    player.SetMoveLeft(false); //This feels weird plz gib help
-                    break;
-                case KeyboardKey.A:
-                    player.SetMoveLeft(false);
+                    eventBus.RegisterEvent(
+                        new GameEvent {
+                            EventType = GameEventType.InputEvent,
+                            Message = "stopMoveLeft",
+                        } );
                     break;
                 case KeyboardKey.Right:
-                    player.SetMoveRight(false);
-                    break;
-                case KeyboardKey.D:
-                    player.SetMoveRight(false);
+                    eventBus.RegisterEvent(
+                        new GameEvent {
+                            EventType = GameEventType.InputEvent,
+                            Message = "stopMoveRight",
+                        } );
                     break;
                 case KeyboardKey.Escape:
-                    window.CloseWindow();
+                    eventBus.RegisterEvent(
+                        new GameEvent {
+                            EventType = GameEventType.InputEvent,
+                            Message = "close",
+                        } );
                     break;
             }
         }
+
         public void ProcessEvent(GameEvent gameEvent) {
-            if (gameEvent.EventType == GameEventType.WindowEvent) {
+            if (gameEvent.EventType == GameEventType.InputEvent) {
                 switch (gameEvent.Message) {
-                    // TODO: Implement
+                    case "close":
+                        window.CloseWindow();
+                        break;
+                    case "moveLeft":
+                        player.SetMoveLeft(true);
+                        break;
+                    case "moveRight":
+                        player.SetMoveRight(true);
+                        break;
+                    case "stopMoveLeft":
+                        player.SetMoveLeft(false);
+                        break;
+                    case "stopMoveRight":
+                        player.SetMoveRight(false);
+                        break;    
                     default:
                         break;
                 }
             }
         }
+
         public override void Render() {
-            player.SetMoveRight(true);
-            for (int i = 0; i < 50; i++){
-                player.move();
-            }
             player.Render();
+            enemies.RenderEntities();
         }
 
         public override void Update() {
-            player.Render();
+            eventBus.ProcessEventsSequentially();
+            player.move();
         }
-       
+        private void KeyHandler(KeyboardAction action, KeyboardKey key) {
+            switch (action){
+                case KeyboardAction.KeyPress:
+                    KeyPress(key);
+                    break;
+                case KeyboardAction.KeyRelease:
+                    KeyRelease(key);
+                    break;
+            }
+        }
     }
 }
 
