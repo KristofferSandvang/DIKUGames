@@ -16,16 +16,18 @@ namespace Galaga {
         
         public void SetMoveLeft(bool val) {
             if (val) {
-            moveLeft = -moveSpeed;
+                moveLeft = -moveSpeed;
+            } else
+                moveLeft = 0.0f;
             updateDirection();
-            } else moveLeft = 0.0f;
         }
         
         public void SetMoveRight(bool val) {
             if (val) {
-                moveLeft = +moveSpeed;
-                updateDirection();
-            } else moveRight = 0.0f;
+                moveLeft = moveSpeed;
+            } else
+                moveRight = 0.0f;
+            updateDirection();
         }
 
         private void updateDirection() {
