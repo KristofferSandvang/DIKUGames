@@ -12,6 +12,9 @@ using System.Collections.Generic;
 using DIKUArcade.Events;
 
 namespace Galaga {
+    /// <summary>
+    /// A subclass of the DIKUGame containing all information about the Game.
+    /// </summary>
     public class Game : DIKUGame, IGameEventProcessor {
         private AnimationContainer enemyExplosions;
         private List<Image> explosionStrides;
@@ -49,8 +52,14 @@ namespace Galaga {
             explosionStrides = ImageStride.CreateStrides(8,
                 Path.Combine("Assets", "Images", "Explosion.png"));
         } 
+        /// <summary>
+        /// Creates a new event of the GameEventType.InputEvent, and registers it
+        /// based on the pressed key. 
+        /// </summary>
+        /// <param name='Key'>
+        /// The Key pressed
+        /// </param>
         public void KeyPress(KeyboardKey key) {
-            // TODO: switch on key string and set the player's move direction
             switch (key) {
                 case KeyboardKey.Left: 
                     eventBus.RegisterEvent(
@@ -68,9 +77,14 @@ namespace Galaga {
                     break;
             }
         }
+        /// <summary>
+        /// Creates and registers a new event of the GameEventType.InputEvent
+        /// based on the key released. 
+        /// </summary>
+        /// <param name='Key'>
+        /// The Key released
+        /// </param>
         public void KeyRelease(KeyboardKey key) {
-            // TODO: switch on key string and disable the player's move direction
-            // TODO: Close window if escape is pressed
             switch (key) {
                 case KeyboardKey.Left:
                     eventBus.RegisterEvent(
@@ -102,7 +116,12 @@ namespace Galaga {
                     break;
             }
         }
-
+        /// <summary>
+        /// Processes a GameEvent based on the GameEvent.Message
+        /// </summary>
+        /// <param name='gameEvent'>
+        /// A GameEvent
+        /// </param>
         public void ProcessEvent(GameEvent gameEvent) {
             if (gameEvent.EventType == GameEventType.InputEvent) {
                 switch (gameEvent.Message) {
@@ -130,19 +149,32 @@ namespace Galaga {
                 }
             }
         }
-
+        /// <summary>
+        /// Renders all Entities in the game.
+        /// </summary>
         public override void Render() {
             player.Render();
             enemies.RenderEntities();
             playerShots.RenderEntities();
             enemyExplosions.RenderAnimations();
         }
-
+        /// <summary>
+        /// Updates the Game
+        /// </summary>
         public override void Update() {
             IterateShots();
             eventBus.ProcessEventsSequentially();
             player.move();
         }
+        /// <summary>
+        /// Adds an explosion to a position
+        /// </summary>
+        /// <param name='postion'>
+        /// The position of the explosion
+        /// </param>
+        /// <param name='extent'>
+        /// The extent of the explosion
+        /// </param>
         public void AddExplosion(Vec2F position, Vec2F extent) {
             enemyExplosions.AddAnimation(
                 new StationaryShape(position, extent),
@@ -150,7 +182,15 @@ namespace Galaga {
                 new ImageStride(EXPLOSION_LENGTH_MS/8, explosionStrides)
             );
         }
-
+        /// <summary>
+        /// Handles a key based on the KeyBoardAction and KeyBoardKey
+        /// </summary>
+        /// <param name='action'>
+        /// a KeyBoardAction
+        /// </param>
+        /// <param name='key'>
+        /// a KeyBoardKey
+        /// </param>
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {
             switch (action){
                 case KeyboardAction.KeyPress:
@@ -161,7 +201,9 @@ namespace Galaga {
                     break;
             }
         }
-
+        /// <summary>
+        /// Iterates the shots and checks for collisions between Enemy and the shot. 
+        /// </summary>
         private void IterateShots() {
             playerShots.Iterate(shot => {
                 float shotY = shot.Shape.Position.Y;

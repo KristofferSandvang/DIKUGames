@@ -2,6 +2,9 @@ using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 namespace Galaga {
+    /// <summary>
+    /// A subclass of Entity, containing information about Player.
+    /// </summary>
     public class Player {
 
         private float moveLeft = 0.0f; 
@@ -13,7 +16,10 @@ namespace Galaga {
             entity = new Entity(shape, image);
             this.shape = shape;
         }
-        
+        /// <summary>
+        /// If true, sets moveLeft to -movespeed 
+        ///(moving left at moveSpeed speed), else to 0.0f
+        /// </summary>
         public void SetMoveLeft(bool val) {
             if (val) {
                 moveLeft = -moveSpeed;
@@ -21,20 +27,27 @@ namespace Galaga {
                 moveLeft = 0.0f;
             updateDirection();
         }
-        
+        /// <summary>
+        /// If true, sets moveRight to movespeed 
+        ///(moving right at moveSpeed speed), else to 0.0f
+        /// </summary>
         public void SetMoveRight(bool val) {
             if (val) {
-                moveLeft = moveSpeed;
+                moveRight = moveSpeed;
             } else
                 moveRight = 0.0f;
             updateDirection();
         }
-
+        /// <summary>
+        /// Updates the direction on the Player's shape
+        /// </summary>
         private void updateDirection() {
             float moveSum = moveLeft + moveRight;
             shape.ChangeDirection(new Vec2F (moveSum, 0.0f));
         }
-
+        /// <summary>
+        /// Moves the player after first checking if it has hit either of the vertical walls.
+        /// </summary>
         public void move() {
             float moveSum = moveLeft + moveRight;
             float upperBounds = shape.Position.X + moveSum + shape.Extent.X;
@@ -44,9 +57,15 @@ namespace Galaga {
                 shape.Move(); 
             } 
         }
+        /// <summary>
+        /// Returns position of Player
+        /// </summary>
         public Vec2F getPosition() {
             return shape.Position;
         }
+        /// <summary>
+        /// Renders the player.
+        /// </summary>
         public void Render() {
             entity.RenderEntity();
         }
