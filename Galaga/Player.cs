@@ -1,12 +1,12 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
+using DIKUArcade.Events;
 namespace Galaga {
     /// <summary>
     /// A subclass of Entity, containing information about Player.
     /// </summary>
-    public class Player {
-
+    public class Player : IGameEventProcessor{
         private float moveLeft = 0.0f; 
         private float moveRight = 0.0f; 
         private float moveSpeed = 0.01f;
@@ -20,7 +20,7 @@ namespace Galaga {
         /// If true, sets moveLeft to -movespeed 
         ///(moving left at moveSpeed speed), else to 0.0f
         /// </summary>
-        public void SetMoveLeft(bool val) {
+        private void SetMoveLeft(bool val) {
             if (val) {
                 moveLeft = -moveSpeed;
             } else
@@ -31,7 +31,7 @@ namespace Galaga {
         /// If true, sets moveRight to movespeed 
         ///(moving right at moveSpeed speed), else to 0.0f
         /// </summary>
-        public void SetMoveRight(bool val) {
+        private void SetMoveRight(bool val) {
             if (val) {
                 moveRight = moveSpeed;
             } else
@@ -58,10 +58,36 @@ namespace Galaga {
             } 
         }
         /// <summary>
+        /// Processes a GameEvent based on the GameEvent.Message
+        /// </summary>
+        /// <param name='gameEvent'>
+        /// A GameEvent
+        /// </param>
+        public void ProcessEvent(GameEvent gameEvent) {
+            if (gameEvent.EventType == GameEventType.PlayerEvent) {
+                switch (gameEvent.Message) {
+                    case "moveLeft":
+                        SetMoveLeft(true);
+                        break;
+                    case "moveRight":
+                        SetMoveRight(true);
+                        break;
+                    case "stopMoveLeft":
+                        SetMoveLeft(false);
+                        break;
+                    case "stopMoveRight":
+                        SetMoveRight(false);
+                        break;
+                }
+            }
+        }        
+        /// <summary>
         /// Returns position of Player
         /// </summary>
-        public Vec2F getPosition() {
-            return shape.Position;
+        public Vec2F shotPosition() {
+            float x = shape.Position.X + (0.5f * shape.Extent.X);
+            float y = shape.Position.Y + shape.Extent.Y;
+            return new Vec2F(x, y);
         }
         /// <summary>
         /// Renders the player.
