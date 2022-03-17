@@ -36,5 +36,8 @@ namespace Galaga {
         public float getSpeed() {
             return speed;
         }
+        public void speedier() {
+            speed += 0.0005f;
+        }
     }
 }

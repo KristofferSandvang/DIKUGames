@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading;
 using DIKUArcade;
 using DIKUArcade.GUI;
 using DIKUArcade.Input;
@@ -18,6 +19,7 @@ namespace Galaga {
     /// A subclass of the DIKUGame containing all information about the Game.
     /// </summary>
     public class Game : DIKUGame, IGameEventProcessor{
+        private bool gameOver;
         private EntityContainer<Enemy> Enemies;
         private AnimationContainer enemyExplosions;
         private List<Image> explosionStrides;
@@ -26,31 +28,32 @@ namespace Galaga {
         private EntityContainer<PlayerShot> playerShots;
         private Player player;
         private GameEventBus eventBus;
-        private List<Image> enemyStridesRed;
-        private ISquadron formation;
-        private IMovementStrategy MovementStrategy; 
+        private List<Image> enemyStrides;
+        private ISquadron[] formations = { new VFormation(), new SquareFormation() };
+        private ISquadron formation; 
+        private IMovementStrategy[] MovementStrategies = { new NoMove(), new Down(), new ZigZigDown() }; 
+        private IMovementStrategy MovementStrategy;
+        private Score score;
+        private Random rand;
         public Game(WindowArgs windowArgs) : base(windowArgs) {
+            gameOver = false;
+
             player = new Player(
                      new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
                      new Image(Path.Combine("Assets", "Images", "Player.png")));
 
+            score = new Score(new Vec2F(0.8f, 0.8f), new Vec2F(0.2f, 0.2f));
+
             eventBus = new GameEventBus();
-            eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent, GameEventType.PlayerEvent });
+            eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent,
+            GameEventType.PlayerEvent });
             window.SetKeyEventHandler(KeyHandler);
             eventBus.Subscribe(GameEventType.InputEvent, this);
             eventBus.Subscribe(GameEventType.PlayerEvent, player);
 
-            enemyStridesRed = ImageStride.CreateStrides(2, Path.Combine("Assets",
-            "Images", "RedMonster.png"));
-
-            var images = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
+            enemyStrides = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
             const int numEnemies = 8;
             Enemies = new EntityContainer<Enemy>(numEnemies);
-            //for (int i = 0; i < numEnemies; i++) {
-            //    Enemies.AddEntity(new Enemy(
-            //        new DynamicShape(new Vec2F(0.1f + (float)i * 0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
-            //        new ImageStride(80, images)));
-            //}
 
             playerShots = new EntityContainer<PlayerShot>();
             playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
@@ -59,10 +62,13 @@ namespace Galaga {
             explosionStrides = ImageStride.CreateStrides(8,
                 Path.Combine("Assets", "Images", "Explosion.png"));
 
-            formation = new SquareFormation();
-            formation.CreateEnemies(images);
+            rand = new Random();
+            formation = formations[rand.Next(2)];
             Enemies = formation.Enemies;
-            MovementStrategy = new ZigZigDown();
+            formation.CreateEnemies(enemyStrides);
+            MovementStrategy = MovementStrategies[rand.Next(2)];
+            
+            
         } 
         /// <summary>
         /// Creates a new event of the GameEventType.InputEvent, and registers it
@@ -153,15 +159,20 @@ namespace Galaga {
         /// Renders all Entities in the game.
         /// </summary>
         public override void Render() {
-            player.Render();
-            Enemies.RenderEntities();
-            playerShots.RenderEntities();
-            enemyExplosions.RenderAnimations();
+            score.RenderScore();
+            if (!gameOver) {
+                player.Render();
+                Enemies.RenderEntities();
+                playerShots.RenderEntities();
+                enemyExplosions.RenderAnimations();
+            }
         }
         /// <summary>
         /// Updates the Game
         /// </summary>
         public override void Update() {
+            newWave();
+            isThisLoss();
             MovementStrategy.MoveEnemies(Enemies);
             IterateShots();
             eventBus.ProcessEventsSequentially();
@@ -183,7 +194,24 @@ namespace Galaga {
                 new ImageStride(EXPLOSION_LENGTH_MS/8, explosionStrides)
             );
         }
-        
+        private void newWave() {
+            if (Enemies.CountEntities() <= 0) {
+                int r = rand.Next(2);
+                formation = formations[r];
+                Enemies = formation.Enemies;
+                formation.CreateEnemies(enemyStrides);
+                Enemies.Iterate( enemy => enemy.speedier());
+                MovementStrategy = MovementStrategies[rand.Next(3)];
+            }
+        }
+
+        private void isThisLoss() {
+            foreach (Enemy enemy in Enemies){
+                if (enemy.Shape.Position.Y < 0.20f) {
+                    gameOver = true;
+                }
+            }
+        }
         /// <summary>
         /// Handles a key based on the KeyBoardAction and KeyBoardKey
         /// </summary>
@@ -203,7 +231,6 @@ namespace Galaga {
                     break;
             }
         }
-
     
         /// <summary>
         /// Iterates the shots and checks for collisions between Enemy and the shot. 
@@ -222,11 +249,9 @@ namespace Galaga {
                             if (enemy.isDead()) {
                                 enemy.DeleteEntity();
                                 AddExplosion(enemy.Shape.Position, enemy.Shape.Extent);
+                                score.AddPoints();
                             }
                         }
-                        else if (enemy.Shape.Position.Y < -0.1f) {
-                            enemy.DeleteEntity();
-                        } 
                     });
                 }
             });

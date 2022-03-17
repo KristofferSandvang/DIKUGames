@@ -86,7 +86,7 @@ namespace Galaga {
         /// </summary>
         public Vec2F shotPosition() {
             float x = shape.Position.X + (0.5f * shape.Extent.X);
-            float y = shape.Position.Y + shape.Extent.Y;
+            float y = shape.Position.Y;
             return new Vec2F(x, y);
         }
         /// <summary>
