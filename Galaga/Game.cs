@@ -29,12 +29,13 @@ namespace Galaga {
         private Player player;
         private GameEventBus eventBus;
         private List<Image> enemyStrides;
-        private ISquadron[] formations = { new VFormation(), new SquareFormation() };
+        private ISquadron[] formations = { new VFormation(), new SquareFormation(), new RainFormation() };
         private ISquadron formation; 
-        private IMovementStrategy[] MovementStrategies = { new NoMove(), new Down(), new ZigZigDown() }; 
+        private IMovementStrategy[] MovementStrategies = { new Down(), new ZigZigDown(), new NoMove() }; 
         private IMovementStrategy MovementStrategy;
         private Score score;
         private Random rand;
+        private int wave;
         public Game(WindowArgs windowArgs) : base(windowArgs) {
             gameOver = false;
 
@@ -42,7 +43,7 @@ namespace Galaga {
                      new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
                      new Image(Path.Combine("Assets", "Images", "Player.png")));
 
-            score = new Score(new Vec2F(0.8f, 0.8f), new Vec2F(0.2f, 0.2f));
+            score = new Score(new Vec2F(0.05f, 0.7f), new Vec2F(0.3f, 0.3f));
 
             eventBus = new GameEventBus();
             eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent,
@@ -52,20 +53,22 @@ namespace Galaga {
             eventBus.Subscribe(GameEventType.PlayerEvent, player);
 
             enemyStrides = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
-            const int numEnemies = 8;
-            Enemies = new EntityContainer<Enemy>(numEnemies);
+            Enemies = new EntityContainer<Enemy>(8);
 
             playerShots = new EntityContainer<PlayerShot>();
             playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
 
-            enemyExplosions = new AnimationContainer(numEnemies);
+            enemyExplosions = new AnimationContainer(8);
             explosionStrides = ImageStride.CreateStrides(8,
                 Path.Combine("Assets", "Images", "Explosion.png"));
 
             rand = new Random();
-            formation = formations[rand.Next(2)];
+            wave = 0;
+
+            formation = formations[rand.Next(3)];
             Enemies = formation.Enemies;
             formation.CreateEnemies(enemyStrides);
+
             MovementStrategy = MovementStrategies[rand.Next(2)];
             
             
@@ -196,12 +199,16 @@ namespace Galaga {
         }
         private void newWave() {
             if (Enemies.CountEntities() <= 0) {
-                int r = rand.Next(2);
-                formation = formations[r];
+                wave++;
+                formation = formations[rand.Next(3)];
                 Enemies = formation.Enemies;
                 formation.CreateEnemies(enemyStrides);
-                Enemies.Iterate( enemy => enemy.speedier());
-                MovementStrategy = MovementStrategies[rand.Next(3)];
+                Enemies.Iterate( enemy => enemy.speedier(wave * 0.00045f));
+                if (formation == new RainFormation()) {
+                    MovementStrategy = MovementStrategies[rand.Next(2)];
+                } else {MovementStrategy = MovementStrategies[rand.Next(3)];}
+                
+                
             }
         }
 
@@ -239,7 +246,7 @@ namespace Galaga {
             playerShots.Iterate(shot => {
                 float shotY = shot.Shape.Position.Y;
                 shot.Shape.Move();
-                if (shotY < 0.0f && shotY > 1.0f) {
+                if (shotY >= 1.0f) {
                     shot.DeleteEntity();
                 } else {
                     Enemies.Iterate(enemy => {

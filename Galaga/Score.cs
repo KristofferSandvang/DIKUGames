@@ -8,9 +8,9 @@ namespace Galaga {
         private Text display;
         public Score (Vec2F position, Vec2F extent) {
             score = 0;
-            display = new Text (score.ToString(), position, extent);
+            display = new Text ("Score: "+score.ToString(), position, extent);
             display.SetColor(System.Drawing.Color.White);
-            display.SetFontSize(300);
+            display.SetFontSize(30);
         }
         public void AddPoints() {
             score += 100;

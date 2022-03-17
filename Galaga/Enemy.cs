@@ -30,14 +30,14 @@ namespace Galaga {
             hitPoints -= 2;
             if (hitPoints <= 4) {
                 Image = red;
-                speed = 0.002f; 
+                speed += 0.0005f; 
             }
         }
         public float getSpeed() {
             return speed;
         }
-        public void speedier() {
-            speed += 0.0005f;
+        public void speedier(float newSpeed) {
+            speed += newSpeed;
         }
     }
 }
