@@ -14,7 +14,7 @@ namespace Galaga {
         }
         public void AddPoints() {
             score += 100;
-            display.SetText(score.ToString());
+            display.SetText("Score: "+score.ToString());
         }
         public void RenderScore() {
             display.RenderText();

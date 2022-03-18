@@ -20,12 +20,18 @@ namespace Galaga {
             startY = Shape.Position.Y;
             startX = Shape.Position.X;
         }
+        /// <summary>
+        /// Determines if the Enemy is dead or not.
+        /// </summary>
         public bool isDead() {
             if (hitPoints <= 0) {
                 return true;
             }
             else return false;
         }
+        /// <summary>
+        /// Decreases the hit points of the enemy and enrages it if allowed.
+        /// </summary>
         public void isHit() {
             hitPoints -= 2;
             if (hitPoints <= 4) {
@@ -33,9 +39,15 @@ namespace Galaga {
                 speed += 0.0005f; 
             }
         }
+        /// <summary>
+        /// Gets the speed of the enemey
+        /// </summary>
         public float getSpeed() {
             return speed;
         }
+        /// <summary>
+        /// Increases the speed of the enemy
+        /// </summary>
         public void speedier(float newSpeed) {
             speed += newSpeed;
         }

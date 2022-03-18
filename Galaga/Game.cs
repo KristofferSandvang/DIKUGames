@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Threading;
 using DIKUArcade;
 using DIKUArcade.GUI;
 using DIKUArcade.Input;
@@ -29,9 +28,15 @@ namespace Galaga {
         private Player player;
         private GameEventBus eventBus;
         private List<Image> enemyStrides;
-        private ISquadron[] formations = { new VFormation(), new SquareFormation(), new RainFormation() };
+        private ISquadron[] formations = { 
+            new VFormation(),
+            new SquareFormation(),
+            new RainFormation() };
         private ISquadron formation; 
-        private IMovementStrategy[] MovementStrategies = { new Down(), new ZigZigDown(), new NoMove() }; 
+        private IMovementStrategy[] MovementStrategies = { 
+            new Down(),
+            new ZigZigDown(), 
+            new NoMove() }; 
         private IMovementStrategy MovementStrategy;
         private Score score;
         private Random rand;
@@ -52,7 +57,8 @@ namespace Galaga {
             eventBus.Subscribe(GameEventType.InputEvent, this);
             eventBus.Subscribe(GameEventType.PlayerEvent, player);
 
-            enemyStrides = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
+            enemyStrides = ImageStride.CreateStrides(4,
+            Path.Combine("Assets", "Images", "BlueMonster.png"));
             Enemies = new EntityContainer<Enemy>(8);
 
             playerShots = new EntityContainer<PlayerShot>();
@@ -197,6 +203,9 @@ namespace Galaga {
                 new ImageStride(EXPLOSION_LENGTH_MS/8, explosionStrides)
             );
         }
+        /// <summary>
+        /// Creates a new wave of enemies once the last wave have been defeated
+        /// </summary>
         private void newWave() {
             if (Enemies.CountEntities() <= 0) {
                 wave++;
@@ -211,7 +220,9 @@ namespace Galaga {
                 
             }
         }
-
+        /// <summary>
+        /// Checks if the game is lost
+        /// </summary>
         private void isThisLoss() {
             foreach (Enemy enemy in Enemies){
                 if (enemy.Shape.Position.Y < 0.20f) {
@@ -250,7 +261,8 @@ namespace Galaga {
                     shot.DeleteEntity();
                 } else {
                     Enemies.Iterate(enemy => {
-                        if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision) {
+                        if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(),
+                            enemy.Shape).Collision) {
                             enemy.isHit();
                             shot.DeleteEntity();
                             if (enemy.isDead()) {
