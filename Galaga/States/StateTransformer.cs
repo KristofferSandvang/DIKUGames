@@ -1,4 +1,6 @@
-namespace Galaga.State {
+using System;
+
+namespace Galaga.GalagaStates {
     public class StateTransformer {
         public static GameStateType TransformStringToState(string state) {
             switch (state) {
@@ -18,7 +20,7 @@ namespace Galaga.State {
             switch (state) {
                 case GameStateType.MainMenu:
                     return "MainMenu";
-                case GameStateType.MainMenu:
+                case GameStateType.GamePaused:
                     return "GamePaused";
                 case GameStateType.GameRunning:
                     return "GameRunning";
