@@ -2,7 +2,7 @@ using DIKUArcade.Entities;
 using System;
 using DIKUArcade.Math;
 namespace Galaga.MovementStrategy{
-    class ZigZigDown : IMovementStrategy {
+    public class ZigZagDown : IMovementStrategy {
         public void MoveEnemy(Enemy enemy) {
             float s = - enemy.getSpeed();
             float p = 0.045f;

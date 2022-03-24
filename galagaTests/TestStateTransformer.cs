@@ -3,7 +3,7 @@ using NUint.Framework;
 namespace GalagaTests;
 
     [TestFixture]
-    public class StateMachineTesting {
+    public class StateTransformerTests {
         private StateTransformer Transformer;
         [SetUp]
         public void InitiateStateTransformer() {

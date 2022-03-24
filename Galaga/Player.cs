@@ -2,6 +2,7 @@ using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Events;
+
 namespace Galaga {
     /// <summary>
     /// A subclass of Entity, containing information about Player.
@@ -23,8 +24,9 @@ namespace Galaga {
         private void SetMoveLeft(bool val) {
             if (val) {
                 moveLeft = -moveSpeed;
-            } else
+            } else {
                 moveLeft = 0.0f;
+            }
             updateDirection();
         }
         /// <summary>
@@ -34,8 +36,9 @@ namespace Galaga {
         private void SetMoveRight(bool val) {
             if (val) {
                 moveRight = moveSpeed;
-            } else
+            } else {
                 moveRight = 0.0f;
+            }
             updateDirection();
         }
         /// <summary>
@@ -94,6 +97,9 @@ namespace Galaga {
         /// </summary>
         public void Render() {
             entity.RenderEntity();
+        }
+        public float xPosition() {
+            return shape.Position.X;
         }
     }
 }
