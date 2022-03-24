@@ -35,7 +35,7 @@ namespace Galaga {
         private ISquadron formation; 
         private IMovementStrategy[] MovementStrategies = { 
             new Down(),
-            new ZigZigDown(), 
+            new ZigZagDown(), 
             new NoMove() }; 
         private IMovementStrategy MovementStrategy;
         private Score score;

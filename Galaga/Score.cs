@@ -3,9 +3,12 @@ using DIKUArcade.Math;
 using DIKUArcade.Events;
 
 namespace Galaga {
-    class Score {
+    public class Score {
         private int score;
         private Text display;
+        public int GetScore{
+            get{return score;}
+        }
         public Score (Vec2F position, Vec2F extent) {
             score = 0;
             display = new Text ("Score: "+score.ToString(), position, extent);

@@ -46,6 +46,12 @@ namespace Galaga {
             return speed;
         }
         /// <summary>
+        /// Gets the hitpoints of the enemy
+        /// </summary>
+        public int getHP(){
+            return hitPoints;
+        }
+        /// <summary>
         /// Increases the speed of the enemy
         /// </summary>
         public void speedier(float newSpeed) {
