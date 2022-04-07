@@ -24,9 +24,6 @@ namespace Galaga.GalagaStates {
                 case GameStateType.MainMenu:
                     ActiveState = new MainMenu();
                     break;
-                case GameStateType.GamePaused:
-                    ActiveState = new GamePaused();
-                    break;
                 case GameStateType.GameRunning:
                     ActiveState = new GameRunning();
                     break;
