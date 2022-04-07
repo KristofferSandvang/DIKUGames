@@ -10,7 +10,7 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Events;
 using System.Collections.Generic;
-
+#pragma warning disable 8618
 namespace galagaTests;
 
 [TestFixture]
@@ -31,86 +31,75 @@ public class TestPlayer {
                     new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
                     new Image(Path.Combine("Assets", "Images", "Player.png")));
         
-        GalagaBus.GetBus().Subscribe(GameEventType.PlayerEvent, tester);
     }
 
-    /*[Test]
+    [Test]
     public void RightMoveTest() {
-        GalagaBus.GetBus().RegisterEvent(
+        tester.ProcessEvent(
             new GameEvent {
                 EventType = GameEventType.PlayerEvent,
                 Message = "moveRight",
             } 
         );
-        GalagaBus.GetBus().RegisterEvent(
-            new GameEvent {
-                EventType = GameEventType.PlayerEvent,
-                Message = "stopMoveRight",
-            } 
-        );
+        tester.move();
         Assert.Greater(tester.xPosition(), dummy.xPosition());
        
-    } */
+    } 
     [Test]
     public void RightMoveRightBoundTest() {
-        GalagaBus.GetBus().RegisterEvent (
+        tester.ProcessEvent(
             new GameEvent {
                 EventType = GameEventType.PlayerEvent,
                 Message = "moveRight",
             }
         );
-        GalagaBus.GetBus().ProcessEventsSequentially();
+        tester.move();
         Assert.Less(tester.xPosition(), 1);
     }
     [Test]
     public void RightMoveLeftBoundTest()  {
-        GalagaBus.GetBus().RegisterEvent (
+        tester.ProcessEvent(
             new GameEvent {
                 EventType = GameEventType.PlayerEvent,
                 Message = "moveRight",
             }
         );
-        GalagaBus.GetBus().ProcessEventsSequentially();
+        tester.move();
         Assert.GreaterOrEqual(tester.xPosition(), 0);
     }
-    /*
+    
     [Test]
     public void LeftMoveTest() {
-        GalagaBus.GetBus().RegisterEvent(
-                new GameEvent {
-                    EventType = GameEventType.PlayerEvent,
-                    Message = "moveLeft",
-                }
-            );
-        GalagaBus.GetBus().RegisterEvent(
-                new GameEvent {
-                    EventType = GameEventType.PlayerEvent,
-                    Message = "stopMoveLeft",
-                }
-            );
-        GalagaBus.GetBus().ProcessEventsSequentially();
+        tester.ProcessEvent(
+            new GameEvent {
+                EventType = GameEventType.PlayerEvent,
+                Message = "moveLeft",
+            } 
+        );
+        tester.move();
         Assert.Less(tester.xPosition(), dummy.xPosition());
-    }*/
+    }
+    
     [Test]
     public void LeftMoveRightBoundTest() {
-        GalagaBus.GetBus().RegisterEvent(
+        tester.ProcessEvent(
             new GameEvent {
                 EventType = GameEventType.PlayerEvent,
                 Message = "moveLeft",
             }
         );
-        GalagaBus.GetBus().ProcessEventsSequentially();
+        tester.move();
         Assert.Less(tester.xPosition(), 1);
     }
     [Test]
     public void LeftMoveLeftBoundTest() {
-        GalagaBus.GetBus().RegisterEvent(
+        tester.ProcessEvent(
             new GameEvent {
                 EventType = GameEventType.PlayerEvent,
                 Message = "moveLeft",
             }
         );
-        GalagaBus.GetBus().ProcessEventsSequentially();
+        tester.move();
         Assert.Greater(tester.xPosition(), 0);
     }
     [Test]

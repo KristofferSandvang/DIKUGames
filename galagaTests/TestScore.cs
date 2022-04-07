@@ -2,7 +2,7 @@ using NUnit.Framework;
 using Galaga;
 using DIKUArcade.Events;
 using DIKUArcade.Math;
-
+#pragma warning disable 8618
 
 
 
@@ -32,13 +32,13 @@ namespace galagaTests;
         }
         
         
-        /*[Test]
+        [Test]
         public void AddMoreScoreTest(){
             for (int i = 0; i < 100; i++) {
                 ScoreTester.AddPoints();
                 Assert.AreEqual(ScoreTester.GetScore, DummyScore.GetScore + 100 + i * 100); 
             }
-        }*/
+        }
     }
 
 

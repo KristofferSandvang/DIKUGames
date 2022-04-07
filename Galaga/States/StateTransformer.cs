@@ -2,6 +2,15 @@ using System;
 
 namespace Galaga.GalagaStates {
     public class StateTransformer {
+        /// <summary>
+        /// Transforms a string in to GameStateType
+        /// </summary>
+        /// <param name='state'>
+        /// a string corresponding to a GameStateType
+        /// </param>
+        /// <returns>
+        /// the corresponding GameStateType
+        /// </returns>
         public static GameStateType TransformStringToState(string state) {
             switch (state) {
                 case "MainMenu":
@@ -16,6 +25,15 @@ namespace Galaga.GalagaStates {
                         "state");;
             }
         }
+        /// <summary>
+        /// Transforms a GameStateType into a string
+        /// </summary>
+        /// <param name='state'>
+        /// A GameStateType
+        /// </param>
+        /// <returns>
+        /// the corresponding string
+        /// </returns>
         public static string TransformStateToString(GameStateType state) {
             switch (state) {
                 case GameStateType.MainMenu:

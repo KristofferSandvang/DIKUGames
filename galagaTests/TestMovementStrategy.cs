@@ -12,7 +12,7 @@ using DIKUArcade.Events;
 using System.Collections.Generic;
 using Galaga.MovementStrategy;
 namespace galagaTests; 
-
+#pragma warning disable 8618
 [TestFixture]
 public class TestMovementStrategy {
     private Enemy tester;
@@ -49,9 +49,13 @@ public void InitializeEnemy() {
     }
 
     [Test]
-    public void DownTest() {
+    public void DownXTest() {
         down.MoveEnemy(tester);
         Assert.AreEqual(tester.Shape.Position.X, dummy.Shape.Position.X);
+    }
+    [Test]
+    public void DownYTest() {
+        down.MoveEnemy(tester);
         Assert.Less(tester.Shape.Position.Y, dummy.Shape.Position.Y);
     }
 

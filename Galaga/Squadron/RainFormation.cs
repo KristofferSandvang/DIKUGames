@@ -11,6 +11,10 @@ namespace Galaga.Squadron {
             MaxEnemies = 20;
             Enemies = new EntityContainer<Enemy>(MaxEnemies);
         }
+        /// <summary> Create enemies into a squadron given list of images </summary>
+        /// <param name='enemyStride'> 
+        /// the list of enemies you are creating into the squadron
+        /// </param>s
         public void  CreateEnemies (List<Image> enemyStride) {
             Enemies.AddEntity(new Enemy(new DynamicShape(new Vec2F(0.2f, 1.0f),
             new Vec2F(0.1f, 0.1f)), new ImageStride(80, enemyStride)));

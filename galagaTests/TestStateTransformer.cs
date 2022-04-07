@@ -1,5 +1,6 @@
 using Galaga.GalagaStates;
-using NUint.Framework;
+using NUnit.Framework;
+#pragma warning disable 8618
 namespace GalagaTests;
 
     [TestFixture]
@@ -22,22 +23,22 @@ namespace GalagaTests;
         }
         [Test]
         public void StateToString3() {
-            GameStateType s = StateTransformer.TransformStateToString(GameStateType.GameRunning);
+            string s = StateTransformer.TransformStateToString(GameStateType.GameRunning);
             Assert.AreEqual(s, "GameRunning");
         }
         [Test]
         public void StringToState1() {
-            GameStateType s = StateTransformer.TransformStateToString("MainMenu");
+            GameStateType s = StateTransformer.TransformStringToState("MainMenu");
             Assert.AreEqual(s, GameStateType.MainMenu);
         }
         [Test]
         public void StringToState2() {
-            GameStateType s = StateTransformer.TransformStateToString("GamePaused");
+            GameStateType s = StateTransformer.TransformStringToState("GamePaused");
             Assert.AreEqual(s, GameStateType.GamePaused);
         }
         [Test]
         public void StringToState3() {
-            GameStateType s = StateTransformer.TransformStateToString("GameRunning");
+            GameStateType s = StateTransformer.TransformStringToState("GameRunning");
             Assert.AreEqual(s, GameStateType.GameRunning);
         }
 

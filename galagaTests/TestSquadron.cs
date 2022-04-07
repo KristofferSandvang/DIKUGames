@@ -6,6 +6,8 @@ using Galaga.Squadron;
 using DIKUArcade.Entities;
 using System.Collections.Generic;
 using DIKUArcade.Graphics;
+using DIKUArcade;
+#pragma warning disable 8618
 
 namespace galagaTests;
 
@@ -14,42 +16,32 @@ public class TestSquadron {
     private ISquadron vFormation;
     private ISquadron squareFormation;
     private ISquadron rainFormation;
+    private List<Image> enemyImage;
 
     [SetUp]
     public void InitializeSquadron() {
-        Window.CreateOpenGLContext();
         vFormation = new VFormation();
         squareFormation = new SquareFormation();
         rainFormation = new RainFormation();
+        enemyImage = ImageStride.CreateStrides(4,
+            Path.Combine("Assets", "Images", "BlueMonster.png"));
     }
     
     [Test]
     public void vFormationNumberOfEnemies() {
-        vFormation.CreateEnemies();
+        vFormation.CreateEnemies(enemyImage);
         Assert.AreEqual(vFormation.Enemies.CountEntities(), vFormation.MaxEnemies);
     }
     [Test]
     public void squareFormationNumberOfEnemies() {
-        vFormation.CreateEnemies();
-        Assert.AreEqual(squareFormation.Enemies.CountEntities(), sq.MaxEnemies);
+        squareFormation.CreateEnemies(enemyImage);
+        Assert.AreEqual(squareFormation.Enemies.CountEntities(), squareFormation.MaxEnemies);
     }
     [Test]
     public void rainNumberOfEnemies() {
-        rainFormation.CreateEnemies();
+        rainFormation.CreateEnemies(enemyImage);
         Assert.AreEqual(rainFormation.Enemies.CountEntities(), rainFormation.MaxEnemies);
         
     }
-/*
-    [Test]
-    public void squareFormation() {
-     //   Assert.Less((), 1);
-    }
-
-    [Test]
-    public void rainFormation1() {
-        rainFormation.CreateEnemies();
-        Assert.AreEqual(rainFormation.Enemies[0].startY, 1.0);
-        Assert.AreEqual(rainFormation.Enemies[0].startX, 0.2f);
-    }*/
-
 }
+

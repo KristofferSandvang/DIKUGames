@@ -15,10 +15,16 @@ namespace Galaga {
             display.SetColor(System.Drawing.Color.White);
             display.SetFontSize(30);
         }
+        /// <summary>
+        /// Adds 100 points to the score
+        /// </summary>
         public void AddPoints() {
             score += 100;
             display.SetText("Score: "+score.ToString());
         }
+        /// <summary>
+        /// Renders the score
+        /// </summary>
         public void RenderScore() {
             display.RenderText();
         }

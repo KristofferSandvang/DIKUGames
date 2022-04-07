@@ -1,44 +1,55 @@
-using Galaga.GalagaStates;
-using NUint.Framework;
+using NUnit.Framework;
 using Galaga;
+using System;
+using System.IO;
+using DIKUArcade;
+using DIKUArcade.GUI;
+using DIKUArcade.Input;
+using DIKUArcade.Entities;
+using DIKUArcade.Graphics;
+using DIKUArcade.Math;
 using DIKUArcade.Events;
 using System.Collections.Generic;
-namespace GalagaTests;
+using Galaga.MovementStrategy;
+using Galaga.GalagaStates;
 
-    [TestFixture]
+namespace GalagaTests;
+#pragma warning disable 8618
+   [TestFixture]
     public class StateMachineTesting {
         private StateMachine stateMachine;
-        private GameEventBus eventBus;
-
-        [OneTimeSetUp]
-        public void InitializeEventBus() {
-            eventBus = GalagaBus.GetBus();
-            eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent,
-            GameEventType.GameStateEvent });
-        }
-
+        private GameEventBus eventBus;  
         [SetUp]
-        public void InitiateStateTransformer() {
-            DIKUArcade.Window.CreateOpenGLContext();
+        public void InitializeStateMachine() {
             stateMachine = new StateMachine();
             eventBus.Subscribe(GameEventType.GameStateEvent, stateMachine);
         }
 
+        [OneTimeSetUp]
+        public void InitializeEventBus() {
+            Window.CreateOpenGLContext();    
+            eventBus = new GameEventBus();
+    
+            eventBus.InitializeEventBus(new List<GameEventType> { 
+                GameEventType.InputEvent,
+                GameEventType.GameStateEvent,
+                GameEventType.PlayerEvent,
+                 } );
+        }
         [Test]
         public void TestInitialState() {
             Assert.That(stateMachine.ActiveState, Is.InstanceOf<MainMenu>());
         }
         [Test]
-        public void TestEventGamePaused() {
-            GalagaBus.GetBus().RegisterEvent(
+        public void TestEventGameRunning() {
+            eventBus.RegisterEvent(
                 new GameEvent{
                 EventType = GameEventType.GameStateEvent,
-                Message = "changeState",
-                StringArg1 = "gamePaused"
+                Message = "GameRunning",
                 }
             );
-
-            GalagaBus.GetBus().ProcessEventsSequentially();
-            Assert.That(stateMachine.ActiveState, Is.InstanceOf<GamePaused>());
+            
+            eventBus.ProcessEventsSequentially();
+            Assert.That(stateMachine.ActiveState, Is.InstanceOf<GameRunning>());
         }
     }

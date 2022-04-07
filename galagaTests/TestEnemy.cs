@@ -10,7 +10,7 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Events;
 using System.Collections.Generic;
-
+#pragma warning disable 8618
 namespace galagaTests;
 
 public class TestEnemy {
