@@ -1,18 +1,8 @@
-using System;
-using System.IO;
 using DIKUArcade;
 using DIKUArcade.GUI;
 using DIKUArcade.Input;
-using DIKUArcade.Entities;
-using DIKUArcade.Graphics;
-using DIKUArcade.Math;
-using DIKUArcade.Physics;
-using System.Security.Principal;
 using System.Collections.Generic;
 using DIKUArcade.Events;
-using Galaga.Squadron;
-using Galaga.MovementStrategy;
-using DIKUArcade.State;
 using Galaga.GalagaStates;
 
 namespace Galaga {
