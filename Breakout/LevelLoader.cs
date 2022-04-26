@@ -1,5 +1,8 @@
 using System.IO;
 using System;
+using DIKUArcade.Entities;
+using DIKUArcade.Math;
+using DIKUArcade.Graphics;
 
 namespace Breakout {
     public class LevelLoader {
@@ -11,7 +14,7 @@ namespace Breakout {
         private int legendEnd = 0;
         private string fileName;
         private string[] lines;
-        //private IDictionary<char> LevelDictionary;
+        private Dictionary<char, string> legend;
         
         /// <summary>
         /// Gets the specific level-file.
@@ -22,7 +25,6 @@ namespace Breakout {
             fileName = Path.Combine("Breakout","Assets", "Levels", FileName);
             lines = File.ReadAllLines(fileName);
             InitializeLevelLoader();
-            Console.WriteLine(lines.Length);
         }
         /// <summary>
         /// Initializes the levelLoader, finding checkpoints and creating a dictionary
@@ -30,7 +32,7 @@ namespace Breakout {
         /// </summary>
         public void InitializeLevelLoader() {
             FindCheckpoints();
-            //LevelDictionary = new IDictionary<char>();
+            legend = new Dictionary<char, string>();
         }
         /// <summary>
         /// Finds all checkpoints meaning the lines where map, meta, legend have their start/ends
@@ -54,27 +56,27 @@ namespace Breakout {
         }
         public void Testing() {
             Console.WriteLine("============");
-            Console.WriteLine(mapStart);
-            Console.WriteLine(mapEnd);
+            Console.WriteLine(legend['0']);
             Console.WriteLine("============");
-            Console.WriteLine(metaStart);
-            Console.WriteLine(metaEnd);
+            Console.WriteLine(legend['w']);
             Console.WriteLine("============");
-            Console.WriteLine(legendStart);
-            Console.WriteLine(legendEnd);
+            Console.WriteLine(legend['#']);
             Console.WriteLine("============");
-            Console.WriteLine(lines[0]);
+            Console.WriteLine(legend['Y']);
+            Console.WriteLine("============");
+            Console.WriteLine(legend['b']);
         }
         
         /// <summary>
         /// Reads through the Legend information field 
         /// Iteratively adding that information to the dictionary
         /// </summary>
-        public void ReadLegend(int legendstart, int legendend, bool levelDoc) {
-            
-            //start ved legendstart
-            //iterativt add legend information til dictionary
-            //end ved legendEnd
+        public void ReadLegend() {
+            for (int i = legendStart + 1; i < legendEnd; i++) {
+                char symbol = lines[i][0];
+                string imgName = lines[i].Substring(3);
+                legend.Add(symbol, imgName);
+            }
         }
         /// <summary>
         /// Reads through the Meta information field 
@@ -94,10 +96,26 @@ namespace Breakout {
         // <param name='levelDoc'>
         // The level file which is to be read
         
-        //public void CreateMap(int mapstart, int mapend, bool leveldoc, Dictionary leveldictionary) {
-            //ReadLegend(levelDoc);
-            //ReadMeta(levelDoc);
-            //apply information to map
-       // }        
+
+        //overvejelser - vi vil have blokene i intervallet (0.2 til og med 1)
+        public EntityContainer<Block> CreateMap() {
+            EntityContainer<Block> blocks = new EntityContainer<Block>();
+            ReadLegend();
+            //Går igennem alle linjerne
+            for (int line = mapStart + 1; line < mapEnd; line++) {
+                //går igennem alle tegne i linjerne
+                for (int block = 0; block < 12; block++) {
+                    if (lines[line][block] != '-') {
+                        string imgName = Path.Combine("Assets", "Images",
+                                         legend[lines[line][block]]);
+                        blocks.AddEntity(new Block(
+                            new DynamicShape(new Vec2F(0.0f + block * 0.08f, 1f - line * 0.04f),
+                            new Vec2F(0.08f, 0.04f)),
+                            new Image(imgName)));
+                    } 
+                }  
+            }
+            return blocks;
+        }        
     }
 }

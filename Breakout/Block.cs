@@ -13,12 +13,9 @@ namespace Breakout{
             hardened = false;
             unbreakable = false;
         }
-
-        
         public int getHP(){
             return hitPoints;
         }
-
        /* public void isHit() {
            /* hitPoints -= 2;
             if (hitPoints <= 4) {

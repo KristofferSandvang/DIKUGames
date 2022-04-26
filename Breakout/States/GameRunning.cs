@@ -18,6 +18,8 @@ namespace Breakout.BreakoutStates {
     /// </summary>
     public class GameRunning : IGameState {
         private Player player;
+        private EntityContainer<Block> blocks;
+        private LevelLoader levelLoader;
         private static GameRunning instance = null;
         /// <summary>
         /// Gets the instance of GameRunning
@@ -41,6 +43,8 @@ namespace Breakout.BreakoutStates {
                     new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.15f, 0.03f)),
                     new Image(Path.Combine("Assets", "Images", "player.png")));
             BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
+            levelLoader = new LevelLoader("level3.txt");
+            blocks = levelLoader.CreateMap();
         }
         /// <summary>
         /// Resets the GameState
@@ -59,6 +63,7 @@ namespace Breakout.BreakoutStates {
         /// Renders the elements
         /// </summary>
         public void RenderState() {
+            blocks.RenderEntities();
             player.Render();
             }
         /// <summary>
