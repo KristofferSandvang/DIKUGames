@@ -25,7 +25,7 @@ namespace Breakout {
         public override void Update() {
             BreakoutBus.GetBus().ProcessEventsSequentially();
             stateMachine.ActiveState.UpdateState();
-        }
+        }s
 
         /// <summary>
         /// Processes a GameEvent based on the GameEvent.Message

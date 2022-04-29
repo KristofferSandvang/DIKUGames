@@ -32,11 +32,7 @@ public class TestPlayer
         new Image(Path.Combine("Assets", "Images", "player.png")));
     }
 
-    [Test]
-    public void Test1()
-    {
-        Assert.Pass();
-    }
+
     [Test]
     public void RightMoveTest() {
         tester.ProcessEvent(
