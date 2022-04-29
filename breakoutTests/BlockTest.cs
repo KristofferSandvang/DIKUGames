@@ -18,43 +18,59 @@ namespace breakoutTests;
 
 public class PlayerTest {
 
-private Enemy dummy;
-private Enemy tester;
+private Block dummy;
+private Block tester;
+private Block hardTester;
+private Block unbreakTester;
 
 [SetUp]
     public void InitializeEnemy() {
         Window.CreateOpenGLContext();
-        dummy = new Enemy( 
+        dummy = new Block( 
             new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new ImageStride(80, ImageStride.CreateStrides(4,
-            Path.Combine("Assets", "Images", "BlueMonster.png"))), false, false);
-        tester = new Enemy(
+            Path.Combine("Assets", "Images", "red-block.png"))), false, false);
+        tester = new Block(
             new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new ImageStride(80, ImageStride.CreateStrides(4,
-            Path.Combine("Assets", "Images", "BlueMonster.png"))), false, false);
-        hardTester = new Enemy(
+            Path.Combine("Assets", "Images", "red-block.png"))), false, false);
+        hardTester = new Block(
             new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new ImageStride(80, ImageStride.CreateStrides(4,
-            Path.Combine("Assets", "Images", "BlueMonster.png"))), true, false); 
-        unbreakTester = new Enemy(
+            Path.Combine("Assets", "Images", "red-block.png"))), true, false); 
+        unbreakTester = new Block(
             new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new ImageStride(80, ImageStride.CreateStrides(4,
-            Path.Combine("Assets", "Images", "BlueMonster.png"))), false, true);  
+            Path.Combine("Assets", "Images", "red-block.png"))), false, true);  
     }
 [Test]
     public void NotHitTest() {
-        Assert.AreEqual(tester.getHP(), dummy.getHP());
-        Assert.AreEqual(tester.getSpeed(),dummy.getSpeed());
-        Assert.False(tester.isDead());
+        Assert.AreEqual(tester.GetHP(), dummy.GetHP());
+        Assert.False(tester.IsDead());
     }
 [Test]
     public void HitOnceTest() {
-        tester.isHit();
-        Assert.AreEqual(tester.getHP(), dummy.getHP()-2);
-        Assert.False(tester.isDead());
+        tester.Hit();
+        Assert.AreEqual(tester.GetHP(), dummy.GetHP()-2);
+        Assert.False(tester.IsDead());
     }
-
-
-
+[Test]
+    public void IsDeadTest() {
+        for (int i = 0; i <= 4; i++){
+            tester.Hit();
+        }
+        Assert.True(tester.IsDead());
+    }
+[Test]
+    public void HardenedTest() {
+        hardTester.Hit();
+        dummy.Hit();
+        Assert.Greater(hardTester.GetHP(),dummy.GetHP());
+    }
+[Test]
+    public void UnbreakTest() {
+        unbreakTester.Hit();
+        Assert.AreEqual(unbreakTester.GetHP(),dummy.GetHP());
+    }
 
 }

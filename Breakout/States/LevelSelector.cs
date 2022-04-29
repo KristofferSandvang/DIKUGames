@@ -13,13 +13,26 @@ namespace Breakout.BreakoutStates {
     /// A class of MainMenu, that contains all information needed for MainMenu to work.
     /// </summary>
     public class LevelSelector : IGameState {
-        private static LevelSelector instance = null;
+        private static LevelSelector? instance = null;
         private Entity backGroundImage;
         private Text[] menuButtons;
         private int activeMenuButton;
         private int maxMenuButtons;
         public LevelSelector() {
-            InitializeGameState();
+            menuButtons = new Text[] { 
+                new Text("Level 1", new Vec2F(0.45f, 0.2f), new Vec2F(0.4f, 0.4f)),
+                new Text("Level 2", new Vec2F(0.45f, 0.1f), new Vec2F(0.4f, 0.4f)),
+                new Text("Level 3", new Vec2F(0.45f, 0.0f), new Vec2F(0.4f, 0.4f)),
+                new Text("Back", new Vec2F(0.45f, -0.1f), new Vec2F(0.4f, 0.4f)),
+
+            };
+            foreach (var button in menuButtons) {
+                button.SetColor(System.Drawing.Color.Blue);
+                button.SetFontSize(50);
+            }
+            backGroundImage = new Entity(
+                new StationaryShape(new Vec2F(0f, 0f), new Vec2F(1f, 1f)), 
+                new Image(Path.Combine("Assets", "Images", "BreakoutTitleScreen.png")));
             maxMenuButtons = menuButtons.Length;
             activeMenuButton = 0;
         }

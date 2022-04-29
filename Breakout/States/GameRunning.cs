@@ -12,16 +12,17 @@ using System.Collections.Generic;
 using DIKUArcade.Events;
 using DIKUArcade.State;
 using Breakout;
+using Breakout.Levels;
 
 namespace Breakout.BreakoutStates {
     /// <summary>
     /// A class of GameRunning, that contains all information needed for the game to run.
     /// </summary>
     public class GameRunning : IGameState {
+        private static GameRunning? instance = null;
         private Player player;
-        private EntityContainer<Block> blocks;
+        private Level level;
         private LevelLoader levelLoader;
-        private static GameRunning instance = null;
         /// <summary>
         /// Gets the instance of GameRunning
         /// </summary>
@@ -34,7 +35,12 @@ namespace Breakout.BreakoutStates {
         }
         
         public GameRunning() {
-            InitializeGameState();
+            player = new Player(
+                     new DynamicShape(new Vec2F(0.435f, 0.1f), new Vec2F(0.15f, 0.03f)),
+                     new Image(Path.Combine("Assets", "Images", "player.png")));
+            BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
+            levelLoader = new LevelLoader("level3.txt");
+            level = levelLoader.CreateLevel();
         }
         /// <summary>
         /// Initializes the GameRunning GameState
@@ -44,8 +50,7 @@ namespace Breakout.BreakoutStates {
                      new DynamicShape(new Vec2F(0.435f, 0.1f), new Vec2F(0.15f, 0.03f)),
                      new Image(Path.Combine("Assets", "Images", "player.png")));
             BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
-            levelLoader = new LevelLoader("level3.txt");
-            blocks = levelLoader.CreateMap();
+            level = levelLoader.CreateLevel();
         }
         /// <summary>
         /// Resets the GameState
@@ -63,9 +68,9 @@ namespace Breakout.BreakoutStates {
         /// Renders the elements
         /// </summary>
         public void RenderState() {
-            blocks.RenderEntities();
+            level.Render();
             player.Render();
-            }
+        }
         /// <summary>
         /// Creates and registers a new event of the GameEventType.InputEvent
         /// based on the key released. 

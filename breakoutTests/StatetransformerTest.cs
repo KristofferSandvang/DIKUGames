@@ -1,5 +1,20 @@
-/*using breakout.BreakoutStates;
 using NUnit.Framework;
+using System;
+using System.IO;
+using DIKUArcade;
+using DIKUArcade.GUI;
+using DIKUArcade.Input;
+using DIKUArcade.Entities;
+using DIKUArcade.Graphics;
+using DIKUArcade.Math;
+using DIKUArcade.Physics;
+using System.Security.Principal;
+using System.Collections.Generic;
+using DIKUArcade.Events;
+using DIKUArcade.State;
+using Breakout;
+using Breakout.BreakoutStates;
+using Breakout.Levels;
 #pragma warning disable 8618
 namespace breakoutTests;
 
@@ -18,8 +33,8 @@ namespace breakoutTests;
         }
         [Test]
         public void StateToString2() {
-            string s = StateTransformer.TransformStateToString(GameStateType.GamePaused);
-            Assert.AreEqual(s, "GamePaused");
+            string s = StateTransformer.TransformStateToString(GameStateType.LevelSelector);
+            Assert.AreEqual(s, "LevelSelector");
         }
         [Test]
         public void StateToString3() {
@@ -33,8 +48,8 @@ namespace breakoutTests;
         }
         [Test]
         public void StringToState2() {
-            GameStateType s = StateTransformer.TransformStringToState("GamePaused");
-            Assert.AreEqual(s, GameStateType.GamePaused);
+            GameStateType s = StateTransformer.TransformStringToState("LevelSelector");
+            Assert.AreEqual(s, GameStateType.LevelSelector);
         }
         [Test]
         public void StringToState3() {
@@ -43,4 +58,5 @@ namespace breakoutTests;
         }
 
     }
-*/
+
+    

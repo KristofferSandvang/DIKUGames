@@ -16,7 +16,7 @@ using Breakout;
 
 namespace breakoutTests;
 
-public class PlayerTest
+public class TestPlayer
 {
     private Player dummy;
     private Player tester;

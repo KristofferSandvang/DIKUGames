@@ -1,6 +1,7 @@
 using System;
 
 namespace Breakout.BreakoutStates {
+    
     public class StateTransformer {
         /// <summary>
         /// Transforms a string in to GameStateType

@@ -2,15 +2,17 @@ using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using System.Collections.Generic;
 using System.IO;
-
+#pragma warning disable 414
 namespace Breakout{
     public class Block : Entity {
         private int hitPoints;
         private bool hardened;
         private bool unbreakable;
+        private int value;
         public Block(DynamicShape Shape, IBaseImage image, bool hard, bool unbreak) 
             : base(Shape, image) {
             hitPoints = 10;
+            value = 100;
             hardened = hard;
             unbreakable = unbreak;
         }
