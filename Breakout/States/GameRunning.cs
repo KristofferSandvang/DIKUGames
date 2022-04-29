@@ -11,6 +11,7 @@ using System.Security.Principal;
 using System.Collections.Generic;
 using DIKUArcade.Events;
 using DIKUArcade.State;
+using Breakout;
 
 namespace Breakout.BreakoutStates {
     /// <summary>
@@ -40,8 +41,8 @@ namespace Breakout.BreakoutStates {
         /// </summary>
         public void InitializeGameState() {
             player = new Player(
-                    new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.15f, 0.03f)),
-                    new Image(Path.Combine("Assets", "Images", "player.png")));
+                     new DynamicShape(new Vec2F(0.435f, 0.1f), new Vec2F(0.15f, 0.03f)),
+                     new Image(Path.Combine("Assets", "Images", "player.png")));
             BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
             levelLoader = new LevelLoader("level3.txt");
             blocks = levelLoader.CreateMap();
@@ -56,7 +57,6 @@ namespace Breakout.BreakoutStates {
         /// Updates the elements
         /// </summary>
         public void UpdateState() {
-            BreakoutBus.GetBus().ProcessEventsSequentially();
             player.Move();
         }
         /// <summary>

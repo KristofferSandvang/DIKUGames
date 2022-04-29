@@ -3,6 +3,7 @@ using System;
 using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
+using DIKUArcade.Events;
 
 namespace Breakout {
     public class LevelLoader {
@@ -21,10 +22,21 @@ namespace Breakout {
         ///
         /// Read the file by putting the lines in arrays, then reads the lines and saves it in lines.
         /// </summary>
-        public LevelLoader(string FileName) {
-            fileName = Path.Combine("Breakout","Assets", "Levels", FileName);
+        public LevelLoader(string FileName) { 
+            try {
+                fileName = Path.Combine("Breakout","Assets", "Levels", FileName);
+            } catch (System.IO.FileNotFoundException e1) {
+                Console.WriteLine("Noob");
+                BreakoutBus.GetBus().RegisterEvent(
+                            new GameEvent {
+                                EventType = GameEventType.GameStateEvent,
+                                Message = "LevelSelector",
+                            }
+                        );
+            }
             lines = File.ReadAllLines(fileName);
             InitializeLevelLoader();
+            legend = new Dictionary<char, string>();
         }
         /// <summary>
         /// Initializes the levelLoader, finding checkpoints and creating a dictionary
@@ -32,7 +44,6 @@ namespace Breakout {
         /// </summary>
         public void InitializeLevelLoader() {
             FindCheckpoints();
-            legend = new Dictionary<char, string>();
         }
         /// <summary>
         /// Finds all checkpoints meaning the lines where map, meta, legend have their start/ends
@@ -54,19 +65,6 @@ namespace Breakout {
             //hver af disse 6 bliver gemt i en int variabel 
             //som repræsenterer dens linjenummer
         }
-        public void Testing() {
-            Console.WriteLine("============");
-            Console.WriteLine(legend['0']);
-            Console.WriteLine("============");
-            Console.WriteLine(legend['w']);
-            Console.WriteLine("============");
-            Console.WriteLine(legend['#']);
-            Console.WriteLine("============");
-            Console.WriteLine(legend['Y']);
-            Console.WriteLine("============");
-            Console.WriteLine(legend['b']);
-        }
-        
         /// <summary>
         /// Reads through the Legend information field 
         /// Iteratively adding that information to the dictionary
@@ -82,10 +80,10 @@ namespace Breakout {
         /// Reads through the Meta information field 
         /// Iteratively adding that information to the dictionary
         /// </summary>
-        public void ReadMeta(int metastart, int metaend, bool levelDoc) {
-            //start ved legendstart
-            //iterativt add legend information til dictionary
-            //end ved legendEnd
+        public void ReadMeta() {
+            for (int i = metaStart + 1; i < metaEnd; i++) {
+                // går igennem indexs i meta delen.
+            }
         }
         /// <summary>   
         /// Uses all the previous (ReadLegend, ReadMeta) after having initialized the levelLoader
@@ -93,14 +91,13 @@ namespace Breakout {
         /// in the level (checking for each block)
         /// </summary>
 
-        // <param name='levelDoc'>
-        // The level file which is to be read
-        
-
         //overvejelser - vi vil have blokene i intervallet (0.2 til og med 1)
         public EntityContainer<Block> CreateMap() {
+            bool hard = false;
+            bool unbreak = false;
             EntityContainer<Block> blocks = new EntityContainer<Block>();
             ReadLegend();
+            ReadMeta();
             //Går igennem alle linjerne
             for (int line = mapStart + 1; line < mapEnd; line++) {
                 //går igennem alle tegne i linjerne
@@ -108,13 +105,16 @@ namespace Breakout {
                     if (lines[line][block] != '-') {
                         string imgName = Path.Combine("Assets", "Images",
                                          legend[lines[line][block]]);
+                        if (true) {hard = true;}
+                        if (true) {unbreak = true;}
                         blocks.AddEntity(new Block(
                             new DynamicShape(new Vec2F(0.0f + block * 0.08f, 1f - line * 0.04f),
                             new Vec2F(0.08f, 0.04f)),
-                            new Image(imgName)));
-                    } 
+                            new Image(imgName),
+                            hard, unbreak));
+                    }  
                 }  
-            }
+            } 
             return blocks;
         }        
     }

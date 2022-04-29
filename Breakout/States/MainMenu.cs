@@ -60,9 +60,9 @@ namespace Breakout.BreakoutStates {
         /// </summary>
         public void UpdateState() {
             foreach (Text button in menuButtons) {
-                button.SetColor(System.Drawing.Color.White);
+                button.SetColor(System.Drawing.Color.Blue);
             }
-            menuButtons[activeMenuButton].SetColor(System.Drawing.Color.Blue);
+            menuButtons[activeMenuButton].SetColor(System.Drawing.Color.White);
         }
         /// <summary>
         /// Renders the MainMenu state

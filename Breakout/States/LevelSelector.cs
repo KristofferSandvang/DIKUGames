@@ -5,7 +5,7 @@ using DIKUArcade.Input;
 using DIKUArcade.Math;
 using DIKUArcade.Events;
 using System.IO;
-
+using Breakout;
 
 
 namespace Breakout.BreakoutStates {
@@ -38,13 +38,14 @@ namespace Breakout.BreakoutStates {
         /// </summary>
         public void InitializeGameState() {
             menuButtons = new Text[] { 
-                new Text("Level 1", new Vec2F(0.45f, 0.6f), new Vec2F(0.2f, 0.2f)),
-                new Text("Level 2", new Vec2F(0.45f, 0.4f), new Vec2F(0.2f, 0.2f)),
-                new Text("Level 3", new Vec2F(0.45f, 0.2f), new Vec2F(0.2f, 0.2f)),
+                new Text("Level 1", new Vec2F(0.45f, 0.2f), new Vec2F(0.4f, 0.4f)),
+                new Text("Level 2", new Vec2F(0.45f, 0.1f), new Vec2F(0.4f, 0.4f)),
+                new Text("Level 3", new Vec2F(0.45f, 0.0f), new Vec2F(0.4f, 0.4f)),
+                new Text("Back", new Vec2F(0.45f, -0.1f), new Vec2F(0.4f, 0.4f)),
 
             };
             foreach (var button in menuButtons) {
-                button.SetColor(System.Drawing.Color.White);
+                button.SetColor(System.Drawing.Color.Blue);
                 button.SetFontSize(50);
             }
             backGroundImage = new Entity(
@@ -62,9 +63,9 @@ namespace Breakout.BreakoutStates {
         /// </summary>
         public void UpdateState() {
             foreach (Text button in menuButtons) {
-                button.SetColor(System.Drawing.Color.White);
+                button.SetColor(System.Drawing.Color.Blue);
             }
-            menuButtons[activeMenuButton].SetColor(System.Drawing.Color.Blue);
+            menuButtons[activeMenuButton].SetColor(System.Drawing.Color.White);
         }
         /// <summary>
         /// Renders the MainMenu state
@@ -116,20 +117,28 @@ namespace Breakout.BreakoutStates {
                                 Message = "GameRunning",
                             }
                         );
-                    } else if (activeMenuButton == 1){
+                    } else if (activeMenuButton == 1) {
                          BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent {
                                 EventType = GameEventType.GameStateEvent,
                                 Message = "GameRunning",
                             }
                         );
-                    } else if (activeMenuButton == 2){
+                    } else if (activeMenuButton == 2) {
                          BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent {
                                 EventType = GameEventType.GameStateEvent,
                                 Message = "GameRunning",
                             }
-                        );}
+                        );
+                    } else if (activeMenuButton == 3) {
+                        BreakoutBus.GetBus().RegisterEvent(
+                            new GameEvent {
+                                EventType = GameEventType.GameStateEvent,
+                                Message = "MainMenu",
+                            }
+                        );
+                    }
                     break;
                 case KeyboardKey.Escape:
                     BreakoutBus.GetBus().RegisterEvent(

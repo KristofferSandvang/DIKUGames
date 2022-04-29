@@ -6,24 +6,28 @@ using System.IO;
 namespace Breakout{
     public class Block : Entity {
         private int hitPoints;
-        public bool hardened;
-        public bool unbreakable;
-        public Block(DynamicShape Shape, IBaseImage image) : base(Shape, image) {
+        private bool hardened;
+        private bool unbreakable;
+        public Block(DynamicShape Shape, IBaseImage image, bool hard, bool unbreak) 
+            : base(Shape, image) {
             hitPoints = 10;
-            hardened = false;
-            unbreakable = false;
+            hardened = hard;
+            unbreakable = unbreak;
         }
-        public int getHP(){
+        public int GetHP(){
             return hitPoints;
         }
-       /* public void isHit() {
-           /* hitPoints -= 2;
-            if (hitPoints <= 4) {
-                Image = "broken";
-               
-            } 
-        }*/
-        public bool isDead() {
+       public void Hit() {
+           if (unbreakable) {
+               return;
+           } else if (hardened) {
+               hitPoints -= 1;
+           } else {
+               hitPoints -= 2;
+           }
+           
+        }
+        public bool IsDead() {
             if (hitPoints <= 0) {
                 return true;
             }

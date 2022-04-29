@@ -67,7 +67,7 @@ namespace Breakout {
             } else {
                 moveLeft = 0.0f;
             }
-            updateDirection();
+            UpdateDirection();
         }
         /// <summary>
         /// If true, sets moveRight to movespeed 
@@ -79,15 +79,18 @@ namespace Breakout {
             } else {
                 moveRight = 0.0f;
             }
-            updateDirection();
+            UpdateDirection();
         }
         /// <summary>
         /// Updates the direction on the Player's shape
         /// </summary>
-        private void updateDirection() {
+        private void UpdateDirection() {
             float moveSum = moveLeft + moveRight;
             shape.ChangeDirection(new Vec2F (moveSum, 0.0f));
         }        
+        public float XPosition() {
+            return shape.Position.X;
+        }
     }
 }   
 

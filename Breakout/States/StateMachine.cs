@@ -10,7 +10,6 @@ namespace Breakout.BreakoutStates {
             BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
             BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, this);
             ActiveState = MainMenu.GetInstance();
-            GameRunning.GetInstance(); 
         }
         /// <summary>
         /// Switches the current state
@@ -21,13 +20,13 @@ namespace Breakout.BreakoutStates {
         private void SwitchState(GameStateType stateType) {
             switch (stateType) {
                 case GameStateType.MainMenu:
-                    ActiveState = new MainMenu();
+                    ActiveState = MainMenu.GetInstance();
                     break;
                 case GameStateType.GameRunning:
-                    ActiveState = new GameRunning();
+                    ActiveState = GameRunning.GetInstance();
                     break;
                 case GameStateType.LevelSelector:
-                    ActiveState = new LevelSelector();
+                    ActiveState = LevelSelector.GetInstance();
                     break;
             }
         }
@@ -48,6 +47,9 @@ namespace Breakout.BreakoutStates {
                         break;
                     case "LevelSelector":
                         SwitchState(StateTransformer.TransformStringToState("LevelSelector"));
+                        break;
+                    case "MainMenu":
+                        SwitchState(StateTransformer.TransformStringToState("MainMenu"));
                         break;
                 }
             }

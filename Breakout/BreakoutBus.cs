@@ -2,7 +2,7 @@ using DIKUArcade.Events;
 
 namespace Breakout {
     public static class BreakoutBus {
-        private static GameEventBus eventBus;
+        private static GameEventBus? eventBus;
         /// <summary>
         /// Gets the current GameEventBus
         /// </summary>
