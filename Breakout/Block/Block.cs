@@ -3,7 +3,7 @@ using DIKUArcade.Graphics;
 using System.Collections.Generic;
 using System.IO;
 #pragma warning disable 414
-namespace Breakout{
+namespace Breakout.Blocks {
     public class Block : Entity {
         private int hitPoints;
         private bool hardened;
