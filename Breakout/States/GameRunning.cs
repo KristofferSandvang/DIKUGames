@@ -23,6 +23,8 @@ namespace Breakout.BreakoutStates {
         private Player player;
         private Level level;
         private LevelLoader levelLoader;
+        
+        private EntityContainer<Ball> balls;
         /// <summary>
         /// Gets the instance of GameRunning
         /// </summary>
@@ -41,6 +43,7 @@ namespace Breakout.BreakoutStates {
             BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
             levelLoader = new LevelLoader("level3.txt");
             level = levelLoader.CreateLevel();
+            balls = new EntityContainer<Ball>();
         }
         /// <summary>
         /// Initializes the GameRunning GameState
@@ -51,6 +54,7 @@ namespace Breakout.BreakoutStates {
                      new Image(Path.Combine("Assets", "Images", "player.png")));
             BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
             level = levelLoader.CreateLevel();
+            balls = new EntityContainer<Ball>();
         }
         /// <summary>
         /// Resets the GameState
@@ -63,6 +67,9 @@ namespace Breakout.BreakoutStates {
         /// </summary>
         public void UpdateState() {
             player.Move();
+            foreach (Ball ball in balls) {
+                ball.Move();
+            }
         }
         /// <summary>
         /// Renders the elements
@@ -70,6 +77,7 @@ namespace Breakout.BreakoutStates {
         public void RenderState() {
             level.Render();
             player.Render();
+            balls.RenderEntities();
         }
         /// <summary>
         /// Creates and registers a new event of the GameEventType.InputEvent
@@ -107,6 +115,13 @@ namespace Breakout.BreakoutStates {
                             EventType = GameEventType.GameStateEvent,
                             Message = "GamePaused",
                         } );
+                    break;
+                case KeyboardKey.Space:
+                    balls.AddEntity(
+                        new Ball(
+                            new DynamicShape( new Vec2F(player.XPosition(), 0.1f),
+                            new Vec2F(0.008f, 0.021f), new Vec2F(0.0f, 0.01f)),
+                            new Image(Path.Combine("Assets", "Images", "ball.png"))));
                     break;
             }
         }

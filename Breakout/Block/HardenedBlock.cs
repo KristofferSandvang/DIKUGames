@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace Breakout.Blocks{
-    public class HardenBlock : BreakoutBlock {
+    public class HardenedBlock : BreakoutBlock {
         public override int hitPoints {get {return hitPoints;} }
         public override int value {get {return value;} }
         public override void Hit() {
@@ -18,6 +18,6 @@ namespace Breakout.Blocks{
             if (hitPoints < maxHitPoints/2) {return true;}
             return false; 
         }
-        public HardenBlock(DynamicShape Shape, IBaseImage image) : base(Shape, image) {}
+        public HardenedBlock(DynamicShape Shape, IBaseImage image) : base(Shape, image) {}
     }
 }*/
