@@ -12,7 +12,7 @@ namespace Breakout {
         private float moveRight = 0.0f; 
         private float moveSpeed = 0.01f;
         private Entity entity;
-        private DynamicShape shape;
+        public DynamicShape shape;
         public Player(DynamicShape shape, IBaseImage image) {
             entity = new Entity(shape, image);
             this.shape = shape;
@@ -90,6 +90,9 @@ namespace Breakout {
         }        
         public float XPosition() {
             return shape.Position.X;
+        }
+        public float BounceDirection() {
+            return shape.Direction.X;
         }
     }
 }   

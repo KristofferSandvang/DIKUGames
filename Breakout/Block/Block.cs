@@ -5,6 +5,7 @@ using System.IO;
 #pragma warning disable 414
 namespace Breakout.Blocks {
     public class Block : Entity {
+        public DynamicShape shape;
         private int hitPoints;
         private bool hardened;
         private bool unbreakable;
@@ -15,6 +16,7 @@ namespace Breakout.Blocks {
             value = 100;
             hardened = hard;
             unbreakable = unbreak;
+            shape = Shape;
         }
         public int GetHP(){
             return hitPoints;

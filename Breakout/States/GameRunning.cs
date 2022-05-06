@@ -23,7 +23,6 @@ namespace Breakout.BreakoutStates {
         private Player player;
         private Level level;
         private LevelLoader levelLoader;
-        
         private EntityContainer<Ball> balls;
         /// <summary>
         /// Gets the instance of GameRunning
@@ -67,9 +66,8 @@ namespace Breakout.BreakoutStates {
         /// </summary>
         public void UpdateState() {
             player.Move();
-            foreach (Ball ball in balls) {
-                ball.Move();
-            }
+            balls.Iterate(ball => {ball.Move(level.GetEC(), player);}); 
+            Console.WriteLine(balls.CountEntities());
         }
         /// <summary>
         /// Renders the elements

@@ -2,8 +2,9 @@ using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using Breakout.Blocks;
+using DIKUArcade.Physics;
 using System;
-namespace Breakout{
+namespace Breakout {
 
     public class Ball : Entity {
         private static Vec2F extent = new Vec2F(0.008f, 0.021f);
@@ -14,39 +15,58 @@ namespace Breakout{
             shape = Shape;
             rand = new Random();
         } 
-
-        public void Collide(EntityContainer<BreakoutBlock> blocks) {
-                
-            }
-        public void CollideWall() {
+        public void Collide(EntityContainer<Block> blocks, Player player) {
+            Remove();
+            CollideBlock(blocks);
+            CollidePlayer(player);
+            CollideWall();
+            CollideRoof();
+        }
+        private void CollideWall() {
             if (shape.Position.X <= 0.0f || shape.Position.X >= 1.0f) {
                 shape.Direction.X = shape.Direction.X * -1.0f;
             }
         }
-        public void CollideRoof() {
+        private void CollideRoof() {
             if (shape.Position.Y >= 1.0f) {
-                float noise = (float) rand.NextDouble() / 100.0f;
+                float noise = (float) rand.NextDouble() / 1000.0f;
                 shape.Direction.Y = shape.Direction.Y * -1.0f;
                 shape.Direction.X = shape.Direction.X + noise;
             }
         }
-        
-        public void CollidePlayer() {
-
-        }
-        public void CollideBlock() {
+        private void CollideBlock(EntityContainer<Block> blocks)  {
+            blocks.Iterate( block => {
+                if (CollisionDetection.Aabb(shape.AsDynamicShape(), block.shape).Collision) {
+                    block.Hit();
+                    if (block.IsDead()) {
+                        block.DeleteEntity();
+                    }
+                    float noise = (float) rand.NextDouble() / 1000.0f;
+                    shape.Direction.Y = shape.Direction.Y * -1.0f;
+                    shape.Direction.X = shape.Direction.X + noise;
+                }
+            });
             //send "hit" to block
             //caculate vector from direction vector
             //update direction
             //go
         }
-        public void Remove() {
+        private void CollidePlayer(Player player) {
+            if (CollisionDetection.Aabb(shape.AsDynamicShape(), player.shape).Collision) {
+                float noise = (float) rand.NextDouble() / 10000.0f;
+                shape.Direction.X = player.BounceDirection() + noise;
+                shape.Direction.Y = shape.Direction.Y * -1.0f;
+            }
+        }
+        private void Remove() {
+            if (shape.Position.Y <= 0.0f) {
+                DeleteEntity();
+            }
             //if y<0, remove ball
             //Hungry block?
         }
-        public void Move() {
-            CollideRoof();
-            CollideWall();
+        public void Move(EntityContainer<Block> blocks, Player player) {
+            Collide(blocks, player);
             shape.Move();
         }
     }
