@@ -28,6 +28,9 @@ namespace Breakout.BreakoutStates {
                 case GameStateType.LevelSelector:
                     ActiveState = LevelSelector.GetInstance();
                     break;
+                case GameStateType.GamePaused:
+                    ActiveState = GamePaused.GetInstance();
+                    break;
             }
         }
         /// <summary>

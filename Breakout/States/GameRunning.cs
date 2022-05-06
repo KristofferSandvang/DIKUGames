@@ -101,6 +101,13 @@ namespace Breakout.BreakoutStates {
                             Message = "Close",
                         } );
                     break;
+                case KeyboardKey.P:
+                    BreakoutBus.GetBus().RegisterEvent(
+                        new GameEvent {
+                            EventType = GameEventType.GameStateEvent,
+                            Message = "GamePaused",
+                        } );
+                    break;
             }
         }
         /// <summary>

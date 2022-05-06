@@ -20,6 +20,8 @@ namespace Breakout.BreakoutStates {
                     return GameStateType.GameRunning;
                 case "LevelSelector":
                     return GameStateType.LevelSelector;
+                case "GamePaused":
+                    return GameStateType.GamePaused;
                 default:
                     throw new ArgumentException(
                         String.Format("{0} does not correspond to a GameStateType", state),
@@ -43,6 +45,8 @@ namespace Breakout.BreakoutStates {
                     return "GameRunning";
                 case GameStateType.LevelSelector:
                     return "LevelSelector";
+                case GameStateType.GamePaused:
+                    return "GamePaused";
                 default:
                     throw new ArgumentException(
                         String.Format("{0} is not a GameStateType", state),

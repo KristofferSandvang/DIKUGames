@@ -7,8 +7,8 @@ namespace Breakout.Blocks {
     public abstract class BreakoutBlock : Entity {
         public abstract void Hit();
         public abstract void Dead();
-        public abstract int value { get; private set;}
-        public abstract int hitPoints { get; private set; }
-        public Block(DynamicShape Shape, IBaseImage image) : base(Shape, image) {}
+        public abstract int value {get;}
+        public abstract int hitPoints {get;}
+        public BreakoutBlock(DynamicShape Shape, IBaseImage image) : base(Shape, image) {}
     }
 }

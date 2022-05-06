@@ -88,7 +88,8 @@ namespace Breakout.Levels {
                         Blocks.AddEntity(new Block(
                             new DynamicShape(new Vec2F(0.0f + block * 0.08f, 1f - (line - 1) * 0.04f),
                             new Vec2F(0.08f, 0.04f)),
-                            new Image(imgName)));
+                            new Image(imgName),
+                            false, false));
                     }  
                 }  
             }
