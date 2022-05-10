@@ -5,13 +5,11 @@ using System.IO;
 
 namespace Breakout.Blocks{
     public class UnbreakableBlock : BreakoutBlock {
-        public override int hitPoints {get {return hitPoints;} }
-        public override int value {get {return value;} }
         public override void Hit() {
             //If can be broken once every other block gone, implement if statement
         }
-        public override void Dead() {
-            if(hitPoints <= 0) {} 
+        public override bool Dead() {
+            return false;
             //add score
             //remove from entity container
         }

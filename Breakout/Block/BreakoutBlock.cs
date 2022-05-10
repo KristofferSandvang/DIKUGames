@@ -5,10 +5,13 @@ using System.IO;
 
 namespace Breakout.Blocks {
     public abstract class BreakoutBlock : Entity {
+        public DynamicShape shape;
         public abstract void Hit();
-        public abstract void Dead();
-        public abstract int value {get;}
-        public abstract int hitPoints {get;}
-        public BreakoutBlock(DynamicShape Shape, IBaseImage image) : base(Shape, image) {}
+        public abstract bool Dead();
+        public int value {get; protected set;}
+        public int hitPoints {get; protected set; }
+        public BreakoutBlock(DynamicShape Shape, IBaseImage image) : base(Shape, image) {
+            shape = Shape;
+        }
     }
 }

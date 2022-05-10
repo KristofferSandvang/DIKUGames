@@ -65,6 +65,13 @@ namespace Breakout.Levels {
                 legend.TryAdd(symbol, imgName);
             }
         }
+        public void ReadMeta() {
+            for (int i = legendStart + 1; i < legendEnd; i++) {
+                char symbol = lines[i][0];
+                string imgName = lines[i].Substring(3);
+                legend.TryAdd(symbol, imgName);
+            }
+        }
         /// <summary>   
         /// Uses all the previous (ReadLegend, ReadMeta) after having initialized the levelLoader
         /// to iteratively apply the needed information from dictionary when intializing each block
@@ -76,7 +83,7 @@ namespace Breakout.Levels {
             string Hard = "-";
             string PowerUp = "-";
             string Unbreakable = "-";
-            EntityContainer<Block> Blocks = new EntityContainer<Block>();
+            EntityContainer<BreakoutBlock> Blocks = new EntityContainer<BreakoutBlock>();
             
             //Går igennem alle linjerne
             for (int line = mapStart + 1; line < mapEnd; line++) {
@@ -85,11 +92,10 @@ namespace Breakout.Levels {
                     if (lines[line][block] != '-') {
                         string imgName = Path.Combine("Assets", "Images",
                                          legend[lines[line][block]]);
-                        Blocks.AddEntity(new Block(
+                        Blocks.AddEntity(new StandardBlock(
                             new DynamicShape(new Vec2F(0.0f + block * 0.08f, 1f - (line - 1) * 0.04f),
                             new Vec2F(0.08f, 0.04f)),
-                            new Image(imgName),
-                            false, false));
+                            new Image(imgName)));
                     }  
                 }  
             }

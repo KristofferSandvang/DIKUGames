@@ -9,9 +9,9 @@ namespace Breakout.Levels {
         private string powerUp;
         private string hardened;
         private string unbreakable;
-        private EntityContainer<Block> blocks;
+        private EntityContainer<BreakoutBlock> blocks;
         public Level(string Name, string Time, string PowerUp, string Hardened,
-        EntityContainer<Block> Blocks, string Unbreakable) {
+        EntityContainer<BreakoutBlock> Blocks, string Unbreakable) {
             time = Time;
             name = Name;
             powerUp = PowerUp;
@@ -25,12 +25,12 @@ namespace Breakout.Levels {
             powerUp = "";
             hardened = "";
             unbreakable = "";
-            blocks = new EntityContainer<Block>();
+            blocks = new EntityContainer<BreakoutBlock>();
         }
         public void Render() {
             blocks.RenderEntities();
         }
-        public EntityContainer<Block> GetEC() {
+        public EntityContainer<BreakoutBlock> GetEC() {
             return blocks;
         }
     }

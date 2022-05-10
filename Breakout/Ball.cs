@@ -15,7 +15,7 @@ namespace Breakout {
             shape = Shape;
             rand = new Random();
         } 
-        public void Collide(EntityContainer<Block> blocks, Player player) {
+        public void Collide(EntityContainer<BreakoutBlock> blocks, Player player) {
             Remove();
             CollideBlock(blocks);
             CollidePlayer(player);
@@ -34,11 +34,11 @@ namespace Breakout {
                 shape.Direction.X = shape.Direction.X + noise;
             }
         }
-        private void CollideBlock(EntityContainer<Block> blocks)  {
+        private void CollideBlock(EntityContainer<BreakoutBlock> blocks)  {
             blocks.Iterate( block => {
                 if (CollisionDetection.Aabb(shape.AsDynamicShape(), block.shape).Collision) {
                     block.Hit();
-                    if (block.IsDead()) {
+                    if (block.Dead()) {
                         block.DeleteEntity();
                     }
                     float noise = (float) rand.NextDouble() / 1000.0f;
@@ -65,7 +65,7 @@ namespace Breakout {
             //if y<0, remove ball
             //Hungry block?
         }
-        public void Move(EntityContainer<Block> blocks, Player player) {
+        public void Move(EntityContainer<BreakoutBlock> blocks, Player player) {
             Collide(blocks, player);
             shape.Move();
         }
