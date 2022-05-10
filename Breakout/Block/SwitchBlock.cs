@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace Breakout.Blocks{
-    public class SwitchBlock : BreakoutBlock {
+    /*public class SwitchBlock : BreakoutBlock {
         public override int hitPoints {get {return hitPoints;} }
         public override int value {get {return value;} }
         private SwitchRecieverBlock[] SwitchRecieverList; 
@@ -29,5 +29,6 @@ namespace Breakout.Blocks{
         }
 
        public SwitchBlock(DynamicShape Shape, IBaseImage image) : base(Shape, image) {}
-    } 
+       
+    } */
 }
