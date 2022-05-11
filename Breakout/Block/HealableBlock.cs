@@ -2,6 +2,7 @@ using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using System.Collections.Generic;
 using System.IO;
+#pragma warning disable 0108
 
 namespace Breakout.Blocks{
     public class HealableBlock : BreakoutBlock {

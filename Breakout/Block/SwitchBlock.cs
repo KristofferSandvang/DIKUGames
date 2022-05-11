@@ -24,7 +24,7 @@ namespace Breakout.Blocks{
         }
         public void AddRecievers(EntityContainer<SwitchRecieverBlock> e) {
             foreach (SwitchRecieverBlock b in e) {
-                SwitchRecieverList.Add(b); 
+            //    SwitchRecieverList.Add(b); 
             }
         }
 
