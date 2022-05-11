@@ -1,23 +1,27 @@
-/*using DIKUArcade.Entities;
+using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using System.Collections.Generic;
 using System.IO;
 
 namespace Breakout.Blocks{
     public class HardenedBlock : BreakoutBlock {
-        public override int hitPoints {get {return hitPoints;} }
-        public override int value {get {return value;} }
         public override void Hit() {
             hitPoints -= 1; 
+            //ændr image
         }
-        public override void Dead() {
-            if(hitPoints <= 0) {return true;}
-            return false; 
+        public override bool Dead() {
+            if(hitPoints <= 0) {
+                Score.AddScore(value);
+                return true;
+            }
+            return false;
         }
-        public void Broken() {
+        /*public void Broken() {
             if (hitPoints < maxHitPoints/2) {return true;}
             return false; 
+        }*/
+        public HardenedBlock(DynamicShape Shape, IBaseImage image, IBaseImage brokenImage) : base(Shape, image) {
+
         }
-        public HardenedBlock(DynamicShape Shape, IBaseImage image) : base(Shape, image) {}
     }
-}*/
+}
