@@ -7,9 +7,7 @@ using System;
 namespace Breakout {
 
     public class Ball : Entity {
-        private static Vec2F extent = new Vec2F(0.008f, 0.021f);
         private DynamicShape shape;
-
         private Random rand;
         public Ball(DynamicShape Shape, IBaseImage image) : base(Shape, image) {
             shape = Shape;
@@ -46,10 +44,6 @@ namespace Breakout {
                     shape.Direction.X = shape.Direction.X + noise;
                 }
             });
-            //send "hit" to block
-            //caculate vector from direction vector
-            //update direction
-            //go
         }
         private void CollidePlayer(Player player) {
             if (CollisionDetection.Aabb(shape.AsDynamicShape(), player.shape).Collision) {

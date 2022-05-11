@@ -67,7 +67,6 @@ namespace Breakout.BreakoutStates {
         public void UpdateState() {
             player.Move();
             balls.Iterate(ball => {ball.Move(level.GetEC(), player);}); 
-            Console.WriteLine(balls.CountEntities());
         }
         /// <summary>
         /// Renders the elements

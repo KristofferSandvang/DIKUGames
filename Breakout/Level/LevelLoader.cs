@@ -17,6 +17,7 @@ namespace Breakout.Levels {
         private string fileName;
         private string[] lines;
         private Dictionary<char, string> legend;
+        private Dictionary<char, BlockType> meta;
         
         /// <summary>
         /// Gets the specific level-file.
@@ -28,7 +29,9 @@ namespace Breakout.Levels {
             lines = File.ReadAllLines(fileName);
             FindCheckpoints();
             legend = new Dictionary<char, string>();
+            meta = new Dictionary<char, BlockType>();
             ReadLegend();
+            ReadMeta();
         }
         /// <summary>
         /// Initializes the levelLoader, finding checkpoints and creating a dictionary
@@ -58,19 +61,53 @@ namespace Breakout.Levels {
         /// Reads through the Legend information field xf
         /// Iteratively adding that information to the dictionary
         /// </summary>
-        public void ReadLegend() {
+        private void ReadLegend() {
             for (int i = legendStart + 1; i < legendEnd; i++) {
                 char symbol = lines[i][0];
                 string imgName = lines[i].Substring(3);
                 legend.TryAdd(symbol, imgName);
             }
         }
-        public void ReadMeta() {
+        private void ReadMeta() {
             for (int i = legendStart + 1; i < legendEnd; i++) {
-                char symbol = lines[i][0];
-                string imgName = lines[i].Substring(3);
-                legend.TryAdd(symbol, imgName);
+                if (lines[i].Contains("Hardened:")) {
+                    int index = lines[i].IndexOf(' ');
+                    char symbol = lines[i][index + 1];
+                    meta.TryAdd(symbol, BlockType.Hardened);
+                }
+                if (lines[i].Contains("Unbreakable:")) {
+                    int index = lines[i].IndexOf(' ');
+                    char symbol = lines[i][index + 1];
+                    meta.TryAdd(symbol, BlockType.Unbreakable);
+                }
             }
+        }
+        /// <summary>   
+        /// Generates the blocks that corresponds to the Map section of the level, by
+        /// using the Dictionaries from ReadLegend() and ReadMeta()
+        /// </summary>
+        ///<returns>
+        /// an EntityContainer containing the BreakoutBlocks
+        /// </returns>
+        private EntityContainer<BreakoutBlock> ReadMap() {
+            EntityContainer<BreakoutBlock> Blocks = new EntityContainer<BreakoutBlock>();
+            for (int line = mapStart + 1; line < mapEnd; line++) {
+                for (int block = 0; block < 12; block++) {
+                    if (lines[line][block] != '-') {
+                        string imgName = Path.Combine("Assets", "Images",
+                                         legend[lines[line][block]]);
+                        Vec2F pos = new Vec2F(0.0f + block * 0.08f, 1f - (line - 1) * 0.04f);
+                        if (meta.ContainsKey(lines[line][block])) {
+                            Blocks.AddEntity(BreakoutBlockFactory.Create(meta[lines[line][block]],
+                                                        imgName, pos));
+                        } else {
+                            Blocks.AddEntity(
+                                new StandardBlock(new DynamicShape(pos, new Vec2F(0.08f, 0.04f)),
+                                new Image(imgName)));
+                        }
+                    }  
+                }  
+            } return Blocks;
         }
         /// <summary>   
         /// Uses all the previous (ReadLegend, ReadMeta) after having initialized the levelLoader
@@ -80,25 +117,9 @@ namespace Breakout.Levels {
         public Level CreateLevel() {
             string Name = "";
             string Time = "10000";
-            string Hard = "-";
             string PowerUp = "-";
-            string Unbreakable = "-";
-            EntityContainer<BreakoutBlock> Blocks = new EntityContainer<BreakoutBlock>();
-            
-            //Går igennem alle linjerne
-            for (int line = mapStart + 1; line < mapEnd; line++) {
-                //går igennem alle tegne i linjerne
-                for (int block = 0; block < 12; block++) {
-                    if (lines[line][block] != '-') {
-                        string imgName = Path.Combine("Assets", "Images",
-                                         legend[lines[line][block]]);
-                        Blocks.AddEntity(new StandardBlock(
-                            new DynamicShape(new Vec2F(0.0f + block * 0.08f, 1f - (line - 1) * 0.04f),
-                            new Vec2F(0.08f, 0.04f)),
-                            new Image(imgName)));
-                    }  
-                }  
-            }
+            EntityContainer<BreakoutBlock> Blocks = ReadMap();
+
             for (int i = metaStart + 1; i < metaEnd; i++) {
                 if (lines[i].Contains("Name:")) {
                     int index = lines[i].IndexOf(' ');
@@ -108,20 +129,12 @@ namespace Breakout.Levels {
                     int index = lines[i].IndexOf(' ');
                     Time = lines[i].Substring(index + 1);
                 }
-                if (lines[i].Contains("Hardened:")) {
-                    int index = lines[i].IndexOf(' ');
-                    Hard = lines[i].Substring(index + 1);
-                }
                 if (lines[i].Contains("PowerUp:")) {
                     int index = lines[i].IndexOf(' ');
                     PowerUp = lines[i].Substring(index + 1);
                 }
-                if (lines[i].Contains("Unbreakable:")) {
-                    int index = lines[i].IndexOf(' ');
-                    Unbreakable = lines[i].Substring(index + 1);
-                }
             } 
-            return new Level(Name, Time, PowerUp, Hard, Blocks, Unbreakable);
+            return new Level(Name, Time, PowerUp, Blocks);
         }        
     }
 }

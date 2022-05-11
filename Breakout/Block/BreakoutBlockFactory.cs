@@ -7,11 +7,24 @@ namespace Breakout.Blocks {
     public class BreakoutBlockFactory {
         
         public BreakoutBlockFactory() {}
-        /*public static BreakoutBlock Create() {
-            new StandardBlock(
-                new DynamicShape(new Vec2F(0.0f + 0.1f, 0.08f * 0.04f),
-                new Vec2F(0.08f, 0.04f)),
-                new Image(imgName));
-        }*/
+        public static BreakoutBlock Create(BlockType blockType, string imgName, Vec2F pos) {
+            switch (blockType) {
+                case BlockType.Hardened:
+                    BreakoutBlock HardenedBlock = new StandardBlock (
+                        new DynamicShape((pos), new Vec2F(0.08f, 0.04f)),
+                        new Image(imgName));
+                    return HardenedBlock;
+                case BlockType.Unbreakable:
+                    BreakoutBlock UnbreakableBlock = new StandardBlock (
+                        new DynamicShape((pos), new Vec2F(0.08f, 0.04f)),
+                        new Image(imgName));
+                    return UnbreakableBlock;
+                default:
+                    BreakoutBlock StandardBlock = new StandardBlock (
+                        new DynamicShape((pos), new Vec2F(0.08f, 0.04f)),
+                        new Image(imgName));
+                    return StandardBlock;
+            }
+        }
     }
 }
