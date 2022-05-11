@@ -40,7 +40,7 @@ namespace Breakout.BreakoutStates {
                      new DynamicShape(new Vec2F(0.435f, 0.1f), new Vec2F(0.15f, 0.03f)),
                      new Image(Path.Combine("Assets", "Images", "player.png")));
             BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
-            levelLoader = new LevelLoader("level3.txt");
+            levelLoader = new LevelLoader("test.txt");
             level = levelLoader.CreateLevel();
             balls = new EntityContainer<Ball>();
         }

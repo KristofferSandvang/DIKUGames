@@ -1,5 +1,6 @@
 using System.IO;
 using System;
+using System.Collections.Generic;
 using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
@@ -69,16 +70,17 @@ namespace Breakout.Levels {
             }
         }
         private void ReadMeta() {
-            for (int i = legendStart + 1; i < legendEnd; i++) {
-                if (lines[i].Contains("Hardened:")) {
+            for (int i = metaStart + 1; i < metaEnd; i++) {
+                string line = lines[i];
+                if (line.Contains("Hardened:")) {
                     int index = lines[i].IndexOf(' ');
                     char symbol = lines[i][index + 1];
-                    meta.TryAdd(symbol, BlockType.Hardened);
+                    meta.Add(symbol, BlockType.Hardened);
                 }
-                if (lines[i].Contains("Unbreakable:")) {
+                if (line.Contains("Unbreakable:")) {
                     int index = lines[i].IndexOf(' ');
                     char symbol = lines[i][index + 1];
-                    meta.TryAdd(symbol, BlockType.Unbreakable);
+                    meta.Add(symbol, BlockType.Unbreakable);
                 }
             }
         }
@@ -94,16 +96,15 @@ namespace Breakout.Levels {
             for (int line = mapStart + 1; line < mapEnd; line++) {
                 for (int block = 0; block < 12; block++) {
                     if (lines[line][block] != '-') {
-                        string imgName = Path.Combine("Assets", "Images",
-                                         legend[lines[line][block]]);
+                        string imgName = legend[lines[line][block]];
                         Vec2F pos = new Vec2F(0.0f + block * 0.08f, 1f - (line - 1) * 0.04f);
                         if (meta.ContainsKey(lines[line][block])) {
                             Blocks.AddEntity(BreakoutBlockFactory.Create(meta[lines[line][block]],
-                                                        imgName, pos));
+                                                                         imgName, pos));
                         } else {
                             Blocks.AddEntity(
                                 new StandardBlock(new DynamicShape(pos, new Vec2F(0.08f, 0.04f)),
-                                new Image(imgName)));
+                                new Image(Path.Combine("Assets", "Images", imgName))));
                         }
                     }  
                 }  
