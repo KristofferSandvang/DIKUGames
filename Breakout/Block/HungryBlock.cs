@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.IO;
 #pragma warning disable 414
 namespace Breakout.Blocks {
-    public class StandardBlock : BreakoutBlock {
+    public class HungryBlock : BreakoutBlock {
         public DynamicShape shape;
-        public StandardBlock(DynamicShape Shape, IBaseImage image) : base(Shape, image) {
+        public HungryBlock(DynamicShape Shape, IBaseImage image) : base(Shape, image) {
             hitPoints = 10;
-            value = 100;
+            value = 500;
             shape = Shape;
         }
         public int GetHP(){
@@ -16,6 +16,8 @@ namespace Breakout.Blocks {
         }
         public override void Hit() {
            hitPoints -= 5;
+           Ball.DeleteEntity();
+           
         }
         public override bool Dead() {
             if (hitPoints <= 0) {

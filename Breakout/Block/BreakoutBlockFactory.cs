@@ -7,11 +7,12 @@ namespace Breakout.Blocks {
     public class BreakoutBlockFactory {
         public BreakoutBlockFactory() {}
         public static BreakoutBlock Create(BlockType blockType, string imgName, Vec2F pos) {
-            string fileName = Path.Combine("Assets", "Images", imgName);
+            string fileName = Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", imgName);
             switch (blockType) {
                 case BlockType.Hardened:
                     int index = imgName.IndexOf('.');
-                    string broken = Path.Combine("Assets", "Images", imgName.Insert(index, "-damaged"));
+                    string broken = Path.Combine(FileIO.GetProjectPath(), "Assets", 
+                                            "Images", imgName.Insert(index, "-damaged"));
                     BreakoutBlock HardenedBlock = new HardenedBlock (
                         new DynamicShape((pos), new Vec2F(0.08f, 0.04f)),
                         new Image(fileName), new Image(broken));

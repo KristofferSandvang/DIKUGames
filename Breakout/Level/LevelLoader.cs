@@ -5,6 +5,7 @@ using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using DIKUArcade.Events;
+using DIKUArcade.Utilities;
 using Breakout.Blocks;
 
 namespace Breakout.Levels {
@@ -26,7 +27,7 @@ namespace Breakout.Levels {
         /// Read the file by putting the lines in arrays, then reads the lines and saves it in lines.
         /// </summary>
         public LevelLoader(string FileName) { 
-            fileName = Path.Combine("Assets", "Levels", FileName);
+            fileName = Path.Combine(FileIO.GetProjectPath(), "Assets", "Levels", FileName);
             lines = File.ReadAllLines(fileName);
             FindCheckpoints();
             legend = new Dictionary<char, string>();
@@ -104,7 +105,8 @@ namespace Breakout.Levels {
                         } else {
                             Blocks.AddEntity(
                                 new StandardBlock(new DynamicShape(pos, new Vec2F(0.08f, 0.04f)),
-                                new Image(Path.Combine("Assets", "Images", imgName))));
+                                new Image(Path.Combine(FileIO.GetProjectPath(),
+                                          "Assets", "Images", imgName))));
                         }
                     }  
                 }  

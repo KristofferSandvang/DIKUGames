@@ -18,30 +18,21 @@ namespace breakoutTests;
 
 public class PlayerTest {
 
-private Block dummy;
-private Block tester;
-private Block hardTester;
-private Block unbreakTester;
+private StandardBlock dummy;
+private StandardBlock tester;
+
 
 [SetUp]
     public void InitializeEnemy() {
         Window.CreateOpenGLContext();
-        dummy = new Block( 
+        dummy = new StandardBlock( 
             new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new ImageStride(80, ImageStride.CreateStrides(4,
-            Path.Combine("Assets", "Images", "red-block.png"))), false, false);
-        tester = new Block(
+            Path.Combine("Assets", "Images", "red-block.png"))));
+        tester = new StandardBlock(
             new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new ImageStride(80, ImageStride.CreateStrides(4,
-            Path.Combine("Assets", "Images", "red-block.png"))), false, false);
-        hardTester = new Block(
-            new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
-            new ImageStride(80, ImageStride.CreateStrides(4,
-            Path.Combine("Assets", "Images", "red-block.png"))), true, false); 
-        unbreakTester = new Block(
-            new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
-            new ImageStride(80, ImageStride.CreateStrides(4,
-            Path.Combine("Assets", "Images", "red-block.png"))), false, true);  
+            Path.Combine("Assets", "Images", "red-block.png"))));
     }
 [Test]
     public void NotHitTest() {
@@ -60,17 +51,6 @@ private Block unbreakTester;
             tester.Hit();
         }
         Assert.True(tester.IsDead());
-    }
-[Test]
-    public void HardenedTest() {
-        hardTester.Hit();
-        dummy.Hit();
-        Assert.Greater(hardTester.GetHP(),dummy.GetHP());
-    }
-[Test]
-    public void UnbreakTest() {
-        unbreakTester.Hit();
-        Assert.AreEqual(unbreakTester.GetHP(),dummy.GetHP());
     }
 
 }
