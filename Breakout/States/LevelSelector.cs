@@ -130,6 +130,7 @@ namespace Breakout.BreakoutStates {
                                 Message = "GameRunning",
                             }
                         );
+                        GameRunning.ChangeLevel(0);
                     } else if (activeMenuButton == 1) {
                          BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent {
@@ -137,6 +138,7 @@ namespace Breakout.BreakoutStates {
                                 Message = "GameRunning",
                             }
                         );
+                        GameRunning.ChangeLevel(1);
                     } else if (activeMenuButton == 2) {
                          BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent {
@@ -144,6 +146,7 @@ namespace Breakout.BreakoutStates {
                                 Message = "GameRunning",
                             }
                         );
+                        GameRunning.ChangeLevel(2);
                     } else if (activeMenuButton == 3) {
                         BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent {

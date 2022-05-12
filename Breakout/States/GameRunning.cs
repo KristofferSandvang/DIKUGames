@@ -21,8 +21,12 @@ namespace Breakout.BreakoutStates {
     public class GameRunning : IGameState {
         private static GameRunning? instance = null;
         private Player player;
-        private Level level;
-        private LevelLoader levelLoader;
+        private static Level level = levelLoaders[0].CreateLevel();
+        private static LevelLoader[] levelLoaders = {
+            new LevelLoader("test.txt"),
+            new LevelLoader("level2.txt"),
+            new LevelLoader("level3.txt"),
+        };       
         private EntityContainer<Ball> balls;
         private Score score; 
         /// <summary>
@@ -42,8 +46,6 @@ namespace Breakout.BreakoutStates {
                      new Image(Path.Combine("Assets", "Images", "player.png")));
             score = new Score(new Vec2F(0.05f, 0.7f), new Vec2F(0.3f, 0.3f));
             BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
-            levelLoader = new LevelLoader("level3.txt");
-            level = levelLoader.CreateLevel();
             balls = new EntityContainer<Ball>();
         }
         /// <summary>
@@ -54,7 +56,6 @@ namespace Breakout.BreakoutStates {
                      new DynamicShape(new Vec2F(0.435f, 0.1f), new Vec2F(0.15f, 0.03f)),
                      new Image(Path.Combine("Assets", "Images", "player.png")));
             BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
-            level = levelLoader.CreateLevel();
             balls = new EntityContainer<Ball>();
         }
         /// <summary>
@@ -78,6 +79,9 @@ namespace Breakout.BreakoutStates {
             player.Render();
             balls.RenderEntities();
             Score.Render();
+        }
+        public static void ChangeLevel(int lvl) {
+            level = levelLoaders[lvl].CreateLevel();
         }
         /// <summary>
         /// Creates and registers a new event of the GameEventType.InputEvent
@@ -169,6 +173,17 @@ namespace Breakout.BreakoutStates {
                     break;
             }
         }
+        /*public void ProcessEvent(GameEvent gameEvent) {
+            if (gameEvent.EventType == GameEventType.GameStateEvent) {
+                switch (gameEvent.Message) {
+                    case "GameRunning":
+                        ChangeLevel(gameEvent.IntArg1);
+                    break;
+                    default:
+                    break;
+                }
+            }
+        }*/
     }
 }
 

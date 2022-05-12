@@ -33,6 +33,7 @@ namespace Breakout.Blocks{
         }*/
         public HardenedBlock(DynamicShape Shape, IBaseImage image, IBaseImage brokenImage) : base(Shape, image) {
             hitPoints = 10;
+            value = 200;
             Broken = brokenImage;
             maxHP = hitPoints;
         }
