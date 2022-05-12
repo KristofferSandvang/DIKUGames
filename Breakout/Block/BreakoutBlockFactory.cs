@@ -3,6 +3,7 @@ using DIKUArcade.Graphics;
 using System.Collections.Generic;
 using System.IO;
 using DIKUArcade.Math;
+using DIKUArcade.Utilities;
 namespace Breakout.Blocks {
     public class BreakoutBlockFactory {
         public BreakoutBlockFactory() {}

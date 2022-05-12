@@ -21,11 +21,23 @@ namespace Breakout.Levels {
             powerUp = "";
             blocks = new EntityContainer<BreakoutBlock>();
         }
+        /// <summary>
+        /// Renders the level
+        /// </summary>
         public void Render() {
             blocks.RenderEntities();
         }
         public EntityContainer<BreakoutBlock> GetEC() {
             return blocks;
+        }
+        public string GetPowerUp() {
+            return powerUp;
+        }
+        public string GetTime() {
+            return time;
+        }
+        public string GetName() {
+            return name;
         }
     }
 }

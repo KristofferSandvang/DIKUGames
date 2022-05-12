@@ -24,6 +24,7 @@ namespace Breakout.BreakoutStates {
         private Level level;
         private LevelLoader levelLoader;
         private EntityContainer<Ball> balls;
+        private Score score; 
         /// <summary>
         /// Gets the instance of GameRunning
         /// </summary>
@@ -39,8 +40,9 @@ namespace Breakout.BreakoutStates {
             player = new Player(
                      new DynamicShape(new Vec2F(0.435f, 0.1f), new Vec2F(0.15f, 0.03f)),
                      new Image(Path.Combine("Assets", "Images", "player.png")));
+            score = new Score(new Vec2F(0.05f, 0.7f), new Vec2F(0.3f, 0.3f));
             BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
-            levelLoader = new LevelLoader("test.txt");
+            levelLoader = new LevelLoader("level3.txt");
             level = levelLoader.CreateLevel();
             balls = new EntityContainer<Ball>();
         }
@@ -75,6 +77,7 @@ namespace Breakout.BreakoutStates {
             level.Render();
             player.Render();
             balls.RenderEntities();
+            Score.Render();
         }
         /// <summary>
         /// Creates and registers a new event of the GameEventType.InputEvent
@@ -116,7 +119,7 @@ namespace Breakout.BreakoutStates {
                 case KeyboardKey.Space:
                     balls.AddEntity(
                         new Ball(
-                            new DynamicShape( new Vec2F(player.XPosition(), 0.1f),
+                            new DynamicShape( new Vec2F(player.XPosition() + player.shape.Extent.X/2, 0.1f),
                             new Vec2F(0.008f, 0.021f), new Vec2F(0.0f, 0.01f)),
                             new Image(Path.Combine("Assets", "Images", "ball.png"))));
                     break;

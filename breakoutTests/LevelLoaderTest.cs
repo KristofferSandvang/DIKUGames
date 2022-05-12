@@ -19,19 +19,42 @@ namespace breakoutTests {
 
     public class LevelLoaderTest {
 
-        private LevelLoader tester; 
+        private LevelLoader tester;
 
+        //Makes a tester levelLoader from "level1.txt" 
+        //and creates a variable testLevel from this using .CreateLevel()
         [SetUp]
         public void Setup() {
         
         Window.CreateOpenGLContext();
         tester = new LevelLoader("level1.txt");
+        var testLevel = tester.CreateLevel();
         }
-        [Test]
-        public void entityCount() {
-            var level = tester.CreateLevel();
-            Assert.AreEqual(level.GetEC().CountEntities(),76);
 
+
+        //Testing that the correct amount of entities has been instanizated 
+        [Test]
+        public void EntityCount() {
+            Assert.AreEqual(testLevel.GetEC().CountEntities(),76);
+        }
+        
+        //Testing that the correct time was read from the meta-data
+        [Test]
+        public void CorrectTime() {
+            Assert.True(testLevel.GetTime(),"300");
+        }
+
+        //Testing that the correct name was read from the meta-data
+        [Test]
+        public void CorrectName() {
+            Assert.True(testLevel.GetName(),"LEVEL 1");
+        }
+
+
+        //Testing that the correct powerup symbol was read from the meta-data
+        [Test]
+        public void CorrectPowerUp() {
+            Assert.True(testLevel.GetPowerUp(),"2");
         }
     }
 }

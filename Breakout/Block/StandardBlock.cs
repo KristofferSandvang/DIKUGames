@@ -14,9 +14,18 @@ namespace Breakout.Blocks {
         public int GetHP(){
             return hitPoints;
         }
+        /// <summary>
+        /// Determines what happens with a block when hit.
+        /// </summary>
         public override void Hit() {
            hitPoints -= 5;
         }
+        /// <summary>
+        /// Determines whether the ball is dead or not
+        /// </summary>
+        /// <returns>
+        /// Returns true if the block is dead and false if not.
+        /// </returns> 
         public override bool Dead() {
             if (hitPoints <= 0) {
                 Score.AddScore(value);

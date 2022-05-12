@@ -10,7 +10,7 @@ using Breakout;
 
 namespace Breakout.BreakoutStates {
     /// <summary>
-    /// A class of MainMenu, that contains all information needed for MainMenu to work.
+    /// A class of LevelSelector, that contains all information needed for LevelSelector to work.
     /// </summary>
     public class LevelSelector : IGameState {
         private static LevelSelector? instance = null;
@@ -37,7 +37,7 @@ namespace Breakout.BreakoutStates {
             activeMenuButton = 0;
         }
         /// <summary>
-        /// Gets the instance of GameRunning
+        /// Gets the instance of LevelSelector
         /// </summary>
         public static LevelSelector GetInstance() {
             if (LevelSelector.instance == null) {
@@ -47,7 +47,7 @@ namespace Breakout.BreakoutStates {
             return LevelSelector.instance;
         }
         /// <summary>
-        /// Initialize the MainMenu-state 
+        /// Initialize the LevelSelector-state 
         /// </summary>
         public void InitializeGameState() {
             menuButtons = new Text[] { 
@@ -66,13 +66,13 @@ namespace Breakout.BreakoutStates {
                 new Image(Path.Combine("Assets", "Images", "BreakoutTitleScreen.png")));
         }
         /// <summary>
-        /// Resets the MainMenu state
+        /// Resets the LevelSelector state
         /// </summary>
         public void ResetState() {
             InitializeGameState();
         }
         /// <summary>
-        /// Updates the MainMenu state
+        /// Updates the LevelSelector state
         /// </summary>
         public void UpdateState() {
             foreach (Text button in menuButtons) {
@@ -81,7 +81,7 @@ namespace Breakout.BreakoutStates {
             menuButtons[activeMenuButton].SetColor(System.Drawing.Color.White);
         }
         /// <summary>
-        /// Renders the MainMenu state
+        /// Renders the LevelSelector state
         /// </summary>
         public void RenderState() {
             backGroundImage.RenderEntity();

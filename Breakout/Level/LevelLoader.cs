@@ -70,6 +70,9 @@ namespace Breakout.Levels {
                 legend.TryAdd(symbol, imgName);
             }
         }
+        /// <summary>
+        /// Reads the Meta data concerning the blocks.
+        /// </summary>
         private void ReadMeta() {
             for (int i = metaStart + 1; i < metaEnd; i++) {
                 string line = lines[i];

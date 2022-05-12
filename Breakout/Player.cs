@@ -17,6 +17,9 @@ namespace Breakout {
             entity = new Entity(shape, image);
             this.shape = shape;
         }
+        /// <summary>   
+        /// Moves the Player if final destination is within bounds.
+        /// </summary>
         public void Move() {
                 float moveSum = moveLeft + moveRight;
                 float upperBounds = shape.Position.X + moveSum + shape.Extent.X;
@@ -87,10 +90,16 @@ namespace Breakout {
         private void UpdateDirection() {
             float moveSum = moveLeft + moveRight;
             shape.ChangeDirection(new Vec2F (moveSum, 0.0f));
-        }        
+        }     
+        /// <summary>   
+        /// Returns the Player's X.Position 
+        /// </summary>   
         public float XPosition() {
             return shape.Position.X;
         }
+        /// <summary>   
+        /// Returns the Player's X.Direction
+        /// </summary>   
         public float BounceDirection() {
             return shape.Direction.X;
         }

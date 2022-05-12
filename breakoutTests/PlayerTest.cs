@@ -33,6 +33,8 @@ public class TestPlayer
     }
 
 
+    //Tests if the player have moved to the right, 
+    //from it's initial position, while moving right
     [Test]
     public void RightMoveTest() {
         tester.ProcessEvent(
@@ -45,6 +47,10 @@ public class TestPlayer
         Assert.Greater(tester.XPosition(), dummy.XPosition());
        
     } 
+    
+
+    //Tests if the player will be stopped, 
+    //when reaching right border, while moving right
     [Test]
     public void RightMoveRightBoundTest() {
         tester.ProcessEvent(
@@ -56,6 +62,9 @@ public class TestPlayer
         tester.Move();
         Assert.Less(tester.XPosition(), 1);
     }
+
+
+    //Tests if the player will stay on the right side of left border, while moving right
     [Test]
     public void RightMoveLeftBoundTest()  {
         tester.ProcessEvent(
@@ -68,6 +77,9 @@ public class TestPlayer
         Assert.GreaterOrEqual(tester.XPosition(), 0);
     }
     
+
+    //Tests in the Player will move left from it's initial position
+    //when moving left
     [Test]
     public void LeftMoveTest() {
         tester.ProcessEvent(
@@ -80,6 +92,9 @@ public class TestPlayer
         Assert.Less(tester.XPosition(), dummy.XPosition());
     }
     
+
+    //Tests if the player will be on the left side of right border
+    //when moving left
     [Test]
     public void LeftMoveRightBoundTest() {
         tester.ProcessEvent(
@@ -91,6 +106,10 @@ public class TestPlayer
         tester.Move();
         Assert.Less(tester.XPosition(), 1);
     }
+
+
+    //Tests if the player will be stopped, 
+    //when reaching left border, while moving left
     [Test]
     public void LeftMoveLeftBoundTest() {
         tester.ProcessEvent(
@@ -102,8 +121,13 @@ public class TestPlayer
         tester.Move();
         Assert.Greater(tester.XPosition(), 0);
     }
+
+
+    //Tests if the player will be stay in the initial position, when no functions is called
     [Test]
     public void NoMoveTest(){
         Assert.AreEqual(dummy.XPosition(), tester.XPosition());
     }
+
+
 }

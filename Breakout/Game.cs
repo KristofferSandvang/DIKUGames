@@ -18,10 +18,15 @@ namespace Breakout {
         public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
             stateMachine.ActiveState.HandleKeyEvent(action, key);
         }
-
+        /// <summary>   
+        /// Renders the active state of the game
+        /// </summary>
         public override void Render() {
             stateMachine.ActiveState.RenderState();
         }
+        /// <summary>   
+        /// Updates the active state of the game
+        /// </summary>
         public override void Update() {
             BreakoutBus.GetBus().ProcessEventsSequentially();
             stateMachine.ActiveState.UpdateState();

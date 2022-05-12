@@ -34,23 +34,47 @@ private StandardBlock tester;
             new ImageStride(80, ImageStride.CreateStrides(4,
             Path.Combine("Assets", "Images", "red-block.png"))));
     }
-[Test]
+
+
+    //Test that the StandardBlock is instaniziated at the full hp, 
+    //And that the StandardBlock is not dead if no damage was taken
+    [Test]
     public void NotHitTest() {
         Assert.AreEqual(tester.GetHP(), dummy.GetHP());
         Assert.False(tester.IsDead());
     }
-[Test]
+    
+
+    //Test that the StandardBlock has lost health after getting hit.
+    [Test]
     public void HitOnceTest() {
         tester.Hit();
-        Assert.AreEqual(tester.GetHP(), dummy.GetHP()-2);
-        Assert.False(tester.IsDead());
+        Assert.True(tester.GetHP()<dummy.GetHP());
     }
-[Test]
+    
+    
+    //Tests that the StandardBlock dies when hit enough times.
+    [Test]
     public void IsDeadTest() {
-        for (int i = 0; i <= 4; i++){
+        for (int i = 0; i <= 10000; i++){
             tester.Hit();
         }
         Assert.True(tester.IsDead());
     }
+    
 
+    //Tests that the StandardBlock is given a value property as per the requirements
+    [Test]
+    public void HasValue() {
+        Assert.True(tester.value != null);
+    }
+    
+    
+    //Tests that the StandardBlock is an entity, by testing that it has a shape
+    //Testing of Image is done by hand, when running the game
+    [Test]
+    public void IsEntity() {
+        Assert.True(tester.shape != null);
+    }
+    
 }

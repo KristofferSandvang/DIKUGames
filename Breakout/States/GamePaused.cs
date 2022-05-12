@@ -10,7 +10,7 @@ using System.IO;
 
 namespace Breakout.BreakoutStates {
     /// <summary>
-    /// A class of MainMenu, that contains all information needed for MainMenu to work.
+    /// A class of GamePaused, that contains all information needed for GamePaused to work.
     /// </summary>
     public class GamePaused : IGameState {
         private static GamePaused? instance = null;
@@ -45,7 +45,7 @@ namespace Breakout.BreakoutStates {
             return GamePaused.instance;
         }
         /// <summary>
-        /// Initialize the MainMenu-state 
+        /// Initialize the GamePaused-state 
         /// </summary>
         public void InitializeGameState() {
             menuButtons = new Text[] { 
@@ -61,13 +61,13 @@ namespace Breakout.BreakoutStates {
                 new Image(Path.Combine("Assets", "Images", "shipit_titlescreen.png")));
         }
         /// <summary>
-        /// Resets the MainMenu state
+        /// Resets the GamePaused state
         /// </summary>
         public void ResetState() {
             InitializeGameState();
         }
         /// <summary>
-        /// Updates the MainMenu state
+        /// Updates the GamePaused state
         /// </summary>
         public void UpdateState() {
             foreach (Text button in menuButtons) {
@@ -76,7 +76,7 @@ namespace Breakout.BreakoutStates {
             menuButtons[activeMenuButton].SetColor(System.Drawing.Color.White);
         }
         /// <summary>
-        /// Renders the MainMenu state
+        /// Renders the GamePaused state
         /// </summary>
         public void RenderState() {
             backGroundImage.RenderEntity();
