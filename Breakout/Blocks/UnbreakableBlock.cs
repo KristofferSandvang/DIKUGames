@@ -21,7 +21,7 @@ namespace Breakout.Blocks{
         }
         public UnbreakableBlock(DynamicShape Shape, IBaseImage image) : base(Shape, image) {
             hitPoints = 10;
-            value = 200;
+            value = 0;
             shape = Shape;
         }
     }

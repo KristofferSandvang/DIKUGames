@@ -36,5 +36,8 @@ namespace Breakout {
         public static void Render() {
             display.RenderText();
         }
+        public int GetScore(){
+            return score; 
+        }
     }
 }

@@ -15,11 +15,13 @@ using DIKUArcade.State;
 using Breakout;
 using Breakout.Levels;
 
+#pragma warning disable 8618
 namespace breakoutTests {
 
     public class LevelLoaderTest {
 
         private LevelLoader tester;
+        private Level testLevel; 
 
         //Makes a tester levelLoader from "level1.txt" 
         //and creates a variable testLevel from this using .CreateLevel()
@@ -28,7 +30,7 @@ namespace breakoutTests {
         
         Window.CreateOpenGLContext();
         tester = new LevelLoader("level1.txt");
-        var testLevel = tester.CreateLevel();
+        testLevel = tester.CreateLevel();
         }
 
 
@@ -41,20 +43,20 @@ namespace breakoutTests {
         //Testing that the correct time was read from the meta-data
         [Test]
         public void CorrectTime() {
-            Assert.True(testLevel.GetTime(),"300");
+            Assert.AreEqual(testLevel.GetTime(),"300");
         }
 
         //Testing that the correct name was read from the meta-data
         [Test]
         public void CorrectName() {
-            Assert.True(testLevel.GetName(),"LEVEL 1");
+            Assert.AreEqual(testLevel.GetName(),"LEVEL 1");
         }
 
 
         //Testing that the correct powerup symbol was read from the meta-data
         [Test]
         public void CorrectPowerUp() {
-            Assert.True(testLevel.GetPowerUp(),"2");
+            Assert.AreEqual(testLevel.GetPowerUp(),"2");
         }
     }
 }

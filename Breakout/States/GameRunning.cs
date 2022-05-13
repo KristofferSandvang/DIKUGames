@@ -21,12 +21,12 @@ namespace Breakout.BreakoutStates {
     public class GameRunning : IGameState {
         private static GameRunning? instance = null;
         private Player player;
-        private static Level level = levelLoaders[0].CreateLevel();
         private static LevelLoader[] levelLoaders = {
             new LevelLoader("test.txt"),
             new LevelLoader("level2.txt"),
             new LevelLoader("level3.txt"),
-        };       
+        }; 
+        private static Level level = levelLoaders[0].CreateLevel();      
         private EntityContainer<Ball> balls;
         private Score score; 
         /// <summary>
@@ -55,6 +55,7 @@ namespace Breakout.BreakoutStates {
             player = new Player(
                      new DynamicShape(new Vec2F(0.435f, 0.1f), new Vec2F(0.15f, 0.03f)),
                      new Image(Path.Combine("Assets", "Images", "player.png")));
+            score = new Score(new Vec2F(0.05f, 0.7f), new Vec2F(0.3f, 0.3f));
             BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
             balls = new EntityContainer<Ball>();
         }
@@ -81,7 +82,9 @@ namespace Breakout.BreakoutStates {
             Score.Render();
         }
         public static void ChangeLevel(int lvl) {
-            level = levelLoaders[lvl].CreateLevel();
+            if (lvl < levelLoaders.Length) {
+                level = levelLoaders[lvl].CreateLevel();
+            }
         }
         /// <summary>
         /// Creates and registers a new event of the GameEventType.InputEvent

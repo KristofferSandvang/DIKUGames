@@ -15,57 +15,68 @@ using DIKUArcade.State;
 using Breakout;
 using Breakout.Blocks; 
 #pragma warning disable 8618
-
 #pragma warning disable 0472
 namespace breakoutTests;
 
-public class StandardBlockTest {
+public class UnbreakableBlockTest {
 
-private StandardBlock dummy;
-private StandardBlock tester;
+private UnbreakableBlock dummy;
+private StandardBlock standardDummy; 
+private UnbreakableBlock tester;
 
 
     [SetUp]
     public void InitializeBlocks() {
         Window.CreateOpenGLContext();
-        dummy = new StandardBlock( 
+        dummy = new UnbreakableBlock( 
             new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new ImageStride(80, ImageStride.CreateStrides(4,
             Path.Combine("Assets", "Images", "red-block.png"))));
-        tester = new StandardBlock(
+        tester = new UnbreakableBlock(
+            new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
+            new ImageStride(80, ImageStride.CreateStrides(4,
+            Path.Combine("Assets", "Images", "red-block.png"))));
+        standardDummy = new StandardBlock(
             new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new ImageStride(80, ImageStride.CreateStrides(4,
             Path.Combine("Assets", "Images", "red-block.png"))));
     }
 
-
-    //Test that the StandardBlock is instaniziated at the full hp, 
-    //And that the StandardBlock is not dead if no damage was taken
+    //Test that the UnbreakableBlock is instaniziated at the full hp, 
+    //And that the UnbreakableBlock is not detected as dead at this point.
     [Test]
-    public void NotHitTest() {
+    public void InitialHPTest() {
         Assert.AreEqual(tester.GetHP(), dummy.GetHP());
         Assert.False(tester.IsDead());
     }
-    
 
-    //Test that the StandardBlock has lost health after getting hit.
+    //Test that the UnbreakableBlock loses no health after getting hit.
     [Test]
-    public void HitOnceTest() {
+    public void NoDamageTest() {
         tester.Hit();
-        Assert.True(tester.GetHP()<dummy.GetHP());
+        Assert.AreEqual(tester.GetHP(),dummy.GetHP());
     }
-    
-    
-    //Tests that the StandardBlock dies when hit enough times.
+
+    //Tests that the UnbreakableBlock takes less damage (as it should take none)
+    //But the standard block does take damage
     [Test]
-    public void IsDeadTest() {
+    public void LessDamageTest() {
+        Assert.AreEqual(tester.GetHP(),standardDummy.GetHP());
+        tester.Hit();
+        standardDummy.Hit();
+        Assert.Greater(tester.hitPoints, standardDummy.hitPoints);
+    }
+
+    //Tests that the UnbreakableBlock never dies and has taken no damage
+    [Test]
+    public void IsNotDeadTest() {
         for (int i = 0; i <= 10000; i++){
             tester.Hit();
         }
-        Assert.True(tester.IsDead());
+        Assert.False(tester.IsDead());
+        Assert.AreEqual(tester.GetHP(), dummy.GetHP());; 
     }
     
-
     //Tests that the StandardBlock is given a value property as per the requirements
     [Test]
     public void HasValue() {
@@ -79,5 +90,4 @@ private StandardBlock tester;
     public void IsEntity() {
         Assert.True(tester.shape != null);
     }
-    
 }

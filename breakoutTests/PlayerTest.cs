@@ -13,11 +13,12 @@ using System.Collections.Generic;
 using DIKUArcade.Events;
 using DIKUArcade.State;
 using Breakout;
+#pragma warning disable 8618
 
 namespace breakoutTests;
 
-public class TestPlayer
-{
+public class TestPlayer {
+
     private Player dummy;
     private Player tester;
     [SetUp]

@@ -19,6 +19,9 @@ namespace Breakout.Blocks {
         /// Returns true if the block is dead and false if not.
         /// </returns> 
         public abstract bool IsDead();
+        public int GetHP() {
+            return hitPoints; 
+        }
         
         public void Dead() {
             if (IsDead()) {
