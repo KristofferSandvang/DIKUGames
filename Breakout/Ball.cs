@@ -48,17 +48,15 @@ namespace Breakout {
         /// </summary>  
         ///<param name="blocks"> An EntityContainer of blocks that exists within the game </param>
         private void CollideBlock(EntityContainer<BreakoutBlock> blocks)  {
-            blocks.Iterate( block => {
+            blocks.Iterate( (EntityContainer<BreakoutBlock>.IteratorMethod)(block => {
                 if (CollisionDetection.Aabb(shape.AsDynamicShape(), block.shape).Collision) {
                     block.Hit();
-                    if (block.Dead()) {
-                        block.DeleteEntity();
-                    }
-                    float noise = (float) rand.NextDouble() / 1000.0f;
+                    block.Dead();
+                    float noise = (float)rand.NextDouble() / 1000.0f;
                     shape.Direction.Y = shape.Direction.Y * -1.0f;
                     shape.Direction.X = shape.Direction.X + noise;
                 }
-            });
+            }));
         }
         /// <summary>   
         /// Handles what happens when a Ball collides with a player

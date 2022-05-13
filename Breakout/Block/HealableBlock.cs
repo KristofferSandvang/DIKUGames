@@ -31,7 +31,7 @@ namespace Breakout.Blocks{
         /// <returns>
         /// Returns true if the block is dead and false if not.
         /// </returns> 
-        public override bool Dead() {
+        public override bool IsDead() {
             if (hitPoints <= 0) {
                 Score.AddScore(value);
                 return true;

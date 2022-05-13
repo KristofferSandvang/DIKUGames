@@ -16,7 +16,7 @@ namespace Breakout.Blocks{
         /// <returns>
         /// Returns true if the block is dead and false if not.
         /// </returns> 
-        public override bool Dead() {
+        public override bool IsDead() {
             return false;
         }
         public UnbreakableBlock(DynamicShape Shape, IBaseImage image) : base(Shape, image) {
