@@ -47,6 +47,19 @@ namespace Breakout {
         /// Handles what happens when a Ball collides with a block
         /// </summary>  
         ///<param name="blocks"> An EntityContainer of blocks that exists within the game </param>
+        /*private void CollideBlock(EntityContainer<BreakoutBlock> blocks)  {
+            blocks.Iterate( (EntityContainer<BreakoutBlock>.IteratorMethod)(block => {
+                var data = CollisionDetection.Aabb(shape.AsDynamicShape(), block.shape);
+                if (data.Collision && data.CollisionDir == CollisionDirection.CollisionDirDown) {
+                    block.Hit();
+                    block.Dead();
+                    float noise = (float)rand.NextDouble() / 1000.0f;
+                    shape.Direction.Y = shape.Direction.Y * -1.0f;
+                    shape.Direction.X = shape.Direction.X + noise;
+                } 
+            }));
+        
+        }*/
         private void CollideBlock(EntityContainer<BreakoutBlock> blocks)  {
             blocks.Iterate( (EntityContainer<BreakoutBlock>.IteratorMethod)(block => {
                 if (CollisionDetection.Aabb(shape.AsDynamicShape(), block.shape).Collision) {
@@ -81,8 +94,11 @@ namespace Breakout {
         /// Moves the ball, by calling all of the collide functions
         /// </summary>  
         public void Move(EntityContainer<BreakoutBlock> blocks, Player player) {
-            Collide(blocks, player);
             shape.Move();
+            Collide(blocks, player);
         }
-    }
+        public DynamicShape GetShape() {
+            return shape;
+        }
+    }   
 }

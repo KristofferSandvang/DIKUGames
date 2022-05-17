@@ -7,6 +7,7 @@ using DIKUArcade.Utilities;
 namespace Breakout.Blocks {
     public class BreakoutBlockFactory {
         public BreakoutBlockFactory() {}
+
         public static BreakoutBlock Create(BlockType blockType, string imgName, Vec2F pos) {
             string fileName = Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", imgName);
             switch (blockType) {
