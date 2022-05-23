@@ -122,7 +122,8 @@ namespace Breakout.BreakoutStates {
                         BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent {
                                 EventType = GameEventType.GameStateEvent,
-                                Message = "LevelSelector",
+                                Message = "SwitchState",
+                                StringArg1 = "LevelSelector"
                             }
                         );
                     } else if (activeMenuButton == 1){

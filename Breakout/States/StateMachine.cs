@@ -33,6 +33,9 @@ namespace Breakout.BreakoutStates {
                     break;
             }
         }
+        private void SwitchToMenu() {
+
+        }
         /// <summary>
         /// Processes a GameEvent based on the GameEvent.Message
         /// </summary>
@@ -42,17 +45,10 @@ namespace Breakout.BreakoutStates {
         public void ProcessEvent(GameEvent gameEvent) {
             if (gameEvent.EventType == GameEventType.GameStateEvent) {
                 switch (gameEvent.Message) {
-                    case "GamePaused":
-                        SwitchState(StateTransformer.TransformStringToState("GamePaused"));
+                    case "SwitchState":
+                        SwitchState(StateTransformer.TransformStringToState(gameEvent.StringArg1));
                         break; 
-                    case "GameRunning":
-                        SwitchState(StateTransformer.TransformStringToState("GameRunning"));
-                        break;
-                    case "LevelSelector":
-                        SwitchState(StateTransformer.TransformStringToState("LevelSelector"));
-                        break;
-                    case "MainMenu":
-                        SwitchState(StateTransformer.TransformStringToState("MainMenu"));
+                    default:
                         break;
                 }
             }

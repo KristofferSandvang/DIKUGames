@@ -120,7 +120,8 @@ namespace Breakout.BreakoutStates {
                     BreakoutBus.GetBus().RegisterEvent(
                         new GameEvent {
                             EventType = GameEventType.GameStateEvent,
-                            Message = "GamePaused",
+                            Message = "SwitchState",
+                            StringArg1 = "GamePaused",
                         } );
                     break;
                 case KeyboardKey.Space:

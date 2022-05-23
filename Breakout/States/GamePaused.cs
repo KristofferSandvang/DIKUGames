@@ -122,14 +122,16 @@ namespace Breakout.BreakoutStates {
                         BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent {
                                 EventType = GameEventType.GameStateEvent,
-                                Message = "GameRunning",
+                                Message = "SwitchState",
+                                StringArg1 = "GameRunning", 
                             }
                         );
                     } else if (activeMenuButton == 1){
                          BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent {
                                 EventType = GameEventType.GameStateEvent,
-                                Message = "MainMenu",
+                                Message = "SwitchState",
+                                StringArg1 = "MainMenu", 
                             }
                         );
                     }

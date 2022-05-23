@@ -127,7 +127,8 @@ namespace Breakout.BreakoutStates {
                         BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent {
                                 EventType = GameEventType.GameStateEvent,
-                                Message = "GameRunning",
+                                Message = "SwitchState",
+                                StringArg1 = "GameRunning", 
                             }
                         );
                         GameRunning.ChangeLevel(0);
@@ -135,7 +136,8 @@ namespace Breakout.BreakoutStates {
                          BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent {
                                 EventType = GameEventType.GameStateEvent,
-                                Message = "GameRunning",
+                                Message = "SwitchState",
+                                StringArg1 = "GameRunning"
                             }
                         );
                         GameRunning.ChangeLevel(1);
@@ -143,7 +145,8 @@ namespace Breakout.BreakoutStates {
                          BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent {
                                 EventType = GameEventType.GameStateEvent,
-                                Message = "GameRunning",
+                                Message = "SwitchState",
+                                StringArg1 = "GameRunning"
                             }
                         );
                         GameRunning.ChangeLevel(2);
@@ -151,7 +154,8 @@ namespace Breakout.BreakoutStates {
                         BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent {
                                 EventType = GameEventType.GameStateEvent,
-                                Message = "MainMenu",
+                                Message = "SwitchState",
+                                StringArg1 = "MainMenu"
                             }
                         );
                     }
