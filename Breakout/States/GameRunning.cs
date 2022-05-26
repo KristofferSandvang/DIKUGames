@@ -44,10 +44,10 @@ namespace Breakout.BreakoutStates {
             player = new Player(
                      new DynamicShape(new Vec2F(0.435f, 0.1f), new Vec2F(0.15f, 0.03f)),
                      new Image(Path.Combine("Assets", "Images", "player.png")));
-            score = new Score(new Vec2F(0.05f, 0.7f), new Vec2F(0.3f, 0.3f));
-            BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
-            BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
+            score = new Score(new Vec2F(0.0f, 0.7f), new Vec2F(0.3f, 0.3f));
             balls = new EntityContainer<Ball>();
+            BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
+            BreakoutBus.GetBus().Subscribe(GameEventType.StatusEvent, score);
         }
         /// <summary>
         /// Initializes the GameRunning GameState
@@ -56,7 +56,7 @@ namespace Breakout.BreakoutStates {
             player = new Player(
                      new DynamicShape(new Vec2F(0.435f, 0.1f), new Vec2F(0.15f, 0.03f)),
                      new Image(Path.Combine("Assets", "Images", "player.png")));
-            score = new Score(new Vec2F(0.05f, 0.7f), new Vec2F(0.3f, 0.3f));
+            score = new Score(new Vec2F(0.0f, 0.7f), new Vec2F(0.3f, 0.3f));
             BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
             balls = new EntityContainer<Ball>();
         }
@@ -71,7 +71,8 @@ namespace Breakout.BreakoutStates {
         /// </summary>
         public void UpdateState() {
             player.Move();
-            balls.Iterate(ball => {ball.Move(level.GetEC(), player);}); 
+            balls.Iterate(ball => {ball.Move(level.GetEC(), player);});
+            score.Update(); 
         }
         /// <summary>
         /// Renders the elements
@@ -80,7 +81,7 @@ namespace Breakout.BreakoutStates {
             level.Render();
             player.Render();
             balls.RenderEntities();
-            Score.Render();
+            score.Render();
         }
         public static void ChangeLevel(int lvl) {
             if (lvl < levelLoaders.Length) {

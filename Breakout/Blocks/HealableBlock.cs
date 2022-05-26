@@ -1,11 +1,12 @@
+/*using DIKUArcade.Timers;
+using static DIKUArcade.Events.TimedGameEvent;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using System.Collections.Generic;
 using System.IO;
-/*using DIKUArcade.Timers;
-using static DIKUArcade.Events.TimedGameEvent;*/
+*/
 
-#pragma warning disable 0108
+/*#pragma warning disable 0108
 
 namespace Breakout.Blocks{
     public class HealableBlock : BreakoutBlock {
@@ -45,5 +46,4 @@ namespace Breakout.Blocks{
             if (eventExpired){hitPoints += hitPoints;}
             //if TimeGameEvent has expired then increment hp
         }*/
-    }
-}
+

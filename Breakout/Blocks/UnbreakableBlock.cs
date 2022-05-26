@@ -1,5 +1,6 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
+using DIKUArcade.Events;
 using System.Collections.Generic;
 using System.IO;
 
@@ -8,20 +9,21 @@ namespace Breakout.Blocks{
         /// <summary>
         /// Determines what happens with a block when hit.
         /// </summary>
-        public override void Hit() {
-        }
-        /// <summary>
-        /// Determines whether the ball is dead or not
-        /// </summary>
-        /// <returns>
-        /// Returns true if the block is dead and false if not.
-        /// </returns> 
-        public override bool IsDead() {
-            return false;
+        public override void Hit() {}
+        public override bool IsDead(){
+             if (hitPoints <= 0) {
+                BreakoutBus.GetBus().RegisterEvent(
+                    new GameEvent{
+                        EventType = GameEventType.StatusEvent,
+                        Message = "AddPoints",
+                        IntArg1 = value,
+                    });
+                return true;
+            } else {return false;}
         }
         public UnbreakableBlock(DynamicShape Shape, IBaseImage image) : base(Shape, image) {
             hitPoints = 10;
-            value = 0;
+            value = 100;
             shape = Shape;
         }
     }

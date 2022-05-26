@@ -4,18 +4,13 @@ using DIKUArcade.Events;
 using DIKUArcade.Input;
 using Breakout.BreakoutStates;
 
-using System.Collections.Generic;
-using System.IO;
-using System;
-using DIKUArcade.Utilities;
-
 namespace Breakout {
     public class Game : DIKUGame, IGameEventProcessor {
         private StateMachine stateMachine;
         public Game(WindowArgs windowArgs) : base(windowArgs) {
             stateMachine = new StateMachine();
             BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent,
-            GameEventType.PlayerEvent, GameEventType.GameStateEvent });
+            GameEventType.PlayerEvent, GameEventType.GameStateEvent, GameEventType.StatusEvent});
             window.SetKeyEventHandler(HandleKeyEvent);
             BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, this);
             BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, stateMachine);

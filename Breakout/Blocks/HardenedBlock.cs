@@ -1,12 +1,24 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
-using System.Collections.Generic;
-using System.IO;
+using DIKUArcade.Events;
+
 
 namespace Breakout.Blocks{
     public class HardenedBlock : BreakoutBlock {
         private IBaseImage Broken;
         private int maxHP;
+        
+        public override bool IsDead(){
+             if (hitPoints <= 0) {
+                BreakoutBus.GetBus().RegisterEvent(
+                    new GameEvent{
+                        EventType = GameEventType.StatusEvent,
+                        Message = "AddPoints",
+                        IntArg1 = value,
+                    });
+                return true;
+            } else {return false;}
+        }
         /// <summary>
         /// Determines what happens with a block when hit.
         /// </summary>
@@ -14,26 +26,9 @@ namespace Breakout.Blocks{
             hitPoints -= 2; 
             if (hitPoints < maxHP * 0.5) {Image = Broken;}
         }
-        /// <summary>
-        /// Determines whether the ball is dead or not
-        /// </summary>
-        /// <returns>
-        /// Returns true if the block is dead and false if not.
-        /// </returns> 
-        public override bool IsDead() {
-            if(hitPoints <= 0) {
-                //Score.AddScore(value);
-                return true;
-            }
-            return false;
-        }
-        /*public void Broken() {
-            if (hitPoints < maxHitPoints/2) {return true;}
-            return false; 
-        }*/
         public HardenedBlock(DynamicShape Shape, IBaseImage image, IBaseImage brokenImage) : base(Shape, image) {
             hitPoints = 10;
-            value = 200;
+            value = 400;
             Broken = brokenImage;
             maxHP = hitPoints;
         }

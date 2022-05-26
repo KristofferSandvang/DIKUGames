@@ -6,8 +6,8 @@ namespace Breakout {
     /// <summary>   
     /// A class to keep track of the current score in the game
     /// </summary>
-    public class Score {
-        private static Text display;
+    public class Score : IGameEventProcessor {
+        private Text display;
         private static int score = 0;
         public Score(Vec2F position, Vec2F extent) {
             display = new Text ("Score: "+score.ToString(), position, extent);
@@ -17,26 +17,48 @@ namespace Breakout {
         /// <summary>   
         /// Adds val to the current Score
         /// </summary>
-        public static void AddScore(int val) {
+        private void AddScore(int val) {
             if (score + val >= 0) {
-            score = score + val; 
-            display.SetText("Score: " + score);
+                score += val; 
             }
         }
         /// <summary>   
         /// Resets the score
         /// </summary>
-        public static void ResetScore() {
-            score = 0; 
+        private void ResetScore() {
+            score = 0;
+        }
+        /// <summary>   
+        /// Updates the score
+        /// </summary>
+        public void Update() {
+            display.SetText("Score: " + score); 
         }
         /// <summary>   
         /// Renders the score
         /// </summary>
-        public static void Render() {
+        public void Render() {
             display.RenderText();
         }
+        /// <summary>   
+        /// Gets the score
+        /// </summary>
         public int GetScore(){
             return score; 
+        }
+        public void ProcessEvent (GameEvent gameEvent) {
+            if (gameEvent.EventType == GameEventType.StatusEvent) {
+                switch (gameEvent.Message) {
+                    case "AddPoints":
+                        AddScore(gameEvent.IntArg1);
+                        break;
+                    case "ResetScore":
+                        ResetScore();
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
     }
 }
