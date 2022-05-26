@@ -61,7 +61,7 @@ namespace Breakout {
         
         }*/
         private void CollideBlock(EntityContainer<BreakoutBlock> blocks)  {
-            blocks.Iterate( (EntityContainer<BreakoutBlock>.IteratorMethod)(block => {
+            blocks.Iterate( (EntityContainer<BreakoutBlock>.IteratorMethod) (block => {
                 if (CollisionDetection.Aabb(shape.AsDynamicShape(), block.shape).Collision) {
                     block.Hit();
                     block.Dead();

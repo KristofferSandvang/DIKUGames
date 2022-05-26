@@ -177,17 +177,6 @@ namespace Breakout.BreakoutStates {
                     break;
             }
         }
-        /*public void ProcessEvent(GameEvent gameEvent) {
-            if (gameEvent.EventType == GameEventType.GameStateEvent) {
-                switch (gameEvent.Message) {
-                    case "GameRunning":
-                        ChangeLevel(gameEvent.IntArg1);
-                    break;
-                    default:
-                    break;
-                }
-            }
-        }*/
     }
 }
 
