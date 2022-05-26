@@ -13,7 +13,6 @@ namespace Breakout.BreakoutStates {
     /// A class of GameRunning, that contains all information needed for the game to run.
     /// </summary>
     public class GameRunning : IGameState {
-        private static GameRunning? instance = null;
         private Player player;
         private static LevelLoader[] levelLoaders = {
             new LevelLoader("test.txt"),
@@ -24,16 +23,6 @@ namespace Breakout.BreakoutStates {
         private EntityContainer<Ball> balls;
         private Score score; 
         private GameTime timer;
-        /// <summary>
-        /// Gets the instance of GameRunning
-        /// </summary>
-        public static GameRunning GetInstance() {
-            if (instance == null) {
-                GameRunning.instance = new GameRunning();
-                GameRunning.instance.InitializeGameState();
-            }
-            return GameRunning.instance;
-        }
         
         public GameRunning() {
             player = new Player(
@@ -47,22 +36,25 @@ namespace Breakout.BreakoutStates {
 
         }
         /// <summary>
-        /// Initializes the GameRunning GameState
-        /// </summary>
-        public void InitializeGameState() {
-            player = new Player(
-                     new DynamicShape(new Vec2F(0.435f, 0.1f), new Vec2F(0.15f, 0.03f)),
-                     new Image(Path.Combine("Assets", "Images", "player.png")));
-            score = new Score(new Vec2F(0.0f, 0.7f), new Vec2F(0.3f, 0.3f));
-            balls = new EntityContainer<Ball>();
-            timer = new GameTime(level.GetTime());
-
-        }
-        /// <summary>
         /// Resets the GameState
         /// </summary>
         public void ResetState() {
-            InitializeGameState();
+            Console.WriteLine("RESET");
+            BreakoutBus.GetBus().Unsubscribe(GameEventType.StatusEvent, score);
+            BreakoutBus.GetBus().Unsubscribe(GameEventType.PlayerEvent, player);
+            player = new Player(
+                     new DynamicShape(new Vec2F(0.435f, 0.1f), new Vec2F(0.15f, 0.03f)),
+                     new Image(Path.Combine("Assets", "Images", "player.png")));
+
+            
+            score = new Score(new Vec2F(0.0f, 0.7f), new Vec2F(0.3f, 0.3f));
+            score.ResetScore();
+
+            balls = new EntityContainer<Ball>();
+            timer = new GameTime(level.GetTime());
+
+            BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
+            BreakoutBus.GetBus().Subscribe(GameEventType.StatusEvent, score);
         }
         /// <summary>
         /// Updates the elements
@@ -124,6 +116,7 @@ namespace Breakout.BreakoutStates {
                             Message = "SwitchState",
                             StringArg1 = "GamePaused",
                         } );
+                        StaticTimer.PauseTimer();
                     break;
                 case KeyboardKey.Space:
                     balls.AddEntity(

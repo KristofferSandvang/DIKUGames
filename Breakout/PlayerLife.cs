@@ -27,7 +27,6 @@ namespace Breakout {
             lives = Entities.Count - 1;
         }
         private void LoseLife() {
-            Console.WriteLine(lives);
             if (lives >= 1) {
                 Entities.RemoveAt(Entities.Count - 1);
                 lives = Entities.Count - 1;

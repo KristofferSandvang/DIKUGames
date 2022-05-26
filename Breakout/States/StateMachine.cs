@@ -1,5 +1,6 @@
 using DIKUArcade.Events;
 using DIKUArcade.State;
+using DIKUArcade.Timers;
 using System;
 
 namespace Breakout.BreakoutStates {
@@ -21,28 +22,39 @@ namespace Breakout.BreakoutStates {
         private void SwitchState(GameStateType stateType) {
             switch (stateType) {
                 case GameStateType.MainMenu:
-                    ActiveState = MainMenu.GetInstance();
+                    States[0].ResetState();
+                    ActiveState = States[0];
                     break;
-                case GameStateType.GameRunning:
-                    ActiveState = GameRunning.GetInstance();
-                    break;
+
                 case GameStateType.LevelSelector:
-                    ActiveState = LevelSelector.GetInstance();
+                    States[1].ResetState();
+                    ActiveState = States[1];
                     break;
+
+                case GameStateType.GameRunning:
+                    if (ActiveState is GamePaused) {
+                        StaticTimer.ResumeTimer();
+                        ActiveState = States[2];
+                    } else {
+                        States[2].ResetState();
+                        ActiveState = States[2];
+                    }
+                    break;
+                
                 case GameStateType.GamePaused:
-                    ActiveState = GamePaused.GetInstance();
+                    States[3].ResetState();
+                    ActiveState = States[3];
                     break;
-                case GameStateType.GameWin:
-                    ActiveState = GameWin.GetInstance();
-                    break;
+
                 case GameStateType.GameOver:
-                    ActiveState = GameOver.GetInstance();
+                    States[4].ResetState();
+                    ActiveState = States[4];
                     break;
-            }
-        }
-        public void ResetStates() {
-            foreach (IGameState state in States) {
-                state.ResetState();
+                
+                case GameStateType.GameWin:
+                    States[5].ResetState();
+                    ActiveState = States[5];
+                    break;
             }
         }
         /// <summary>

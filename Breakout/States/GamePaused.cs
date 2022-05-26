@@ -13,7 +13,6 @@ namespace Breakout.BreakoutStates {
     /// A class of GamePaused, that contains all information needed for GamePaused to work.
     /// </summary>
     public class GamePaused : IGameState {
-        private static GamePaused? instance = null;
         private Entity backGroundImage;
         private Text[] menuButtons;
         private int activeMenuButton;
@@ -35,36 +34,14 @@ namespace Breakout.BreakoutStates {
             activeMenuButton = 0;
         }
         /// <summary>
-        /// Gets the instance of GameRunning
-        /// </summary>
-        public static GamePaused GetInstance() {
-            if (GamePaused.instance == null) {
-                GamePaused.instance = new GamePaused();
-                GamePaused.instance.InitializeGameState();
-            }
-            return GamePaused.instance;
-        }
-        /// <summary>
-        /// Initialize the GamePaused-state 
-        /// </summary>
-        public void InitializeGameState() {
-            menuButtons = new Text[] { 
-                new Text("Continue", new Vec2F(0.45f, 0.4f), new Vec2F(0.2f, 0.2f)),
-                new Text("Main Menu", new Vec2F(0.45f, 0.2f), new Vec2F(0.2f, 0.2f)),
-            };
-            foreach (var button in menuButtons) {
-                button.SetColor(System.Drawing.Color.White);
-                button.SetFontSize(50);
-            }
-            backGroundImage = new Entity(
-                new StationaryShape(new Vec2F(0f, 0f), new Vec2F(1f, 1f)), 
-                new Image(Path.Combine("Assets", "Images", "shipit_titlescreen.png")));
-        }
-        /// <summary>
         /// Resets the GamePaused state
         /// </summary>
         public void ResetState() {
-            InitializeGameState();
+            activeMenuButton = 0;
+            foreach (Text button in menuButtons) {
+                button.SetColor(System.Drawing.Color.Blue);
+            }
+            menuButtons[activeMenuButton].SetColor(System.Drawing.Color.White);
         }
         /// <summary>
         /// Updates the GamePaused state

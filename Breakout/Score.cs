@@ -25,7 +25,7 @@ namespace Breakout {
         /// <summary>   
         /// Resets the score
         /// </summary>
-        private void ResetScore() {
+        public void ResetScore() {
             score = 0;
         }
         /// <summary>   
@@ -51,9 +51,6 @@ namespace Breakout {
                 switch (gameEvent.Message) {
                     case "AddPoints":
                         AddScore(gameEvent.IntArg1);
-                        break;
-                    case "ResetScore":
-                        ResetScore();
                         break;
                     default:
                         break;
