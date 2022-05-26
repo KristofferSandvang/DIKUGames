@@ -8,9 +8,8 @@ namespace Breakout {
     /// </summary>
     public class Score {
         private static Text display;
-        private static int score;
+        private static int score = 0;
         public Score(Vec2F position, Vec2F extent) {
-            score = 0;
             display = new Text ("Score: "+score.ToString(), position, extent);
             display.SetColor(System.Drawing.Color.White);
             display.SetFontSize(30);
@@ -21,7 +20,7 @@ namespace Breakout {
         public static void AddScore(int val) {
             if (score + val >= 0) {
             score = score + val; 
-            display.SetText("Score: "+score.ToString());
+            display.SetText("Score: " + score);
             }
         }
         /// <summary>   

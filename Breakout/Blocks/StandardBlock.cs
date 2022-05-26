@@ -18,7 +18,7 @@ namespace Breakout.Blocks {
         /// Determines what happens with a block when hit.
         /// </summary>
         public override void Hit() {
-           hitPoints -= 5;
+           hitPoints -= 10;
         }
         /// <summary>
         /// Determines whether the ball is dead or not

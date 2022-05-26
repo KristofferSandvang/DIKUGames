@@ -4,6 +4,11 @@ using DIKUArcade.Events;
 using DIKUArcade.Input;
 using Breakout.BreakoutStates;
 
+using System.Collections.Generic;
+using System.IO;
+using System;
+using DIKUArcade.Utilities;
+
 namespace Breakout {
     public class Game : DIKUGame, IGameEventProcessor {
         private StateMachine stateMachine;

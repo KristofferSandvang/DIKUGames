@@ -10,69 +10,83 @@ using Breakout;
 
 namespace Breakout.BreakoutStates {
     /// <summary>
-    /// A class of LevelSelector, that contains all information needed for LevelSelector to work.
+    /// A class of MainMenu, that contains all information needed for MainMenu to work.
     /// </summary>
-    public class LevelSelector : IGameState {
-        private static LevelSelector? instance = null;
+    public class GameWin : IGameState {
+        private static GameWin? instance = null;
         private Entity backGroundImage;
         private Text[] menuButtons;
+        private Text HeadLine;
         private int activeMenuButton;
         private int maxMenuButtons;
-        public LevelSelector() {
-            menuButtons = new Text[] { 
-                new Text("Level 1", new Vec2F(0.45f, 0.2f), new Vec2F(0.4f, 0.4f)),
-                new Text("Level 2", new Vec2F(0.45f, 0.1f), new Vec2F(0.4f, 0.4f)),
-                new Text("Level 3", new Vec2F(0.45f, 0.0f), new Vec2F(0.4f, 0.4f)),
-                new Text("Back", new Vec2F(0.45f, -0.1f), new Vec2F(0.4f, 0.4f)),
+        private Score score;
+        private Text yourScore;
 
+        public GameWin() {
+            menuButtons = new Text[] {
+                new Text("Quit Game", new Vec2F(0.45f, 0.2f), new Vec2F(0.2f, 0.2f)),
+                new Text("Main Menu", new Vec2F(0.45f, 0.1f), new Vec2F(0.2f, 0.2f))
             };
             foreach (var button in menuButtons) {
-                button.SetColor(System.Drawing.Color.Blue);
+                button.SetColor(System.Drawing.Color.Yellow);
                 button.SetFontSize(50);
             }
+            HeadLine = new Text("You Won!", new Vec2F(0.4f, 0.4f), new Vec2F(0.5f, 0.5f));
+            HeadLine.SetColor(System.Drawing.Color.Yellow);
+            HeadLine.SetFontSize(100);
+
+            score = new Score(new Vec2F(0.4f, 0.5f), new Vec2F(0.3f, 0.3f));
+            yourScore = new Text(string.Format("Your score is " + score.GetScore()), 
+                                 new Vec2F(0.4f, 0.5f), new Vec2F(0.3f, 0.3f));
+            yourScore.SetColor(System.Drawing.Color.Yellow);
+            yourScore.SetFontSize(75);
             backGroundImage = new Entity(
                 new StationaryShape(new Vec2F(0f, 0f), new Vec2F(1f, 1f)), 
-                new Image(Path.Combine("Assets", "Images", "BreakoutTitleScreen.png")));
+                new Image(Path.Combine("Assets", "Images", "SpaceBackground.png")));
+
             maxMenuButtons = menuButtons.Length;
             activeMenuButton = 0;
         }
+
         /// <summary>
-        /// Gets the instance of LevelSelector
+        /// Gets the instance of GameWin
         /// </summary>
-        public static LevelSelector GetInstance() {
-            if (LevelSelector.instance == null) {
-                LevelSelector.instance = new LevelSelector();
-                LevelSelector.instance.InitializeGameState();
+        public static GameWin GetInstance() {
+            if (GameWin.instance == null) {
+                GameWin.instance = new GameWin();
+                GameWin.instance.InitializeGameState();
             }
-            return LevelSelector.instance;
+            return GameWin.instance;
         }
         /// <summary>
-        /// Initialize the LevelSelector-state 
+        /// Initialize the GameWin-state 
         /// </summary>
         public void InitializeGameState() {
-            menuButtons = new Text[] { 
-                new Text("Level 1", new Vec2F(0.45f, 0.2f), new Vec2F(0.4f, 0.4f)),
-                new Text("Level 2", new Vec2F(0.45f, 0.1f), new Vec2F(0.4f, 0.4f)),
-                new Text("Level 3", new Vec2F(0.45f, 0.0f), new Vec2F(0.4f, 0.4f)),
-                new Text("Back", new Vec2F(0.45f, -0.1f), new Vec2F(0.4f, 0.4f)),
-
+            menuButtons = new Text[] {
+                new Text("Quit Game", new Vec2F(0.45f, 0.2f), new Vec2F(0.2f, 0.2f)),
+                new Text("Main Menu", new Vec2F(0.45f, 0.1f), new Vec2F(0.2f, 0.2f))
             };
             foreach (var button in menuButtons) {
-                button.SetColor(System.Drawing.Color.Blue);
+                button.SetColor(System.Drawing.Color.Yellow);
                 button.SetFontSize(50);
             }
+            HeadLine = new Text("You Won!", new Vec2F(0.4f, 0.4f), new Vec2F(0.5f, 0.5f));
+            HeadLine.SetColor(System.Drawing.Color.Yellow);
+            HeadLine.SetFontSize(100);
+
             backGroundImage = new Entity(
                 new StationaryShape(new Vec2F(0f, 0f), new Vec2F(1f, 1f)), 
-                new Image(Path.Combine("Assets", "Images", "BreakoutTitleScreen.png")));
+                new Image(Path.Combine("Assets", "Images", "SpaceBackground.png")));
         }
+
         /// <summary>
-        /// Resets the LevelSelector state
+        /// Resets the WinGame state
         /// </summary>
         public void ResetState() {
             InitializeGameState();
         }
         /// <summary>
-        /// Updates the LevelSelector state
+        /// Updates the WinGame state
         /// </summary>
         public void UpdateState() {
             foreach (Text button in menuButtons) {
@@ -81,13 +95,15 @@ namespace Breakout.BreakoutStates {
             menuButtons[activeMenuButton].SetColor(System.Drawing.Color.White);
         }
         /// <summary>
-        /// Renders the LevelSelector state
+        /// Renders the WinGame state
         /// </summary>
         public void RenderState() {
             backGroundImage.RenderEntity();
             foreach (var button in menuButtons) {
                 button.RenderText();
             }
+            HeadLine.RenderText();
+            yourScore.RenderText();
         } 
         /// <summary>
         /// Handles a key based on the KeyBoardAction and KeyBoardKey
@@ -112,13 +128,13 @@ namespace Breakout.BreakoutStates {
         /// </param>
         private void KeyRelease(KeyboardKey key) {
             switch (key) {
-                case KeyboardKey.Up:
-                    if (activeMenuButton != 0) {
+                 case KeyboardKey.Up:
+                    if (activeMenuButton == 1) {
                         activeMenuButton -= 1;
                     }
                     break;
                 case KeyboardKey.Down:
-                    if (activeMenuButton != maxMenuButtons - 1) {
+                    if (activeMenuButton == 0) {
                         activeMenuButton += 1;
                     }
                     break;
@@ -126,36 +142,17 @@ namespace Breakout.BreakoutStates {
                     if (activeMenuButton == 0) {
                         BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent {
-                                EventType = GameEventType.GameStateEvent,
-                                Message = "SwitchState",
-                                StringArg1 = "GameRunning", 
+                                EventType = GameEventType.InputEvent,
+                                Message = "Close",
                             }
                         );
-                        GameRunning.ChangeLevel(0);
-                    } else if (activeMenuButton == 1) {
+                    }
+                    else if (activeMenuButton == 1) {
                          BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent {
                                 EventType = GameEventType.GameStateEvent,
                                 Message = "SwitchState",
-                                StringArg1 = "GameRunning"
-                            }
-                        );
-                        GameRunning.ChangeLevel(1);
-                    } else if (activeMenuButton == 2) {
-                         BreakoutBus.GetBus().RegisterEvent(
-                            new GameEvent {
-                                EventType = GameEventType.GameStateEvent,
-                                Message = "SwitchState",
-                                StringArg1 = "GameRunning"
-                            }
-                        );
-                        GameRunning.ChangeLevel(2);
-                    } else if (activeMenuButton == 3) {
-                        BreakoutBus.GetBus().RegisterEvent(
-                            new GameEvent {
-                                EventType = GameEventType.GameStateEvent,
-                                Message = "SwitchState",
-                                StringArg1 = "GameWin"
+                                StringArg1 = "MainMenu"
                             }
                         );
                     }
@@ -171,8 +168,6 @@ namespace Breakout.BreakoutStates {
             }
         }
 
-
     }
 }
-
 

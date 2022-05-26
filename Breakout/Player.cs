@@ -13,9 +13,11 @@ namespace Breakout {
         private float moveSpeed = 0.01f;
         private Entity entity;
         public DynamicShape shape;
+        public PlayerLife Lives;
         public Player(DynamicShape shape, IBaseImage image) {
             entity = new Entity(shape, image);
             this.shape = shape;
+            Lives = new PlayerLife();
         }
         /// <summary>   
         /// Moves the Player if final destination is within bounds.
@@ -34,6 +36,7 @@ namespace Breakout {
         /// </summary>
         public void Render() {
             entity.RenderEntity();
+            Lives.Render();
         }
         
         /// <summary>
@@ -56,6 +59,12 @@ namespace Breakout {
                         break;
                     case "stopMoveRight":
                         SetMoveRight(false);
+                        break;
+                    case "LoseLife":
+                        Lives.ProcessEvent(gameEvent);
+                        break;
+                    case "GainLife":
+                        Lives.ProcessEvent(gameEvent);
                         break;
                 }
             }

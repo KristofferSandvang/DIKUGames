@@ -31,6 +31,12 @@ namespace Breakout.BreakoutStates {
                 case GameStateType.GamePaused:
                     ActiveState = GamePaused.GetInstance();
                     break;
+                case GameStateType.GameWin:
+                    ActiveState = GameWin.GetInstance();
+                    break;
+                case GameStateType.GameOver:
+                    ActiveState = GameOver.GetInstance();
+                    break;
             }
         }
         private void SwitchToMenu() {

@@ -3,6 +3,7 @@ using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using Breakout.Blocks;
 using DIKUArcade.Physics;
+using DIKUArcade.Events;
 using System;
 namespace Breakout {
 
@@ -86,11 +87,17 @@ namespace Breakout {
         /// Removes the ball if its Y position is less that 0.0f
         /// </summary>  
         private void Remove() {
-            if (shape.Position.Y <= 0.0f) {
+            if (shape.Position.Y == 0.0f) {
                 DeleteEntity();
+                BreakoutBus.GetBus().RegisterEvent(
+                    new GameEvent {
+                        EventType = GameEventType.PlayerEvent,
+                        Message = "LoseLife",
+                    }
+                );
             }
         }
-        /// <summary>   
+        /// <summary>  
         /// Moves the ball, by calling all of the collide functions
         /// </summary>  
         public void Move(EntityContainer<BreakoutBlock> blocks, Player player) {

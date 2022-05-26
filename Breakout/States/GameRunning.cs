@@ -46,6 +46,7 @@ namespace Breakout.BreakoutStates {
                      new Image(Path.Combine("Assets", "Images", "player.png")));
             score = new Score(new Vec2F(0.05f, 0.7f), new Vec2F(0.3f, 0.3f));
             BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
+            BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
             balls = new EntityContainer<Ball>();
         }
         /// <summary>
