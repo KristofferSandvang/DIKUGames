@@ -43,9 +43,7 @@ namespace Breakout.BreakoutStates {
             balls = new EntityContainer<Ball>();
             BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
             BreakoutBus.GetBus().Subscribe(GameEventType.StatusEvent, score);
-            Console.WriteLine(StaticTimer.GetElapsedSeconds());
-            timer = new GameTime(10.0);
-            Console.WriteLine(StaticTimer.GetElapsedSeconds());
+            timer = new GameTime(level.GetTime());
 
         }
         /// <summary>
@@ -56,8 +54,9 @@ namespace Breakout.BreakoutStates {
                      new DynamicShape(new Vec2F(0.435f, 0.1f), new Vec2F(0.15f, 0.03f)),
                      new Image(Path.Combine("Assets", "Images", "player.png")));
             score = new Score(new Vec2F(0.0f, 0.7f), new Vec2F(0.3f, 0.3f));
-            BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
             balls = new EntityContainer<Ball>();
+            timer = new GameTime(level.GetTime());
+
         }
         /// <summary>
         /// Resets the GameState
@@ -84,10 +83,9 @@ namespace Breakout.BreakoutStates {
             score.Render();
             timer.Render();
         }
+        
         public static void ChangeLevel(int lvl) {
-            if (lvl < levelLoaders.Length) {
-                level = levelLoaders[lvl].CreateLevel();
-            }
+            level = levelLoaders[lvl].CreateLevel();
         }
         /// <summary>
         /// Creates and registers a new event of the GameEventType.InputEvent

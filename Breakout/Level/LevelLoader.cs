@@ -122,7 +122,7 @@ namespace Breakout.Levels {
         /// </summary>
         public Level CreateLevel() {
             string Name = "";
-            string Time = "10000";
+            double Time = -1.0;
             string PowerUp = "-";
             EntityContainer<BreakoutBlock> Blocks = ReadMap();
 
@@ -133,7 +133,7 @@ namespace Breakout.Levels {
                 }
                 if (lines[i].Contains("Time:")) {
                     int index = lines[i].IndexOf(' ');
-                    Time = lines[i].Substring(index + 1);
+                    Time = Double.Parse(lines[i].Substring(index + 1));
                 }
                 if (lines[i].Contains("PowerUp:")) {
                     int index = lines[i].IndexOf(' ');

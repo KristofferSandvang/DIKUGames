@@ -43,7 +43,7 @@ namespace breakoutTests {
         //Testing that the correct time was read from the meta-data
         [Test]
         public void CorrectTime() {
-            Assert.AreEqual(testLevel.GetTime(),"300");
+            Assert.AreEqual(testLevel.GetTime(),300);
         }
 
         //Testing that the correct name was read from the meta-data

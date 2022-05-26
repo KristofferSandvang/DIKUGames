@@ -5,11 +5,12 @@ using System;
 namespace Breakout.BreakoutStates {
     public class StateMachine : IGameEventProcessor {
         public IGameState ActiveState { get; private set; }
+        private IGameState[] States = { new MainMenu(), new LevelSelector(), new GameRunning(),
+                                       new GamePaused(), new GameOver(), new GameWin() };
         public StateMachine() {
-
             BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
             BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, this);
-            ActiveState = MainMenu.GetInstance();
+            ActiveState = States[0];
         }
         /// <summary>
         /// Switches the current state
@@ -39,8 +40,10 @@ namespace Breakout.BreakoutStates {
                     break;
             }
         }
-        private void SwitchToMenu() {
-
+        public void ResetStates() {
+            foreach (IGameState state in States) {
+                state.ResetState();
+            }
         }
         /// <summary>
         /// Processes a GameEvent based on the GameEvent.Message

@@ -4,22 +4,16 @@ using Breakout.Blocks;
 namespace Breakout.Levels {
 
     public class Level{
-        private string time;
+        private double time;
         private string name;
         private string powerUp;
         private EntityContainer<BreakoutBlock> blocks;
-        public Level(string Name, string Time, string PowerUp, 
+        public Level(string Name, double Time, string PowerUp, 
                      EntityContainer<BreakoutBlock> Blocks) {
             time = Time;
             name = Name;
             powerUp = PowerUp;
             blocks = Blocks;
-        }
-        public Level() {
-            time = "";
-            name = "";
-            powerUp = "";
-            blocks = new EntityContainer<BreakoutBlock>();
         }
         /// <summary>
         /// Renders the level
@@ -33,7 +27,7 @@ namespace Breakout.Levels {
         public string GetPowerUp() {
             return powerUp;
         }
-        public string GetTime() {
+        public double GetTime() {
             return time;
         }
         public string GetName() {

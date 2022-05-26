@@ -17,8 +17,7 @@ namespace Breakout {
         public void Update() {
             double timePassed = StaticTimer.GetElapsedSeconds();
             int val = (int) (time - timePassed);
-            
-                timeDisplay.SetText(val.ToString());
+            timeDisplay.SetText(val.ToString());
             if (val <= 0) {
                 BreakoutBus.GetBus().RegisterEvent(
                     new GameEvent {
