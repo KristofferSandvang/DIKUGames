@@ -39,7 +39,6 @@ namespace Breakout.BreakoutStates {
         /// Resets the GameState
         /// </summary>
         public void ResetState() {
-            Console.WriteLine("RESET");
             BreakoutBus.GetBus().Unsubscribe(GameEventType.StatusEvent, score);
             BreakoutBus.GetBus().Unsubscribe(GameEventType.PlayerEvent, player);
             player = new Player(
@@ -75,7 +74,17 @@ namespace Breakout.BreakoutStates {
             score.Render();
             timer.Render();
         }
-        
+        public void DidIWin() {
+            if (level.GetEC().CountEntities() == 0) {
+                BreakoutBus.GetBus().RegisterEvent(
+                    new GameEvent {
+                            EventType = GameEventType.GameStateEvent,
+                            Message = "SwitchState",
+                            StringArg1 = "GameWin",
+                    }
+                );
+            }
+        }
         public static void ChangeLevel(int lvl) {
             level = levelLoaders[lvl].CreateLevel();
         }
@@ -119,12 +128,14 @@ namespace Breakout.BreakoutStates {
                         StaticTimer.PauseTimer();
                     break;
                 case KeyboardKey.Space:
-                    balls.AddEntity(
-                        new Ball(
-                            new DynamicShape( new Vec2F(player.XPosition() + player.shape.Extent.X/2, 0.1f),
-                            new Vec2F(0.008f, 0.021f), new Vec2F(0.0f, 0.01f)),
-                            new Image(Path.Combine("Assets", "Images", "ball.png"))));
-                    break;
+                    if (balls.CountEntities() == 0) {
+                        balls.AddEntity(
+                            new Ball(
+                                new DynamicShape( new Vec2F(player.XPosition() + 
+                                                  player.shape.Extent.X/2, 0.1f),
+                                new Vec2F(0.008f, 0.021f), new Vec2F(0.0f, 0.01f)),
+                                new Image(Path.Combine("Assets", "Images", "ball.png"))));
+                    } break;
             }
         }
         /// <summary>

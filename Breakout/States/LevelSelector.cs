@@ -130,7 +130,7 @@ namespace Breakout.BreakoutStates {
                             new GameEvent {
                                 EventType = GameEventType.GameStateEvent,
                                 Message = "SwitchState",
-                                StringArg1 = "GameWin"
+                                StringArg1 = "MainMenu"
                             }
                         );
                     }
