@@ -4,6 +4,7 @@ using DIKUArcade.Entities;
 using DIKUArcade.Input;
 using DIKUArcade.Math;
 using DIKUArcade.Events;
+using DIKUArcade.Timers;
 using System.IO;
 using Breakout;
 
@@ -47,6 +48,7 @@ namespace Breakout.BreakoutStates {
 
             maxMenuButtons = menuButtons.Length;
             activeMenuButton = 0;
+            Console.WriteLine(StaticTimer.GetElapsedSeconds());
         }
 
         /// <summary>

@@ -1,14 +1,8 @@
-using System;
-using System.IO;
-using DIKUArcade;
-using DIKUArcade.GUI;
+using DIKUArcade.Timers;
 using DIKUArcade.Input;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using DIKUArcade.Physics;
-using System.Security.Principal;
-using System.Collections.Generic;
 using DIKUArcade.Events;
 using DIKUArcade.State;
 using Breakout;
@@ -29,6 +23,7 @@ namespace Breakout.BreakoutStates {
         private static Level level = levelLoaders[0].CreateLevel();      
         private EntityContainer<Ball> balls;
         private Score score; 
+        private GameTime timer;
         /// <summary>
         /// Gets the instance of GameRunning
         /// </summary>
@@ -48,6 +43,10 @@ namespace Breakout.BreakoutStates {
             balls = new EntityContainer<Ball>();
             BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
             BreakoutBus.GetBus().Subscribe(GameEventType.StatusEvent, score);
+            Console.WriteLine(StaticTimer.GetElapsedSeconds());
+            timer = new GameTime(10.0);
+            Console.WriteLine(StaticTimer.GetElapsedSeconds());
+
         }
         /// <summary>
         /// Initializes the GameRunning GameState
@@ -73,6 +72,7 @@ namespace Breakout.BreakoutStates {
             player.Move();
             balls.Iterate(ball => {ball.Move(level.GetEC(), player);});
             score.Update(); 
+            timer.Update();
         }
         /// <summary>
         /// Renders the elements
@@ -82,6 +82,7 @@ namespace Breakout.BreakoutStates {
             player.Render();
             balls.RenderEntities();
             score.Render();
+            timer.Render();
         }
         public static void ChangeLevel(int lvl) {
             if (lvl < levelLoaders.Length) {
