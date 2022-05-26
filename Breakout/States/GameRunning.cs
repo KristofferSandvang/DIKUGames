@@ -22,18 +22,21 @@ namespace Breakout.BreakoutStates {
         private static Level level = levelLoaders[0].CreateLevel();      
         private EntityContainer<Ball> balls;
         private Score score; 
+        private GameControl controller;
         private GameTime timer;
         
         public GameRunning() {
             player = new Player(
                      new DynamicShape(new Vec2F(0.435f, 0.1f), new Vec2F(0.15f, 0.03f)),
                      new Image(Path.Combine("Assets", "Images", "player.png")));
+
             score = new Score(new Vec2F(0.0f, 0.7f), new Vec2F(0.3f, 0.3f));
             balls = new EntityContainer<Ball>();
+            timer = new GameTime(level.GetTime());
+            controller = new GameControl();
+
             BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
             BreakoutBus.GetBus().Subscribe(GameEventType.StatusEvent, score);
-            timer = new GameTime(level.GetTime());
-
         }
         /// <summary>
         /// Resets the GameState
@@ -63,6 +66,7 @@ namespace Breakout.BreakoutStates {
             balls.Iterate(ball => {ball.Move(level.GetEC(), player);});
             score.Update(); 
             timer.Update();
+            controller.GameOver(timer, player, level.GetEC());
         }
         /// <summary>
         /// Renders the elements
@@ -73,17 +77,6 @@ namespace Breakout.BreakoutStates {
             balls.RenderEntities();
             score.Render();
             timer.Render();
-        }
-        public void DidIWin() {
-            if (level.GetEC().CountEntities() == 0) {
-                BreakoutBus.GetBus().RegisterEvent(
-                    new GameEvent {
-                            EventType = GameEventType.GameStateEvent,
-                            Message = "SwitchState",
-                            StringArg1 = "GameWin",
-                    }
-                );
-            }
         }
         public static void ChangeLevel(int lvl) {
             level = levelLoaders[lvl].CreateLevel();

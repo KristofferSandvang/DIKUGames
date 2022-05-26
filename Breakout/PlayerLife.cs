@@ -11,34 +11,25 @@ namespace Breakout {
     /// A subclass of Entity, containing information about Player.
     /// </summary>
     public class PlayerLife : IGameEventProcessor {
+        private static string fileName = Path.Combine(FileIO.GetProjectPath(), 
+                                        "Assets", "Images", "heart_filled.png");
         private int lives;
         private List<Entity> Entities;
-
         public PlayerLife() {
             Entities = new List<Entity> ();
             
             for (int i = 0; i < 3; i++) {
-                string fileName = Path.Combine(FileIO.GetProjectPath(), 
-                                    "Assets", "Images", "heart_filled.png");
                 Entities.Add(new Entity(
                     new StationaryShape(new Vec2F(0.0f + i * 0.0125f , 0.0f), new Vec2F(0.025f, 0.025f)),
                     new Image(fileName)));
             }
-            lives = Entities.Count - 1;
+            lives = Entities.Count;
         }
         private void LoseLife() {
             if (lives >= 1) {
                 Entities.RemoveAt(Entities.Count - 1);
-                lives = Entities.Count - 1;
-            } else if (lives == 0) {
-                BreakoutBus.GetBus().RegisterEvent(
-                    new GameEvent {
-                        EventType = GameEventType.GameStateEvent,
-                        Message = "SwitchState",
-                        StringArg1 = "GameOver",
-                    }
-                );
-            }
+                lives = Entities.Count;
+            } 
         }
         private void GainLife() {
             int index = Entities.Count - 1;
@@ -52,6 +43,9 @@ namespace Breakout {
             foreach (Entity life in Entities) {
                 life.RenderEntity();
             }
+        }
+        public int LivesLeft() {
+            return lives;
         }
 
         public void ProcessEvent (GameEvent gameEvent) {

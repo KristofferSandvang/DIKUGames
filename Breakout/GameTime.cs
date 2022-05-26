@@ -1,11 +1,10 @@
 using DIKUArcade.Timers;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using DIKUArcade.Events;
 namespace Breakout {
     public class GameTime {
-        double time;
-        Text timeDisplay;
+        public double time { get; private set;}
+        private Text timeDisplay;
         public GameTime(double Time) {
             StaticTimer.RestartTimer();
             time = Time;
@@ -15,21 +14,16 @@ namespace Breakout {
         }
 
         public void Update() {
-            double timePassed = StaticTimer.GetElapsedSeconds();
-            int val = (int) (time - timePassed);
-            timeDisplay.SetText(val.ToString());
-            if (val <= 0) {
-                BreakoutBus.GetBus().RegisterEvent(
-                    new GameEvent {
-                            EventType = GameEventType.GameStateEvent,
-                            Message = "SwitchState",
-                            StringArg1 = "GameOver",
-                    } 
-                );
+            if (time != -1.0) {
+                double timePassed = StaticTimer.GetElapsedSeconds();
+                int val = (int) (time - timePassed);
+                timeDisplay.SetText(val.ToString());
             }
         }
         public void Render() {
-            timeDisplay.RenderText();
+            if (time != -1.0) {
+                timeDisplay.RenderText();
+            }
         }
     }
 }

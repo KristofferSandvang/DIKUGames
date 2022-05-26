@@ -28,7 +28,7 @@ Map/
 
 Meta:
 Name: LEVEL 1
-Time: 300
+Time: 60
 Hardened: %
 PowerUp: 2
 Meta/
