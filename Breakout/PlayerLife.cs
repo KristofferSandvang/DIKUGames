@@ -24,24 +24,21 @@ namespace Breakout {
                     new StationaryShape(new Vec2F(0.0f + i * 0.0125f , 0.0f), new Vec2F(0.025f, 0.025f)),
                     new Image(fileName)));
             }
-            lives = 3;
+            lives = Entities.Count - 1;
         }
         private void LoseLife() {
-            Console.WriteLine("NoB");
-            if (lives != 0) {
-                lives -= 1;
-                Console.WriteLine(lives);
-                if (lives >= 1) {
-                    Entities.RemoveAt(Entities.Count - 1);
-                } else if (lives == 0) {
-                    BreakoutBus.GetBus().RegisterEvent(
-                        new GameEvent {
-                            EventType = GameEventType.GameStateEvent,
-                            Message = "SwitchState",
-                            StringArg1 = "GameOver",
-                        }
-                    );
-                }
+            Console.WriteLine(lives);
+            if (lives >= 1) {
+                Entities.RemoveAt(Entities.Count - 1);
+                lives = Entities.Count - 1;
+            } else if (lives == 0) {
+                BreakoutBus.GetBus().RegisterEvent(
+                    new GameEvent {
+                        EventType = GameEventType.GameStateEvent,
+                        Message = "SwitchState",
+                        StringArg1 = "GameOver",
+                    }
+                );
             }
         }
         private void GainLife() {
@@ -64,7 +61,7 @@ namespace Breakout {
                     case "LoseLife":
                         LoseLife();
                         break;
-                    case "noobs":
+                    case "GainLife":
                         GainLife();
                         break;
                     default:

@@ -87,7 +87,7 @@ namespace Breakout {
         /// Removes the ball if its Y position is less that 0.0f
         /// </summary>  
         private void Remove() {
-            if (shape.Position.Y == 0.0f) {
+            if (shape.Position.Y <= 0.0f) {
                 DeleteEntity();
                 BreakoutBus.GetBus().RegisterEvent(
                     new GameEvent {

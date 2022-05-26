@@ -36,10 +36,11 @@ namespace Breakout.BreakoutStates {
             HeadLine.SetFontSize(100);
 
             score = new Score(new Vec2F(0.4f, 0.5f), new Vec2F(0.3f, 0.3f));
-            yourScore = new Text(string.Format("Your score is " + score.GetScore()), 
-                                 new Vec2F(0.4f, 0.5f), new Vec2F(0.3f, 0.3f));
+            yourScore = new Text(string.Format("Your score: " + score.GetScore()), 
+                                 new Vec2F(0.40f, 0.5f), new Vec2F(0.3f, 0.3f));
             yourScore.SetColor(System.Drawing.Color.Yellow);
-            yourScore.SetFontSize(75);
+            yourScore.SetFontSize(60);
+
             backGroundImage = new Entity(
                 new StationaryShape(new Vec2F(0f, 0f), new Vec2F(1f, 1f)), 
                 new Image(Path.Combine("Assets", "Images", "SpaceBackground.png")));
