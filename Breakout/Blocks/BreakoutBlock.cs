@@ -9,6 +9,7 @@ namespace Breakout.Blocks {
         public DynamicShape shape;
         public int value {get; protected set;}
         public int hitPoints {get; protected set; }
+        public bool PowerUp {get; protected set; }
         /// <summary>
         /// Determines what happens with a block when hit.
         /// </summary>
@@ -32,9 +33,9 @@ namespace Breakout.Blocks {
                 DeleteEntity();
             }
         }
-
         public BreakoutBlock(DynamicShape Shape, IBaseImage image) : base(Shape, image) {
             shape = Shape;
+            PowerUp = false;
         }
     }
 }
