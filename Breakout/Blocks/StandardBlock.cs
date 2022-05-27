@@ -7,7 +7,7 @@ using System.IO;
 namespace Breakout.Blocks {
     public class StandardBlock : BreakoutBlock {
 
-        public StandardBlock(DynamicShape Shape, IBaseImage image) : base(Shape, image) {
+        public StandardBlock(DynamicShape Shape, IBaseImage image, bool powerUp) : base(Shape, image, powerUp) {
             hitPoints = 10;
             value = 100;
         }

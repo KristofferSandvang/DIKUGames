@@ -56,7 +56,7 @@ namespace breakoutTests {
         //Testing that the correct powerup symbol was read from the meta-data
         [Test]
         public void CorrectPowerUp() {
-            Assert.AreEqual(testLevel.GetPowerUp(),"2");
+            Assert.AreEqual(testLevel.GetPowerUp(),'2');
         }
     }
 }

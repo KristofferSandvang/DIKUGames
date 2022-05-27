@@ -1,6 +1,7 @@
 using DIKUArcade.Entities;
 using Breakout.Blocks;
 using DIKUArcade.Events;
+using DIKUArcade.Timers;
 namespace Breakout {
     public class GameControl {
 
@@ -24,7 +25,7 @@ namespace Breakout {
             }
         }
         private bool TimeOut(GameTime Time) {
-            if (Time.time == 0) {
+            if (Time.timeRemaining <= 0) {
                 return true;
             } else {return false;}
         }

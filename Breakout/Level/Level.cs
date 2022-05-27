@@ -6,9 +6,9 @@ namespace Breakout.Levels {
     public class Level{
         private double time;
         private string name;
-        private string powerUp;
+        private char powerUp;
         private EntityContainer<BreakoutBlock> blocks;
-        public Level(string Name, double Time, string PowerUp, 
+        public Level(string Name, double Time, char PowerUp, 
                      EntityContainer<BreakoutBlock> Blocks) {
             time = Time;
             name = Name;
@@ -24,7 +24,7 @@ namespace Breakout.Levels {
         public EntityContainer<BreakoutBlock> GetEC() {
             return blocks;
         }
-        public string GetPowerUp() {
+        public char GetPowerUp() {
             return powerUp;
         }
         public double GetTime() {

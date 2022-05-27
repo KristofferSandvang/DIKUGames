@@ -17,6 +17,7 @@ namespace Breakout.Levels {
         private int legendStart = 0;
         private int legendEnd = 0;
         private string fileName;
+        private char powerUp;
         private string[] lines;
         private Dictionary<char, string> legend;
         private Dictionary<char, BlockType> meta;
@@ -97,19 +98,23 @@ namespace Breakout.Levels {
         /// </returns>
         private EntityContainer<BreakoutBlock> ReadMap() {
             EntityContainer<BreakoutBlock> Blocks = new EntityContainer<BreakoutBlock>();
+            bool power = false;
             for (int line = mapStart + 1; line < mapEnd; line++) {
                 for (int block = 0; block < 12; block++) {
+
                     if (lines[line][block] != '-') {
+                        if (powerUp == lines[line][block]) {power = true;}
                         string imgName = legend[lines[line][block]];
                         Vec2F pos = new Vec2F(0.0f + block * 0.08f, 1f - (line - 1) * 0.04f);
+
                         if (meta.ContainsKey(lines[line][block])) {
                             Blocks.AddEntity(BreakoutBlockFactory.Create(meta[lines[line][block]],
-                                                                         imgName, pos));
+                                                                         imgName, pos, power));
                         } else {
                             Blocks.AddEntity(
                                 new StandardBlock(new DynamicShape(pos, new Vec2F(0.08f, 0.04f)),
                                 new Image(Path.Combine(FileIO.GetProjectPath(),
-                                          "Assets", "Images", imgName))));
+                                          "Assets", "Images", imgName)), power));
                         }
                     }  
                 }  
@@ -123,8 +128,7 @@ namespace Breakout.Levels {
         public Level CreateLevel() {
             string Name = "";
             double Time = -1.0;
-            string PowerUp = "-";
-            EntityContainer<BreakoutBlock> Blocks = ReadMap();
+            char PowerUp = '-';
 
             for (int i = metaStart + 1; i < metaEnd; i++) {
                 if (lines[i].Contains("Name:")) {
@@ -137,9 +141,13 @@ namespace Breakout.Levels {
                 }
                 if (lines[i].Contains("PowerUp:")) {
                     int index = lines[i].IndexOf(' ');
-                    PowerUp = lines[i].Substring(index + 1);
+                    powerUp = lines[i][index + 1];
+                    PowerUp = powerUp;
                 }
             } 
+
+            EntityContainer<BreakoutBlock> Blocks = ReadMap();
+
             return new Level(Name, Time, PowerUp, Blocks);
         }        
     }

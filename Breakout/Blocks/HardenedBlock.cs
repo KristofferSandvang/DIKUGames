@@ -26,7 +26,7 @@ namespace Breakout.Blocks{
             hitPoints -= 2; 
             if (hitPoints < maxHP * 0.5) {Image = Broken;}
         }
-        public HardenedBlock(DynamicShape Shape, IBaseImage image, IBaseImage brokenImage) : base(Shape, image) {
+        public HardenedBlock(DynamicShape Shape, IBaseImage image, IBaseImage brokenImage, bool powerUp) : base(Shape, image, powerUp) {
             hitPoints = 10;
             value = 400;
             Broken = brokenImage;
