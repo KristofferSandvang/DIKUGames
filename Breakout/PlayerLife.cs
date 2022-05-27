@@ -32,12 +32,14 @@ namespace Breakout {
             } 
         }
         private void GainLife() {
-            int index = Entities.Count - 1;
+            int index = Entities.Count;
             string fileName = Path.Combine(FileIO.GetProjectPath(), "Assets", "Images",
                 "heart_filled.png");
             Vec2F pos = new Vec2F(0.0f + index * 0.0125f , 0.0f);
+
             Entities.Add(new Entity(
                     new StationaryShape(pos, new Vec2F(0.025f, 0.025f)), new Image(fileName)));
+            lives = Entities.Count;
         }
         public void Render() {
             foreach (Entity life in Entities) {

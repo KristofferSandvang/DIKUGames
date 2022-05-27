@@ -37,6 +37,8 @@ namespace Breakout.BreakoutStates {
 
             BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
             BreakoutBus.GetBus().Subscribe(GameEventType.StatusEvent, score);
+            BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, controller);
+            BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, timer);
         }
         /// <summary>
         /// Resets the GameState
@@ -44,6 +46,8 @@ namespace Breakout.BreakoutStates {
         public void ResetState() {
             BreakoutBus.GetBus().Unsubscribe(GameEventType.StatusEvent, score);
             BreakoutBus.GetBus().Unsubscribe(GameEventType.PlayerEvent, player);
+            BreakoutBus.GetBus().Unsubscribe(GameEventType.ControlEvent, controller);
+            BreakoutBus.GetBus().Unsubscribe(GameEventType.ControlEvent, timer);
             player = new Player(
                      new DynamicShape(new Vec2F(0.435f, 0.1f), new Vec2F(0.15f, 0.03f)),
                      new Image(Path.Combine("Assets", "Images", "player.png")));
@@ -51,12 +55,14 @@ namespace Breakout.BreakoutStates {
             
             score = new Score(new Vec2F(0.0f, 0.7f), new Vec2F(0.3f, 0.3f));
             score.ResetScore();
-
+            controller = new GameControl();
             balls = new EntityContainer<Ball>();
             timer = new GameTime(level.GetTime());
 
+            BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, controller);
             BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
             BreakoutBus.GetBus().Subscribe(GameEventType.StatusEvent, score);
+            BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, timer);
         }
         /// <summary>
         /// Updates the elements
@@ -67,6 +73,7 @@ namespace Breakout.BreakoutStates {
             score.Update(); 
             timer.Update();
             controller.GameOver(timer, player, level.GetEC());
+            controller.Update(player);
         }
         /// <summary>
         /// Renders the elements
@@ -77,6 +84,7 @@ namespace Breakout.BreakoutStates {
             balls.RenderEntities();
             score.Render();
             timer.Render();
+            controller.Render();
         }
         public static void ChangeLevel(int lvl) {
             level = levelLoaders[lvl].CreateLevel();

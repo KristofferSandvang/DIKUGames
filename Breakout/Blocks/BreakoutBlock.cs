@@ -33,7 +33,13 @@ namespace Breakout.Blocks {
             if (IsDead()) {
                 DeleteEntity();
                 if (powerUp) {
-                    PowerUpFactory.SpawnPowerUp(this);
+                    BreakoutBus.GetBus().RegisterEvent(
+                        new GameEvent {
+                            EventType = GameEventType.ControlEvent,
+                            Message = "SpawnPowerUp",
+                            ObjectArg1 = this,
+                        }
+                    );
                 }
             }
         }

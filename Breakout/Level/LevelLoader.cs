@@ -98,10 +98,9 @@ namespace Breakout.Levels {
         /// </returns>
         private EntityContainer<BreakoutBlock> ReadMap() {
             EntityContainer<BreakoutBlock> Blocks = new EntityContainer<BreakoutBlock>();
-            bool power = false;
             for (int line = mapStart + 1; line < mapEnd; line++) {
                 for (int block = 0; block < 12; block++) {
-
+                    bool power = false;
                     if (lines[line][block] != '-') {
                         if (powerUp == lines[line][block]) {power = true;}
                         string imgName = legend[lines[line][block]];

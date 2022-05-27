@@ -14,6 +14,9 @@ namespace Breakout.PowerUps {
         /// </summary>
         public void Move() {
             shape.Move();
+            if (shape.Position.Y < 0.0f) {
+                DeleteEntity();
+            }
         }
         public void Render(){
             RenderEntity();
@@ -21,7 +24,7 @@ namespace Breakout.PowerUps {
         public PowerUp(DynamicShape Shape, IBaseImage image) : base(Shape, image){
             shape = Shape;
             shape.Direction.X = 0.0f;
-            shape.Direction.Y = 0.001f;
+            shape.Direction.Y = -0.005f;
         }
     }
 }

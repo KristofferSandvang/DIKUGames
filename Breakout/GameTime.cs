@@ -1,8 +1,9 @@
 using DIKUArcade.Timers;
 using DIKUArcade.Graphics;
+using DIKUArcade.Events;
 using DIKUArcade.Math;
 namespace Breakout {
-    public class GameTime {
+    public class GameTime : IGameEventProcessor {
         public double timeRemaining { get; private set;}
         private Text timeDisplay;
         private double totalTime;
@@ -28,5 +29,19 @@ namespace Breakout {
                 timeDisplay.RenderText();
             }
         }
+        private void AddTime() {
+            totalTime += 10.0;
+            int val = (int) (totalTime - StaticTimer.GetElapsedSeconds());
+            timeRemaining = (double) val;
+        }
+        public void ProcessEvent(GameEvent gameEvent) {
+            if (gameEvent.EventType == GameEventType.ControlEvent) {
+                switch (gameEvent.Message) {
+                    case "MoreTime":
+                        AddTime();
+                        break;
+                }
+            }
+        } 
     }
 }
