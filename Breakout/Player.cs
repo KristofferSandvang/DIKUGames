@@ -11,6 +11,7 @@ namespace Breakout {
         private float moveLeft = 0.0f; 
         private float moveRight = 0.0f; 
         private float moveSpeed = 0.01f;
+        private float width;
         private Entity entity;
         public DynamicShape shape;
         public PlayerLife Lives;
@@ -18,6 +19,7 @@ namespace Breakout {
             entity = new Entity(shape, image);
             this.shape = shape;
             Lives = new PlayerLife();
+            width = shape.Extent.X;
         }
         /// <summary>   
         /// Moves the Player if final destination is within bounds.
@@ -66,8 +68,23 @@ namespace Breakout {
                     case "GainLife":
                         Lives.ProcessEvent(gameEvent);
                         break;
+                    case "ExtraWidth":
+                        MoreWidth();
+                        break;
+                    case "NormalWidth":
+                        NormalWidth();
+                        break;
                 }
             }
+        }
+        private void MoreWidth() {
+            shape.Extent.X = shape.Extent.X + shape.Extent.X;
+            if (shape.Position.X + shape.Extent.X > 1.0f) {
+                shape.Position.X = 1.0f - shape.Extent.X;
+            }
+        }
+        private void NormalWidth() {
+            shape.Extent.X = width;
         }
         /// <summary>
         /// If true, sets moveLeft to -movespeed 

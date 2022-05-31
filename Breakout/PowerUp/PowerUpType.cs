@@ -3,5 +3,6 @@ namespace Breakout.PowerUps {
         ExtraLife,
         ExtraTime,
         PlayerSpeed,
+        ExtraWidth,
     }
 }

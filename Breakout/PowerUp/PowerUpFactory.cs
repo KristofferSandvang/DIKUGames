@@ -11,6 +11,8 @@ namespace Breakout.PowerUps {
             Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "LifePickUp.png"));
         private static IBaseImage extraTimeImg = new Image (
             Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "ClockPickUp.png"));
+        private static IBaseImage extraWidthImg = new Image (
+            Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "WidePowerUp.png"));
         public static PowerUp SpawnPowerUp(Vec2F pos, PowerUpType powerUpType) {
             switch (powerUpType) {
                 case PowerUpType.ExtraLife: 
@@ -23,10 +25,15 @@ namespace Breakout.PowerUps {
                         new DynamicShape(pos, new Vec2F(0.05f, 0.05f)),
                         PowerUpFactory.extraTimeImg);
                     return MoreTime;
+                case PowerUpType.ExtraWidth:
+                    PowerUp ExtraWidth = new ExtraWidth(
+                        new DynamicShape(pos, new Vec2F(0.05f, 0.05f)),
+                        PowerUpFactory.extraWidthImg);
+                    return ExtraWidth;
                 default: 
                     PowerUp fjol = new ExtraLife(
                         new DynamicShape(pos, new Vec2F(0.025f, 0.025f)),
-                        PowerUpFactory.extraTimeImg);
+                        PowerUpFactory.extraLifeImg);
                     return fjol;
             }
             

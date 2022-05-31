@@ -9,7 +9,7 @@ namespace Breakout {
         private EntityContainer<PowerUp> powerUps;
         private Random rand;
         private PowerUpType[] powers = {PowerUpType.ExtraLife, PowerUpType.ExtraTime,
-            PowerUpType.PlayerSpeed};
+            PowerUpType.PlayerSpeed, PowerUpType.ExtraWidth};
         public GameControl() {
             powerUps = new EntityContainer<PowerUp>();
             rand = new Random();
@@ -34,7 +34,7 @@ namespace Breakout {
             }
         }
         public void ProcessEvent(GameEvent gameEvent) {
-            PowerUpType powerUp = powers[rand.Next(powers.Length - 1)];
+            PowerUpType powerUp = powers[rand.Next(powers.Length)];
             if (gameEvent.EventType == GameEventType.ControlEvent) {
                 switch (gameEvent.Message) {
                     case "SpawnPowerUp": 

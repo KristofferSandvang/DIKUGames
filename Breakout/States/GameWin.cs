@@ -30,11 +30,11 @@ namespace Breakout.BreakoutStates {
                 button.SetColor(System.Drawing.Color.Blue);
                 button.SetFontSize(50);
             }
-            HeadLine = new Text("You Won!", new Vec2F(0.4f, 0.4f), new Vec2F(0.5f, 0.5f));
+            HeadLine = new Text("You Won!", new Vec2F(0.35f, 0.4f), new Vec2F(0.5f, 0.5f));
             HeadLine.SetColor(System.Drawing.Color.Yellow);
             HeadLine.SetFontSize(100);
 
-             score = new Score(new Vec2F(0.4f, 0.5f), new Vec2F(0.3f, 0.3f));
+             score = new Score(new Vec2F(0.35f, 0.5f), new Vec2F(0.3f, 0.3f));
             yourScore = new Text(string.Format("Your score is " + score.GetScore()), 
                                  new Vec2F(0.4f, 0.5f), new Vec2F(0.3f, 0.3f));
             yourScore.SetColor(System.Drawing.Color.Blue);
