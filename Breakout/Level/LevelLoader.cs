@@ -6,6 +6,7 @@ using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using DIKUArcade.Events;
 using DIKUArcade.Utilities;
+using Breakout.Blocks.BlockFactories;
 using Breakout.Blocks;
 
 namespace Breakout.Levels {
@@ -20,7 +21,8 @@ namespace Breakout.Levels {
         private char powerUp;
         private string[] lines;
         private Dictionary<char, string> legend;
-        private Dictionary<char, BlockType> meta;
+        private Dictionary<char, BlockFactory> meta;
+        private BlockFactory standard;
         
         /// <summary>
         /// Gets the specific level-file.
@@ -31,8 +33,9 @@ namespace Breakout.Levels {
             fileName = Path.Combine(FileIO.GetProjectPath(), "Assets", "Levels", FileName);
             lines = File.ReadAllLines(fileName);
             FindCheckpoints();
+            standard = new StandardBlockFactory();
             legend = new Dictionary<char, string>();
-            meta = new Dictionary<char, BlockType>();
+            meta = new Dictionary<char, BlockFactory>();
             ReadLegend();
             ReadMeta();
         }
@@ -80,12 +83,12 @@ namespace Breakout.Levels {
                 if (line.Contains("Hardened:")) {
                     int index = lines[i].IndexOf(' ');
                     char symbol = lines[i][index + 1];
-                    meta.Add(symbol, BlockType.Hardened);
+                    meta.Add(symbol, new HardenedBlockFactory());
                 }
                 if (line.Contains("Unbreakable:")) {
                     int index = lines[i].IndexOf(' ');
                     char symbol = lines[i][index + 1];
-                    meta.Add(symbol, BlockType.Unbreakable);
+                    meta.Add(symbol, new UnbreakableBlockFactory());
                 }
             }
         }
@@ -103,17 +106,14 @@ namespace Breakout.Levels {
                     bool power = false;
                     if (lines[line][block] != '-') {
                         if (powerUp == lines[line][block]) {power = true;}
-                        string imgName = legend[lines[line][block]];
+                        string imgName = Path.Combine(FileIO.GetProjectPath(), "Assets", 
+                            "Images", legend[lines[line][block]]);
                         Vec2F pos = new Vec2F(0.0f + block * 0.08f, 1f - (line - 1) * 0.04f);
 
                         if (meta.ContainsKey(lines[line][block])) {
-                            Blocks.AddEntity(BreakoutBlockFactory.Create(meta[lines[line][block]],
-                                                                         imgName, pos, power));
+                            Blocks.AddEntity((meta[lines[line][block]].CreateBlock(imgName, pos, power)));                                                  
                         } else {
-                            Blocks.AddEntity(
-                                new StandardBlock(new DynamicShape(pos, new Vec2F(0.08f, 0.04f)),
-                                new Image(Path.Combine(FileIO.GetProjectPath(),
-                                          "Assets", "Images", imgName)), power));
+                            Blocks.AddEntity(standard.CreateBlock(imgName, pos, power));
                         }
                     }  
                 }  
