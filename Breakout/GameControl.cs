@@ -3,13 +3,14 @@ using Breakout.Blocks;
 using DIKUArcade.Events;
 using Breakout.PowerUps;
 using DIKUArcade.Timers;
+using Breakout.PowerUps.PowerUpFactories;
 using DIKUArcade.Math;
 namespace Breakout {
     public class GameControl : IGameEventProcessor {
         private EntityContainer<PowerUp> powerUps;
         private Random rand;
-        private PowerUpType[] powers = {PowerUpType.ExtraLife, PowerUpType.ExtraTime,
-            PowerUpType.PlayerSpeed, PowerUpType.ExtraWidth};
+        private PowerUpFactory[] powers = {new ExtraLifeFactory(), new ExtraPlayerSpeedFactory(),
+            new ExtraWidthFactory(), new MoreTimeFactory() };
         public GameControl() {
             powerUps = new EntityContainer<PowerUp>();
             rand = new Random();
@@ -34,14 +35,14 @@ namespace Breakout {
             }
         }
         public void ProcessEvent(GameEvent gameEvent) {
-            PowerUpType powerUp = powers[rand.Next(powers.Length)];
+            PowerUpFactory powerUp = powers[rand.Next(powers.Length)];
             if (gameEvent.EventType == GameEventType.ControlEvent) {
                 switch (gameEvent.Message) {
                     case "SpawnPowerUp": 
                         if (gameEvent.ObjectArg1 is BreakoutBlock) {
                             BreakoutBlock block = (BreakoutBlock)gameEvent.ObjectArg1;
                             Vec2F pos = block.shape.Position;
-                            powerUps.AddEntity(PowerUpFactory1.SpawnPowerUp(pos, powerUp));
+                            powerUps.AddEntity(powerUp.CreatePowerUp(pos));
                         }
                     break;
                 }

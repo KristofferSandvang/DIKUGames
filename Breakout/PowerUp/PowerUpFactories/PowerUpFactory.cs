@@ -3,7 +3,7 @@ using Breakout.PowerUps;
 using DIKUArcade.Graphics;
 using DIKUArcade.Utilities;
 
-namespace Breakout.Blocks.PowerUpFactories {
+namespace Breakout.PowerUps.PowerUpFactories {
     public abstract class PowerUpFactory {
         protected IBaseImage extraLifeImg = new Image (
             Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "LifePickUp.png"));
@@ -11,6 +11,8 @@ namespace Breakout.Blocks.PowerUpFactories {
             Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "ClockPickUp.png"));
         protected IBaseImage extraWidthImg = new Image (
             Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "WidePowerUp.png"));
+        protected IBaseImage extraSpeedImg = new Image (
+            Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "DoubleSpeedPowerUp.png"));
         public abstract PowerUp CreatePowerUp (Vec2F pos);
     }
 }

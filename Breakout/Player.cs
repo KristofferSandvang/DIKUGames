@@ -11,6 +11,7 @@ namespace Breakout {
         private float moveLeft = 0.0f; 
         private float moveRight = 0.0f; 
         private float moveSpeed = 0.01f;
+        private float baseMoveSpeed = 0.01f;
         private float width;
         private Entity entity;
         public DynamicShape shape;
@@ -74,8 +75,20 @@ namespace Breakout {
                     case "NormalWidth":
                         NormalWidth();
                         break;
+                    case "ExtraSpeed":
+                        ExtraSpeed();
+                        break;
+                    case "NormalSpeed":
+                        NormalSpeed();
+                        break;
                 }
             }
+        }
+        private void ExtraSpeed() {
+            moveSpeed += 0.01f;
+        }
+        private void NormalSpeed() {
+            moveSpeed = baseMoveSpeed;
         }
         private void MoreWidth() {
             shape.Extent.X = shape.Extent.X + shape.Extent.X;

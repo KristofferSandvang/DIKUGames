@@ -3,10 +3,10 @@ using Breakout.PowerUps;
 using DIKUArcade.Graphics;
 using DIKUArcade.Entities;
 
-namespace Breakout.Blocks.PowerUpFactories {
+namespace Breakout.PowerUps.PowerUpFactories {
     public class ExtraWidthFactory : PowerUpFactory {
         public override PowerUp CreatePowerUp(Vec2F pos) {
-            return new ExtraWidth(new DynamicShape(pos, new Vec2F(0.025f, 0.025f)), extraLifeImg);
+            return new ExtraWidth(new DynamicShape(pos, new Vec2F(0.025f, 0.025f)), extraWidthImg);
         }
     }
 }
