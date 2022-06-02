@@ -41,7 +41,7 @@ namespace Breakout {
                         if (gameEvent.ObjectArg1 is BreakoutBlock) {
                             BreakoutBlock block = (BreakoutBlock)gameEvent.ObjectArg1;
                             Vec2F pos = block.shape.Position;
-                            powerUps.AddEntity(PowerUpFactory.SpawnPowerUp(pos, powerUp));
+                            powerUps.AddEntity(PowerUpFactory1.SpawnPowerUp(pos, powerUp));
                         }
                     break;
                 }
