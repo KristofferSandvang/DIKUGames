@@ -125,7 +125,7 @@ namespace Breakout.BreakoutStates {
                                 StringArg1 = "GameRunning"
                             }
                         );
-                        GameRunning.ChangeLevel(3);
+                        GameRunning.ChangeLevel(2);
                     } else if (activeMenuButton == 3) {
                          BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent {
