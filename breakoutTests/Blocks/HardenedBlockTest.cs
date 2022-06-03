@@ -1,19 +1,10 @@
 using NUnit.Framework;
-using System;
 using System.IO;
-using DIKUArcade;
 using DIKUArcade.GUI;
-using DIKUArcade.Input;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using DIKUArcade.Physics;
-using System.Security.Principal;
-using System.Collections.Generic;
-using DIKUArcade.Events;
-using DIKUArcade.State;
 using DIKUArcade.Utilities;
-using Breakout;
 using Breakout.Blocks; 
 
 namespace breakoutTests;
@@ -37,11 +28,11 @@ private HardenedBlock tester;
             new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "red-block.png")),
             new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images",
-                      "red-block-damaged.png")));
+                      "red-block-damaged.png")), false);
         standardDummy = new StandardBlock(
             new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new ImageStride(80, ImageStride.CreateStrides(4,
-            Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "red-block.png"))));
+            Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "red-block.png"))), false);
     }
 
 

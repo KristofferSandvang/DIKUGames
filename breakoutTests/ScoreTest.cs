@@ -30,12 +30,14 @@ public class ScoreTest {
             block = new StandardBlock( 
                 new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
                 new ImageStride(80, ImageStride.CreateStrides(4,
-                Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "red-block.png"))));
+                Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "red-block.png"))),
+                false);
             hardenedBlock = new HardenedBlock(
             new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "red-block.png")),
             new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images",
-                      "red-block-damaged.png")));
+                      "red-block-damaged.png")),
+            false);
         }
     
     //Tests that the score is initially 0
@@ -48,15 +50,25 @@ public class ScoreTest {
     //Tests that the score is able to recieve points at all, the basis of all other tests
     [Test]
     public void RecievePointsTest() {
-        Score.AddScore(100);
-        Assert.True(tester.GetScore() > 0); 
+        tester.ProcessEvent(new GameEvent{
+                        EventType = GameEventType.StatusEvent,
+                        Message = "AddPoints",
+                        IntArg1 = 100,
+                    }
+        );
+        Assert.Greater(tester.GetScore(), 0); 
     }
     
     //Tests that the score can never be negative
     [Test]
     public void NonNegativeTest() {
-        Score.AddScore(-100);
-        Assert.True(tester.GetScore() >= 0); 
+        tester.ProcessEvent(new GameEvent{
+                        EventType = GameEventType.StatusEvent,
+                        Message = "AddPoints",
+                        IntArg1 = -100,
+                    }
+        );
+        Assert.GreaterOrEqual(tester.GetScore(), 0); 
     }
     
     
@@ -97,7 +109,7 @@ public class ScoreTest {
         }
         block.IsDead(); 
         //Assert.True(tester.score>0);
-        Score.ResetScore();
+        tester.ResetScore();
         Assert.AreEqual(tester.GetScore(),0); 
     }
 }

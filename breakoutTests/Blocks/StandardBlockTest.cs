@@ -29,11 +29,11 @@ private StandardBlock tester;
         dummy = new StandardBlock( 
             new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new ImageStride(80, ImageStride.CreateStrides(4,
-            Path.Combine("Assets", "Images", "red-block.png"))));
+            Path.Combine("Assets", "Images", "red-block.png"))), false);
         tester = new StandardBlock(
             new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new ImageStride(80, ImageStride.CreateStrides(4,
-            Path.Combine("Assets", "Images", "red-block.png"))));
+            Path.Combine("Assets", "Images", "red-block.png"))), false);
     }
 
 
