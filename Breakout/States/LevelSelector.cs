@@ -22,7 +22,8 @@ namespace Breakout.BreakoutStates {
                 new Text("Level 1", new Vec2F(0.45f, 0.2f), new Vec2F(0.4f, 0.4f)),
                 new Text("Level 2", new Vec2F(0.45f, 0.1f), new Vec2F(0.4f, 0.4f)),
                 new Text("Level 3", new Vec2F(0.45f, 0.0f), new Vec2F(0.4f, 0.4f)),
-                new Text("Back", new Vec2F(0.45f, -0.1f), new Vec2F(0.4f, 0.4f)),
+                new Text("Level 4", new Vec2F(0.45f, -0.1f), new Vec2F(0.4f, 0.4f)),
+                new Text("Back", new Vec2F(0.45f, -0.2f), new Vec2F(0.4f, 0.4f)),
 
             };
             foreach (var button in menuButtons) {
@@ -124,8 +125,17 @@ namespace Breakout.BreakoutStates {
                                 StringArg1 = "GameRunning"
                             }
                         );
-                        GameRunning.ChangeLevel(2);
+                        GameRunning.ChangeLevel(3);
                     } else if (activeMenuButton == 3) {
+                         BreakoutBus.GetBus().RegisterEvent(
+                            new GameEvent {
+                                EventType = GameEventType.GameStateEvent,
+                                Message = "SwitchState",
+                                StringArg1 = "GameRunning"
+                            }
+                        );
+                        GameRunning.ChangeLevel(3);
+                    } else if (activeMenuButton == 4) {
                         BreakoutBus.GetBus().RegisterEvent(
                             new GameEvent {
                                 EventType = GameEventType.GameStateEvent,

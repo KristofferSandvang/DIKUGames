@@ -18,6 +18,7 @@ namespace Breakout.BreakoutStates {
             new LevelLoader("test.txt"),
             new LevelLoader("level2.txt"),
             new LevelLoader("level3.txt"),
+            new LevelLoader("level4.txt")
         }; 
         private static Level level = levelLoaders[0].CreateLevel();      
         private EntityContainer<Ball> balls;

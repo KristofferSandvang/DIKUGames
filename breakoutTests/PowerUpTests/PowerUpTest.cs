@@ -2,7 +2,7 @@ using NUnit.Framework;
 using System;
 using System.IO;
 using DIKUArcade.Entities;
-using DIKUArcade.Graphics
+using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Utilities;
 using Breakout;

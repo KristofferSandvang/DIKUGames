@@ -1,0 +1,47 @@
+Map:
+------------
+------------
+-aaaaaaaaaa-
+-aaaaaaaaaa-
+-000----000-
+-000-%%-000-
+-000-11-0??-
+-000-%%-0?!-
+-?????????0-
+-%%%%%%%%%%-
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+Map/
+
+Meta:
+Name: LEVEL 4
+Time: 300
+Hardened: #
+PowerUp: 2
+Switch: !
+SwitchReciever: ?
+Healable: %
+Meta/
+
+Legend:
+%) blue-block.png
+0) grey-block.png
+1) orange-block.png
+a) purple-block.png
+?) teal-block.png
+!) darkgreen-block.png
+
+Legend/
