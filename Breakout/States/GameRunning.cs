@@ -135,7 +135,12 @@ namespace Breakout.BreakoutStates {
                                 new DynamicShape( new Vec2F(player.XPosition() + 
                                                   player.shape.Extent.X/2, 0.1f),
                                 new Vec2F(0.008f, 0.021f), new Vec2F(0.0f, 0.01f)),
-                                new Image(Path.Combine("Assets", "Images", "ball.png"))));
+                                new Image(Path.Combine("Assets", "Images", "ball.png"))
+                            )
+                        );
+                        foreach (Ball ball in balls) {
+                        BreakoutBus.GetBus().Subscribe(GameEventType.MovementEvent, ball);
+                        }
                     } break;
             }
         }

@@ -31,7 +31,8 @@ private HardenedBlock tester;
             new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "red-block.png")), 
             new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images",
-                      "red-block-damaged.png")));
+                      "red-block-damaged.png")),
+            false);
         tester = new HardenedBlock(
             new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "red-block.png")),

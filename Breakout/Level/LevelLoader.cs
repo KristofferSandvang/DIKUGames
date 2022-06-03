@@ -90,6 +90,21 @@ namespace Breakout.Levels {
                     char symbol = lines[i][index + 1];
                     meta.Add(symbol, new UnbreakableBlockFactory());
                 }
+                if (line.Contains("Switch:")) {
+                    int index = lines[i].IndexOf(' ');
+                    char symbol = lines[i][index + 1];
+                    meta.Add(symbol, new SwitchBlockFactory());
+                }
+                if (line.Contains("SwitchReciever:")) {
+                    int index = lines[i].IndexOf(' ');
+                    char symbol = lines[i][index + 1];
+                    meta.Add(symbol, new SwitchRecieverBlockFactory());
+                }
+                if (line.Contains("Healable:")) {
+                    int index = lines[i].IndexOf(' ');
+                    char symbol = lines[i][index + 1];
+                    meta.Add(symbol, new HealAbleBlockFactory());
+                }
             }
         }
         /// <summary>   
@@ -108,7 +123,7 @@ namespace Breakout.Levels {
                         if (powerUp == lines[line][block]) {power = true;}
                         string imgName = Path.Combine(FileIO.GetProjectPath(), "Assets", 
                             "Images", legend[lines[line][block]]);
-                        Vec2F pos = new Vec2F(0.0f + block * 0.08f, 1f - (line - 1) * 0.04f);
+                        Vec2F pos = new Vec2F(0.0f + block * 0.08333334f, 1f - (line - 1) * 0.028f);
 
                         if (meta.ContainsKey(lines[line][block])) {
                             Blocks.AddEntity((meta[lines[line][block]].CreateBlock(imgName, pos, power)));                                                  

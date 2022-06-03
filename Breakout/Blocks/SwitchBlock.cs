@@ -1,37 +1,34 @@
-/*using DIKUArcade.Entities;
+using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
+using DIKUArcade.Events;
 using System.Collections.Generic;
 using System.IO;
 
 namespace Breakout.Blocks{
     public class SwitchBlock : BreakoutBlock{
-        private SwitchRecieverBlock[] SwitchRecieverList; 
+        public static List<SwitchRecieverBlock> switchRecieverList = new List<SwitchRecieverBlock>(); 
         public override void Hit() {
-            hitPoints -= 2;
-            foreach (SwitchRecieverBlock b in SwitchRecieverList) {
-                b.DeleteEntity();
-                Score.AddScore(b.value);
-
-                //Skal der tilføjes score når de dør? 
+            hitPoints -= 5;
+            foreach(SwitchRecieverBlock b in switchRecieverList) {
+                b.DeleteEntity(); 
             }
         }
-        public override bool Dead() {
-            if(hitPoints <= 0) {
-                Score.AddScore(value);
+        public override bool IsDead() {
+            if (hitPoints <= 0) {
+                BreakoutBus.GetBus().RegisterEvent(
+                    new GameEvent{
+                        EventType = GameEventType.StatusEvent,
+                        Message = "AddPoints",
+                        IntArg1 = value,
+                    });
                 return true;
-            }
-            return false; 
-        }
-        public void AddRecievers(EntityContainer<SwitchRecieverBlock> e) {
-            foreach (SwitchRecieverBlock b in e) {
-            //    SwitchRecieverList.Add(b); 
-            }
+            } else {return false;}
         }
 
-       public SwitchBlock(DynamicShape Shape, IBaseImage image) : base(Shape, image) {
+       public SwitchBlock(DynamicShape Shape, IBaseImage image, bool powerUp) : base(Shape, image, powerUp) {
             hitPoints = 10;
-            value = 100;
+            value = 200;
             shape = Shape;
         }
     } 
-} */
+} 

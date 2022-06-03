@@ -13,7 +13,7 @@ namespace Breakout.Blocks.BlockFactories {
                 "Images", imgName.Insert(index, "-damaged"));
                 
             BreakoutBlock HardenedBlock = new HardenedBlock (
-                new DynamicShape((pos), new Vec2F(0.08f, 0.04f)),
+                new DynamicShape((pos), new Vec2F(0.08333334f, 0.028f)),
                 new Image(imgName), new Image(broken), PowerUp);
             return HardenedBlock; 
         }

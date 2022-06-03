@@ -7,7 +7,7 @@ using DIKUArcade.Events;
 using System;
 namespace Breakout {
 
-    public class Ball : Entity {
+    public class Ball : Entity, IGameEventProcessor {
         private DynamicShape shape;
         private Random rand;
         public Ball(DynamicShape Shape, IBaseImage image) : base(Shape, image) {
@@ -110,8 +110,26 @@ namespace Breakout {
             shape.Move();
             Collide(blocks, player);
         }
-        public DynamicShape GetShape() {
-            return shape;
+        private void FasterBall() {
+            shape.Direction.X = shape.Direction.X * 2;
+            shape.Direction.Y = shape.Direction.Y * 2;
+        }
+        private void ResetBallSpeed() {
+            shape.Direction.X = shape.Direction.X / 2;
+            shape.Direction.Y = shape.Direction.Y / 2;
+        }
+        public void ProcessEvent (GameEvent gameEvent) {
+            if (gameEvent.EventType == GameEventType.MovementEvent) {
+                switch (gameEvent.Message) {
+                    case "ExtraBallSpeed":
+                        FasterBall();
+                        
+                        break;
+                    case "NormalBallSpeed":
+                        ResetBallSpeed();
+                        break;
+                }
+            }
         }
     }   
 }

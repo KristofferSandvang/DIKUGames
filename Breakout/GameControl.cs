@@ -10,7 +10,7 @@ namespace Breakout {
         private EntityContainer<PowerUp> powerUps;
         private Random rand;
         private PowerUpFactory[] powers = {new ExtraLifeFactory(), new ExtraPlayerSpeedFactory(),
-            new ExtraWidthFactory(), new MoreTimeFactory() };
+            new ExtraWidthFactory(), new MoreTimeFactory(), new ExtraBallSpeedFactory() };
         public GameControl() {
             powerUps = new EntityContainer<PowerUp>();
             rand = new Random();
