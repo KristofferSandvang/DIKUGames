@@ -14,9 +14,7 @@ using DIKUArcade.Events;
 using DIKUArcade.State;
 using Breakout;
 using Breakout.Blocks; 
-#pragma warning disable 8618
 
-#pragma warning disable 0472
 namespace breakoutTests;
 
 public class StandardBlockTest {
