@@ -6,6 +6,6 @@ namespace Breakout.BreakoutStates {
         GamePaused,
         GameWin,
         GameOver,
-        
+        Invalid,
     }
 }
