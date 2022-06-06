@@ -1,13 +1,7 @@
 using NUnit.Framework;
-using DIKUArcade.Entities;
-using DIKUArcade.Graphics;
-using DIKUArcade.Math;
-using DIKUArcade.Physics;
 using DIKUArcade.GUI;
 using System.Collections.Generic;
 using DIKUArcade.Events;
-using DIKUArcade.Utilities;
-using System.IO;
 using Breakout;
 using Breakout.PowerUps;
 
@@ -16,7 +10,6 @@ using Breakout.PowerUps;
 namespace breakoutTests;
 
 public class PlayerLifeTest {
-    private ExtraLife powerUp;
     private PlayerLife dummy; 
     private PlayerLife tester;
 

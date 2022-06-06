@@ -8,13 +8,16 @@ namespace Breakout.Blocks.BlockFactories {
     public class HardenedBlockFactory : BlockFactory {
         
         public override BreakoutBlock CreateBlock(string imgName,  Vec2F pos, bool PowerUp) {
+            string nonBroken = Path.Combine(FileIO.GetProjectPath(), "Assets", 
+                "Images", imgName);
+
             int index = imgName.IndexOf('.');
             string broken = Path.Combine(FileIO.GetProjectPath(), "Assets", 
                 "Images", imgName.Insert(index, "-damaged"));
                 
             BreakoutBlock HardenedBlock = new HardenedBlock (
                 new DynamicShape((pos), new Vec2F(0.08333334f, 0.028f)),
-                new Image(imgName), new Image(broken), PowerUp);
+                new Image(nonBroken), new Image(broken), PowerUp);
             return HardenedBlock; 
         }
     }
