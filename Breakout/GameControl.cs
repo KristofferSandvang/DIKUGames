@@ -57,6 +57,9 @@ namespace Breakout {
                 powerUp.Collected(player);
             } ); 
         }
+        public EntityContainer<PowerUp> GetPowerUps() {
+            return powerUps;
+        }
         private bool TimeOut(GameTime Time) {
             if (Time.timeRemaining <= 0) {
                 return true;
