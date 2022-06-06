@@ -43,5 +43,4 @@ Legend:
 a) purple-block.png
 ?) teal-block.png
 !) darkgreen-block.png
-
 Legend/
