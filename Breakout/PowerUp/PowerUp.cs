@@ -21,6 +21,9 @@ namespace Breakout.PowerUps {
         public void Render(){
             RenderEntity();
         }
+        public DynamicShape GetShape() {
+            return shape;
+        } 
         public PowerUp(DynamicShape Shape, IBaseImage image) : base(Shape, image){
             shape = Shape;
             shape.Direction.X = 0.0f;

@@ -14,6 +14,9 @@ namespace Breakout {
             shape = Shape;
             rand = new Random();
         } 
+        public double GetSpeed() {
+            return shape.Direction.Length(); 
+        }
         /// <summary>   
         /// Checks if the Ball collides with anything
         /// </summary>   

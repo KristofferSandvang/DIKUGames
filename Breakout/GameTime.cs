@@ -15,7 +15,9 @@ namespace Breakout {
             timeDisplay.SetColor(System.Drawing.Color.White);
             timeDisplay.SetFontSize(50);
         }
-
+        public double GetTime() {
+            return timeRemaining;
+        }
         public void Update() {
             if (totalTime != -1.0) {
                 double timePassed = StaticTimer.GetElapsedSeconds();

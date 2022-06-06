@@ -142,6 +142,9 @@ namespace Breakout {
         public float BounceDirection() {
             return shape.Direction.X;
         }
+        public float GetSpeed() {
+            return moveSpeed; 
+        }
     }
 }   
 

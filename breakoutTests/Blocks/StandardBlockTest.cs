@@ -17,6 +17,9 @@ using Breakout.Blocks;
 
 namespace breakoutTests;
 
+#pragma warning disable 0472
+#pragma warning disable 8618
+
 public class StandardBlockTest {
 
 private StandardBlock dummy;

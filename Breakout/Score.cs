@@ -10,7 +10,7 @@ namespace Breakout {
         private Text display;
         private static int score = 0;
         public Score(Vec2F position, Vec2F extent) {
-            display = new Text ("Score: "+score.ToString(), position, extent);
+            display = new Text ("Score: " + score.ToString(), position, extent);
             display.SetColor(System.Drawing.Color.White);
             display.SetFontSize(30);
         }
@@ -19,7 +19,7 @@ namespace Breakout {
         /// </summary>
         private void AddScore(int val) {
             if (score + val >= 0) {
-                score += val; 
+                score = val + score; 
             }
         }
         /// <summary>   

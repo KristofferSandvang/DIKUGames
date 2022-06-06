@@ -1,17 +1,10 @@
 using NUnit.Framework;
-using System;
 using System.IO;
-using DIKUArcade;
-using DIKUArcade.GUI;
-using DIKUArcade.Input;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using DIKUArcade.Physics;
-using System.Security.Principal;
 using System.Collections.Generic;
 using DIKUArcade.Events;
-using DIKUArcade.State;
 using DIKUArcade.Utilities;
 using Breakout;
 using Breakout.Blocks; 
@@ -19,56 +12,74 @@ using Breakout.Blocks;
 
 namespace breakoutTests;
 
+[TestFixture]
 public class ScoreTest {
 
     private Score tester;
     private StandardBlock block;
     private HardenedBlock hardenedBlock;
+
+    [OneTimeSetUp]
+    public void InitalizeBreakoutBus() {
+        BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> { GameEventType.StatusEvent } );
+    }
+    [OneTimeTearDown]
+    public void ResetBreakoutBus() {
+        BreakoutBus.ResetBus();
+    }
+
     [SetUp]
-        public void InitializeScore() {
-            tester = new Score(new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.15f));
-            block = new StandardBlock( 
-                new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
-                new ImageStride(80, ImageStride.CreateStrides(4,
-                Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "red-block.png"))),
-                false);
-            hardenedBlock = new HardenedBlock(
+    public void InitializeScore() {
+        tester = new Score(new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.15f));
+        BreakoutBus.GetBus().Unsubscribe(GameEventType.StatusEvent, tester);
+        block = new StandardBlock( 
+            new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
+            new ImageStride(80, ImageStride.CreateStrides(4,
+            Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "red-block.png"))),
+            false);
+        hardenedBlock = new HardenedBlock(
             new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "red-block.png")),
             new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images",
                       "red-block-damaged.png")),
             false);
-        }
-    
+        BreakoutBus.GetBus().Subscribe(GameEventType.StatusEvent, tester);
+    }
+    [TearDown]
+    public void ResetTester() {
+        tester.ResetScore();
+    }
     //Tests that the score is initially 0
     [Test]
-    public void ZeroPointsTest() {
+    public void TestZeroPoints() {
         Assert.AreEqual(tester.GetScore(), 0); 
     }
     
     
     //Tests that the score is able to recieve points at all, the basis of all other tests
     [Test]
-    public void RecievePointsTest() {
-        tester.ProcessEvent(new GameEvent{
+    public void TestRecievePoints() {
+        BreakoutBus.GetBus().RegisterEvent(new GameEvent{
                         EventType = GameEventType.StatusEvent,
                         Message = "AddPoints",
                         IntArg1 = 100,
                     }
         );
+        BreakoutBus.GetBus().ProcessEventsSequentially();
         Assert.Greater(tester.GetScore(), 0); 
     }
     
     //Tests that the score can never be negative
     [Test]
-    public void NonNegativeTest() {
-        tester.ProcessEvent(new GameEvent{
+    public void TestNonNegative() {
+        BreakoutBus.GetBus().RegisterEvent(new GameEvent{
                         EventType = GameEventType.StatusEvent,
                         Message = "AddPoints",
-                        IntArg1 = -100,
+                        IntArg1 = (-10),
                     }
         );
-        Assert.GreaterOrEqual(tester.GetScore(), 0); 
+        BreakoutBus.GetBus().ProcessEventsSequentially();
+        Assert.AreEqual(0, tester.GetScore()); 
     }
     
     
@@ -76,34 +87,16 @@ public class ScoreTest {
     //and then calling IsDead which is what actually gives the points (assuming it is dead)
     //The block is hit an excessive amount of time in case of changing hp values. Just needs to be dead
     [Test]
-    public void DestroyBlockTest() {
-        for (int i = 0;i<10000;i++) {
-            block.Hit(); 
-        }
+    public void TestDestroyBlockScore() {
+        block.Hit(); 
         block.IsDead(); 
-        Assert.True(tester.GetScore() > 0); 
+        BreakoutBus.GetBus().ProcessEventsSequentially();
+        Assert.Greater(tester.GetScore(), 0); 
     }
-    
-    //Same as prior, just that each block does not give the same value
-    //Though this is more confirmable by reading the code or by playtesting
-    [Test]
-    public void DifferentValues() {
-        for (int i = 0;i<10000;i++) {
-            block.Hit();
-            hardenedBlock.Hit(); 
-        }
-        block.IsDead(); 
-        var blockValue = tester.GetScore(); 
-        hardenedBlock.IsDead(); 
-        var hardenedBlockValue = (tester.GetScore()-blockValue); 
-        Assert.AreNotEqual(hardenedBlockValue, blockValue); 
-
-    }
-
     
     //Tests that the ResetScore function works, not a specificaiton 
     [Test]
-    public void ResetScore() {
+    public void TestResetScore() {
         for (int i = 0;i<10000;i++) {
             block.Hit(); 
         }

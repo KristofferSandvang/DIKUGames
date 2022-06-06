@@ -8,7 +8,7 @@ using DIKUArcade.GUI;
 using DIKUArcade.Entities;
 using System.IO;
 
-
+#pragma warning disable 8618
 
 namespace breakoutTests;
     public class BallTest {
