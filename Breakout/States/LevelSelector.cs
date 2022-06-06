@@ -24,16 +24,18 @@ namespace Breakout.BreakoutStates {
                 new Text("Level 3", new Vec2F(0.45f, 0.0f), new Vec2F(0.4f, 0.4f)),
                 new Text("Level 4", new Vec2F(0.45f, -0.1f), new Vec2F(0.4f, 0.4f)),
                 new Text("Back", new Vec2F(0.45f, -0.2f), new Vec2F(0.4f, 0.4f)),
-
             };
+
             foreach (var button in menuButtons) {
                 button.SetColor(System.Drawing.Color.Blue);
                 button.SetFontSize(50);
             }
+
             backGroundImage = new Entity(
                 new StationaryShape(new Vec2F(0f, 0f), new Vec2F(1f, 1f)), 
                 new Image(Path.Combine("Assets", "Images", "BreakoutTitleScreen.png")));
-            maxMenuButtons = menuButtons.Length;
+
+            maxMenuButtons = menuButtons.Length - 1;
             activeMenuButton = 0;
         }
         /// <summary>

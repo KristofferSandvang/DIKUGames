@@ -8,7 +8,7 @@ namespace Breakout.Blocks{
     public class SwitchBlock : BreakoutBlock{
         public static List<SwitchRecieverBlock> switchRecieverList = new List<SwitchRecieverBlock>(); 
         public override void Hit() {
-            hitPoints -= 5;
+            hitPoints -= 10;
             foreach(SwitchRecieverBlock b in switchRecieverList) {
                 b.DeleteEntity(); 
             }

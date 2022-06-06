@@ -6,19 +6,12 @@ using System.Collections.Generic;
 using System.IO;
 using DIKUArcade.Events;
 
-#pragma warning disable 0108
-
 namespace Breakout.Blocks{
     public class HealableBlock : BreakoutBlock {
-        public DynamicShape shape;
 
         public HealableBlock(DynamicShape Shape, IBaseImage image, bool power) : base(Shape, image, power) {
-            hitPoints = 10;
+            hitPoints = 15;
             value = 200;
-            shape = Shape;
-        }
-        public int GetHP(){
-            return hitPoints;
         }
         /// <summary>
         /// Determines what happens with a block when hit.
