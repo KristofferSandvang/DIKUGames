@@ -26,8 +26,6 @@ namespace Breakout.Levels {
         
         /// <summary>
         /// Gets the specific level-file.
-        ///
-        /// Read the file by putting the lines in arrays, then reads the lines and saves it in lines.
         /// </summary>
         public LevelLoader(string FileName) { 
             fileName = Path.Combine(FileIO.GetProjectPath(), "Assets", "Levels", FileName);
@@ -40,8 +38,7 @@ namespace Breakout.Levels {
             ReadMeta();
         }
         /// <summary>
-        /// Initializes the levelLoader, finding checkpoints and creating a dictionary
-        /// later used for storing the information in "Meta" and "Legend". 
+        /// Initializes the levelLoader
         /// </summary>
         public void InitializeLevelLoader() {
             FindCheckpoints();
@@ -50,8 +47,6 @@ namespace Breakout.Levels {
         /// <summary>
         /// Finds all checkpoints meaning the lines where map, meta, legend have their start/ends
         /// by reading through the level document in its entirity, 
-        /// storing that information in variables to be used later
-        /// for the methods having to process that information.
         /// </summary>
         private void FindCheckpoints() {
             mapStart = Array.IndexOf(lines, "Map:");
@@ -64,8 +59,8 @@ namespace Breakout.Levels {
             legendEnd = Array.IndexOf(lines, "Legend/");
         }
         /// <summary>
-        /// Reads through the Legend information field xf
-        /// Iteratively adding that information to the dictionary
+        /// Reads through the Legend information field and
+        /// adding the information to the dictionary
         /// </summary>
         private void ReadLegend() {
             for (int i = legendStart + 1; i < legendEnd; i++) {
@@ -75,7 +70,7 @@ namespace Breakout.Levels {
             }
         }
         /// <summary>
-        /// Reads the Meta data concerning the blocks.
+        /// Reads the Meta data.
         /// </summary>
         private void ReadMeta() {
             for (int i = metaStart + 1; i < metaEnd; i++) {
@@ -108,8 +103,7 @@ namespace Breakout.Levels {
             }
         }
         /// <summary>   
-        /// Generates the blocks that corresponds to the Map section of the level, by
-        /// using the Dictionaries from ReadLegend() and ReadMeta()
+        /// Generates the blocks that corresponds to the Map section of the level
         /// </summary>
         ///<returns>
         /// an EntityContainer containing the BreakoutBlocks
@@ -135,9 +129,7 @@ namespace Breakout.Levels {
             } return Blocks;
         }
         /// <summary>   
-        /// Uses all the previous (ReadLegend, ReadMeta) after having initialized the levelLoader
-        /// to iteratively apply the needed information from dictionary when intializing each block
-        /// in the level (checking for each block)
+        /// Creates a Level with values corresponding to its .txt document
         /// </summary>
         public Level CreateLevel() {
             string Name = "";

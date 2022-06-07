@@ -21,15 +21,27 @@ namespace Breakout.Levels {
         public void Render() {
             blocks.RenderEntities();
         }
+        /// <summary>
+        /// Gets the EntityContainer of blocks
+        /// </summary>
         public EntityContainer<BreakoutBlock> GetEC() {
             return blocks;
         }
+        /// <summary>
+        /// gets the char corresponding to PowerUps
+        /// </summary>
         public char GetPowerUp() {
             return powerUp;
         }
+        /// <summary>
+        /// gets the time as a double
+        /// </summary>
         public double GetTime() {
             return time;
         }
+        /// <summary>
+        /// Gets the level's name
+        /// </summary>
         public string GetName() {
             return name;
         }

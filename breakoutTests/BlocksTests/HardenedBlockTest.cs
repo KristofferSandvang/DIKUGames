@@ -43,7 +43,7 @@ private HardenedBlock tester;
     //And that the HardenedBlock is not dead if no damage was taken
     [Test]
     public void NotHitTest() {
-        Assert.AreEqual(tester.GetHP(), dummy.GetHP());
+        Assert.AreEqual(tester.hitPoints, dummy.hitPoints);
         Assert.False(tester.IsDead());
     }
     
@@ -52,16 +52,16 @@ private HardenedBlock tester;
     [Test]
     public void HitOnceTest() {
         tester.Hit();
-        Assert.True(tester.GetHP()<dummy.GetHP());
+        Assert.Less(tester.hitPoints, dummy.hitPoints);
     }
 
     //Tests that the HardenedBlock takes less damage than the standard block type
     [Test]
     public void LessDamageTest() {
-        Assert.AreEqual(tester.GetHP(),standardDummy.GetHP());
+        Assert.AreEqual(tester.hitPoints, standardDummy.hitPoints);
         tester.Hit();
         standardDummy.Hit(); 
-        Assert.True(tester.GetHP()>standardDummy.GetHP());
+        Assert.Greater(tester.hitPoints, standardDummy.hitPoints);
     }
 
     //Tests that the HardenedBlock dies when hit enough times.

@@ -7,7 +7,9 @@ namespace Breakout.Blocks{
     public class HardenedBlock : BreakoutBlock {
         private IBaseImage Broken;
         private int maxHP;
-        
+        /// <summary>
+        /// Determines whether the block is dead or not and adds its value to the score. 
+        /// </summary>
         public override bool IsDead(){
              if (hitPoints <= 0) {
                 BreakoutBus.GetBus().RegisterEvent(

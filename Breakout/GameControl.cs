@@ -15,6 +15,18 @@ namespace Breakout {
             powerUps = new EntityContainer<PowerUp>();
             rand = new Random();
         }
+        /// <summary>
+        /// Checks if the game is over and creates events for state switching if so.
+        /// </summary>
+        /// <param name='Time'>
+        /// A GameTime
+        /// </param>
+        /// <param name='player'>
+        /// A player
+        /// </param>
+        /// <param name='Blocks'>
+        /// An EntityContainer containing Breakoutblocks
+        /// </param>
         public void GameOver(GameTime Time, Player player, EntityContainer<BreakoutBlock> blocks) {
             if (TimeOut(Time) || NoLives(player)) {
                 BreakoutBus.GetBus().RegisterEvent(
@@ -34,6 +46,12 @@ namespace Breakout {
                 );
             }
         }
+        /// <summary>
+        /// Processes a GameEvent based on the GameEvent.Message
+        /// </summary>
+        /// <param name='gameEvent'>
+        /// A GameEvent
+        /// </param>
         public void ProcessEvent(GameEvent gameEvent) {
             PowerUpFactory powerUp = powers[rand.Next(powers.Length)];
             if (gameEvent.EventType == GameEventType.ControlEvent) {
@@ -48,28 +66,67 @@ namespace Breakout {
                 }
             }
         }
+        /// <summary>
+        /// Renders the PowerUps
+        /// </summary>
         public void Render() {
             powerUps.RenderEntities();
         }
+        /// <summary>
+        /// Updates the PowerUps and check if they're being collected by a player.
+        /// </summary>
+        /// <param name='player'>
+        /// A player
+        /// </param>
         public void Update(Player player){
             powerUps.Iterate(powerUp => {
                 powerUp.Move();
                 powerUp.Collected(player);
             } ); 
         }
+        /// <summary>
+        /// Gets the EntityContainer of PowerUps
+        /// </summary>
         public EntityContainer<PowerUp> GetPowerUps() {
             return powerUps;
         }
+        /// <summary>
+        /// Determines whether the time is out or not
+        /// </summary>
+        /// <param name='Time'>
+        /// A GameTime
+        /// </param>
+        /// <returns>
+        /// True if the time is out, and false if not
+        /// </returns>
         private bool TimeOut(GameTime Time) {
             if (Time.timeRemaining <= 0) {
                 return true;
             } else {return false;}
         }
+        /// <summary>
+        /// Determines whether the player has lives remaining 
+        /// </summary>
+        /// <param name='player'>
+        /// A Player
+        /// </param>
+        /// <returns>
+        /// True if the player does not have lives remaining and false if the player does
+        /// </returns>
         private bool NoLives(Player player) {
             if (player.Lives.LivesLeft() == 0) {
                 return true;
             } else {return false;}
         }
+        /// <summary>
+        /// Determines whether the game is won or not
+        /// </summary>
+        /// <param name='blocks'>
+        /// An EntityContainer of Breakoutblocks
+        /// </param>
+        /// <returns>
+        /// True if all the Breakoutblokcs have been destroyed; false if not
+        /// </returns>
         private bool Victory(EntityContainer<BreakoutBlock> blocks) {
             if (blocks.CountEntities() <= 0) {
                 return true;

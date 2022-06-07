@@ -25,6 +25,4 @@ namespace Breakout.Blocks{
         value = 100;
         }
     }  
-    //Den her class eksisterer så Switch er sikker på at få en liste af blocks der 
-    //1. ikke tager skade 2. er dem der skal slettes når Switch bliver ramt
 }

@@ -14,9 +14,6 @@ namespace Breakout {
             shape = Shape;
             rand = new Random();
         } 
-        public double GetSpeed() {
-            return shape.Direction.Length(); 
-        }
         /// <summary>   
         /// Checks if the Ball collides with anything
         /// </summary>   
@@ -100,23 +97,37 @@ namespace Breakout {
             shape.Move();
             Collide(blocks, player);
         }
+        /// <summary>  
+        /// Gets the shape of the ball
+        /// </summary>  
         public DynamicShape GetShape() {
             return shape;
         }
+        /// <summary>  
+        /// Makes the ball twice as fast
+        /// </summary>  
         private void FasterBall() {
             shape.Direction.X = shape.Direction.X * 2;
             shape.Direction.Y = shape.Direction.Y * 2;
         }
+        /// <summary>  
+        /// Resets the ball's speed
+        /// </summary>  
         private void ResetBallSpeed() {
             shape.Direction.X = shape.Direction.X / 2;
             shape.Direction.Y = shape.Direction.Y / 2;
         }
+        /// <summary>
+        /// Processes a GameEvent based on the GameEvent.Message
+        /// </summary>
+        /// <param name='gameEvent'>
+        /// A GameEvent
+        /// </param>
         public void ProcessEvent (GameEvent gameEvent) {
             if (gameEvent.EventType == GameEventType.MovementEvent) {
                 switch (gameEvent.Message) {
                     case "ExtraBallSpeed":
                         FasterBall();
-                        
                         break;
                     case "NormalBallSpeed":
                         ResetBallSpeed();

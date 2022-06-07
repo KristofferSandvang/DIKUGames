@@ -7,12 +7,18 @@ using System.IO;
 namespace Breakout.Blocks{
     public class SwitchBlock : BreakoutBlock{
         public static List<SwitchRecieverBlock> switchRecieverList = new List<SwitchRecieverBlock>(); 
+        /// <summary>
+        /// Determines what happens with a block when hit.
+        /// </summary>
         public override void Hit() {
             hitPoints -= 10;
             foreach(SwitchRecieverBlock b in switchRecieverList) {
                 b.DeleteEntity(); 
             }
         }
+        /// <summary>
+        /// Determines whether the block is dead or not and adds its value to the score. 
+        /// </summary>
         public override bool IsDead() {
             if (hitPoints <= 0) {
                 BreakoutBus.GetBus().RegisterEvent(

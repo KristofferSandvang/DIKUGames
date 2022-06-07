@@ -6,6 +6,7 @@ namespace Breakout.BreakoutStates {
         GamePaused,
         GameWin,
         GameOver,
+        // Invalid has only been added for testing purposes.
         Invalid,
     }
 }

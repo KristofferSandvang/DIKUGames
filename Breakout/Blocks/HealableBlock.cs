@@ -21,11 +21,8 @@ namespace Breakout.Blocks{
            IterateHeal();
         }
         /// <summary>
-        /// Determines whether the ball is dead or not
+        /// Determines whether the block is dead or not and adds its value to the score. 
         /// </summary>
-        /// <returns>
-        /// Returns true if the block is dead and false if not.
-        /// </returns> 
         public override bool IsDead(){
              if (hitPoints <= 0) {
                 BreakoutBus.GetBus().RegisterEvent(
@@ -37,9 +34,15 @@ namespace Breakout.Blocks{
                 return true;
             } else {return false;}
         }
+        /// <summary>
+        /// Heals the blocks, by changing its hitpoints to 10. 
+        /// </summary>
         private void Heal() {
             hitPoints = 10;
         }
+        /// <summary>
+        /// Heals the block if 3 seconds has passed. 
+        /// </summary>
         public void IterateHeal() {
         var Timer = StaticTimer.GetElapsedSeconds();
         if (Timer % 3.0 == 0.0) {Heal(); }  

@@ -25,12 +25,18 @@ namespace Breakout {
             }
             lives = Entities.Count;
         }
+        /// <summary>
+        /// Removes a life from the existing lives
+        /// </summary>
         private void LoseLife() {
             if (lives >= 1) {
                 Entities.RemoveAt(Entities.Count - 1);
                 lives = Entities.Count;
             } 
         }
+        /// <summary>
+        /// Adds a life to the existing lives
+        /// </summary>
         private void GainLife() {
             int index = Entities.Count;
             string fileName = Path.Combine(FileIO.GetProjectPath(), "Assets", "Images",
@@ -41,15 +47,29 @@ namespace Breakout {
                     new StationaryShape(pos, new Vec2F(0.025f, 0.025f)), new Image(fileName)));
             lives = Entities.Count;
         }
+        /// <summary>
+        /// Renders the Player's lives
+        /// </summary>
         public void Render() {
             foreach (Entity life in Entities) {
                 life.RenderEntity();
             }
         }
+        /// <summary>
+        /// determines the amount of lives remaining 
+        /// </summary>
+        /// <returns>
+        /// the amount of lives left.
+        /// </returns>
         public int LivesLeft() {
             return lives;
         }
-
+        /// <summary>
+        /// Processes a GameEvent based on the GameEvent.Message
+        /// </summary>
+        /// <param name='gameEvent'>
+        /// A GameEvent
+        /// </param>
         public void ProcessEvent (GameEvent gameEvent) {
             if (gameEvent.EventType == GameEventType.PlayerEvent) {
                 switch (gameEvent.Message) {

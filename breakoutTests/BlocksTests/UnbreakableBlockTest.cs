@@ -48,7 +48,7 @@ private UnbreakableBlock tester;
     //And that the UnbreakableBlock is not detected as dead at this point.
     [Test]
     public void InitialHPTest() {
-        Assert.AreEqual(tester.GetHP(), dummy.GetHP());
+        Assert.AreEqual(tester.hitPoints, dummy.hitPoints);
         Assert.False(tester.IsDead());
     }
 
@@ -56,14 +56,14 @@ private UnbreakableBlock tester;
     [Test]
     public void NoDamageTest() {
         tester.Hit();
-        Assert.AreEqual(tester.GetHP(),dummy.GetHP());
+        Assert.AreEqual(tester.hitPoints, dummy.hitPoints);
     }
 
     //Tests that the UnbreakableBlock takes less damage (as it should take none)
     //But the standard block does take damage
     [Test]
     public void LessDamageTest() {
-        Assert.AreEqual(tester.GetHP(),standardDummy.GetHP());
+        Assert.AreEqual(tester.hitPoints, standardDummy.hitPoints);
         tester.Hit();
         standardDummy.Hit();
         Assert.Greater(tester.hitPoints, standardDummy.hitPoints);
@@ -76,7 +76,7 @@ private UnbreakableBlock tester;
             tester.Hit();
         }
         Assert.False(tester.IsDead());
-        Assert.AreEqual(tester.GetHP(), dummy.GetHP());; 
+        Assert.AreEqual(tester.hitPoints, dummy.hitPoints);; 
     }
     
     //Tests that the StandardBlock is given a value property as per the requirements

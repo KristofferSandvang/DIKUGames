@@ -87,6 +87,12 @@ namespace Breakout.BreakoutStates {
             timer.Render();
             controller.Render();
         }
+        /// <summary>
+        /// Changes the active level, that is being played
+        /// </summary>
+        /// <param name='lvl'>
+        /// The level to switch to.
+        /// </param>
         public static void ChangeLevel(int lvl) {
             level = levelLoaders[lvl].CreateLevel();
         }

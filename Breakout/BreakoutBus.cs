@@ -12,6 +12,12 @@ namespace Breakout {
         public static GameEventBus GetBus() {
             return BreakoutBus.eventBus ?? (BreakoutBus.eventBus = new GameEventBus());
         }
+        /// <summary>
+        /// Creates a new GameEventBus
+        /// </summary>
+        /// <returns>
+        /// the new GameEventBus
+        /// </returns>
         public static GameEventBus ResetBus() {
             eventBus = new GameEventBus();
             return eventBus;

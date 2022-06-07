@@ -70,9 +70,9 @@ public class ExtraTimeTest {
 
         powerUp.Collected(player);
 
-        var before = TimeTester.GetTime();
+        var before = TimeTester.timeRemaining;
         BreakoutBus.GetBus().ProcessEventsSequentially();
-        var after = TimeTester.GetTime();
+        var after = TimeTester.timeRemaining;
         Assert.Greater(after, before);
     }
 }

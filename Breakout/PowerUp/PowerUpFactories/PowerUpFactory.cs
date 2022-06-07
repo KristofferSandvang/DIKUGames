@@ -15,6 +15,12 @@ namespace Breakout.PowerUps.PowerUpFactories {
             Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "DoubleSpeedPowerUp.png"));
         protected IBaseImage ballSpeedImg = new Image (
             Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "BallSpeedier.png"));
+        /// <summary>
+        /// Creates a PowerUP
+        /// </summary>
+        /// <returns>
+        /// A PowerUP
+        /// </returns>
         public abstract PowerUp CreatePowerUp (Vec2F pos);
     }
 }

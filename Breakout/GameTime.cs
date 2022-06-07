@@ -15,9 +15,9 @@ namespace Breakout {
             timeDisplay.SetColor(System.Drawing.Color.White);
             timeDisplay.SetFontSize(50);
         }
-        public double GetTime() {
-            return timeRemaining;
-        }
+        /// <summary>
+        /// Updates the display for the time
+        /// </summary>
         public void Update() {
             if (totalTime != -1.0) {
                 double timePassed = StaticTimer.GetElapsedSeconds();
@@ -26,16 +26,28 @@ namespace Breakout {
                 timeDisplay.SetText(val.ToString());
             }
         }
+        /// <summary>
+        /// Renders the time
+        /// </summary>
         public void Render() {
             if (totalTime != -1.0) {
                 timeDisplay.RenderText();
             }
         }
+        /// <summary>
+        /// Adds 10 seconds to the timeRemaining
+        /// </summary>
         private void AddTime() {
             totalTime += 10.0;
             int val = (int) (totalTime - StaticTimer.GetElapsedSeconds());
             timeRemaining = (double) val;
         }
+        /// <summary>
+        /// Processes a GameEvent based on the GameEvent.Message
+        /// </summary>
+        /// <param name='gameEvent'>
+        /// A GameEvent
+        /// </param>
         public void ProcessEvent(GameEvent gameEvent) {
             if (gameEvent.EventType == GameEventType.ControlEvent) {
                 switch (gameEvent.Message) {

@@ -44,7 +44,7 @@ private StandardBlock tester;
     //And that the StandardBlock is not dead if no damage was taken
     [Test]
     public void NotHitTest() {
-        Assert.AreEqual(tester.GetHP(), dummy.GetHP());
+        Assert.AreEqual(tester.hitPoints, dummy.hitPoints);
         Assert.False(tester.IsDead());
     }
     
@@ -53,7 +53,7 @@ private StandardBlock tester;
     [Test]
     public void HitOnceTest() {
         tester.Hit();
-        Assert.True(tester.GetHP()<dummy.GetHP());
+        Assert.Less(tester.hitPoints, dummy.hitPoints);
     }
     
     

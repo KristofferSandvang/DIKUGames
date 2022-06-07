@@ -10,6 +10,10 @@ namespace Breakout.Blocks{
         /// Determines what happens with a block when hit.
         /// </summary>
         public override void Hit() {}
+        
+        /// <summary>
+        /// Determines what happens with a block when hit.
+        /// </summary>
         public override bool IsDead(){
              if (hitPoints <= 0) {
                 BreakoutBus.GetBus().RegisterEvent(

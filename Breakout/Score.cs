@@ -46,6 +46,12 @@ namespace Breakout {
         public int GetScore(){
             return score; 
         }
+        /// <summary>
+        /// Processes a GameEvent based on the GameEvent.Message
+        /// </summary>
+        /// <param name='gameEvent'>
+        /// A GameEvent
+        /// </param>
         public void ProcessEvent (GameEvent gameEvent) {
             if (gameEvent.EventType == GameEventType.StatusEvent) {
                 switch (gameEvent.Message) {

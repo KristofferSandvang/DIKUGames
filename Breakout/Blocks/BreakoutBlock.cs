@@ -20,14 +20,9 @@ namespace Breakout.Blocks {
         /// Determines whether the block is dead or not
         /// </summary>
         public abstract bool IsDead();
+
         /// <summary>
-        /// Gets the block's HP
-        /// </summary>
-        public int GetHP() {
-            return hitPoints; 
-        }
-        /// <summary>
-        /// Deletes the block. 
+        /// Deletes the block and spawns a PowerUp if powerUp is true. 
         /// </summary>
         public void Dead() {
             if (IsDead()) {
@@ -43,6 +38,7 @@ namespace Breakout.Blocks {
                 }
             }
         }
+        
         public BreakoutBlock(DynamicShape Shape, IBaseImage image, bool PowerUp) : base(Shape, image) {
             shape = Shape;
             powerUp = PowerUp;

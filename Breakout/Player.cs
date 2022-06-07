@@ -84,18 +84,30 @@ namespace Breakout {
                 }
             }
         }
+        /// <summary>
+        /// Adds 0.01f to the player's movement speed
+        /// </summary>
         private void ExtraSpeed() {
             moveSpeed += 0.01f;
         }
+        /// <summary>
+        /// Sets the player's movement speed to its initial value.
+        /// </summary>
         private void NormalSpeed() {
             moveSpeed = baseMoveSpeed;
         }
+        /// <summary>
+        /// Double's the player's width
+        /// </summary>
         private void MoreWidth() {
             shape.Extent.X = shape.Extent.X + shape.Extent.X;
             if (shape.Position.X + shape.Extent.X > 1.0f) {
                 shape.Position.X = 1.0f - shape.Extent.X;
             }
         }
+        /// <summary>
+        /// Resets the player's width
+        /// </summary>
         private void NormalWidth() {
             shape.Extent.X = width;
         }
@@ -142,6 +154,9 @@ namespace Breakout {
         public float BounceDirection() {
             return shape.Direction.X;
         }
+        /// <summary>
+        /// Gets the player's speed
+        /// </summary>
         public float GetSpeed() {
             return moveSpeed; 
         }

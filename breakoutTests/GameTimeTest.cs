@@ -36,7 +36,7 @@ public class GameTimeTest {
     [Test]
     public void TestNegativeValues() {
         System.Threading.Thread.Sleep(1000);
-        Assert.GreaterOrEqual(tester.GetTime(), 0.0);
+        Assert.GreaterOrEqual(tester.timeRemaining, 0.0);
     }
     
     // Tests that 10 seconds can be added to the timer. 
@@ -47,6 +47,6 @@ public class GameTimeTest {
                 Message = "MoreTime",
             }
         );
-        Assert.Greater(tester.GetTime(), dummy.GetTime());
+        Assert.Greater(tester.timeRemaining, dummy.timeRemaining);
     }
 }

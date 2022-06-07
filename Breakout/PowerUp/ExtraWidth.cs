@@ -6,6 +6,12 @@ using DIKUArcade.Timers;
 
 namespace Breakout.PowerUps {
     public class ExtraWidth : PowerUp {
+        /// <summary>
+        /// Determines what happens when the powerUp is collected by the player
+        /// </summary>
+        /// <param name='player'>
+        /// The player that has to collect the powerUp
+        /// </param>
         public override void Collected(Player player) {
            if (CollisionDetection.Aabb(shape.AsDynamicShape(), player.shape).Collision) {
                 BreakoutBus.GetBus().RegisterEvent(
