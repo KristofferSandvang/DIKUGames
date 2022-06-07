@@ -2,14 +2,12 @@ using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Events;
-using System.Collections.Generic;
-using System.IO;
-using System;
 using DIKUArcade.Utilities;
+
 namespace Breakout {
     /// <summary>   
-    /// A subclass of Entity, containing information about Player.
-    /// </summary>
+    /// A class controlling the lives of the player.
+    /// </summary> 
     public class PlayerLife : IGameEventProcessor {
         private static string fileName = Path.Combine(FileIO.GetProjectPath(), 
                                         "Assets", "Images", "heart_filled.png");

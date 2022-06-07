@@ -4,13 +4,13 @@ using DIKUArcade.Entities;
 using DIKUArcade.Input;
 using DIKUArcade.Math;
 using DIKUArcade.Events;
-using System.IO;
+
 
 
 
 namespace Breakout.BreakoutStates {
     /// <summary>
-    /// A class of GamePaused, that contains all information needed for GamePaused to work.
+    /// A state for when the Game is Paused
     /// </summary>
     public class GamePaused : IGameState {
         private Entity backGroundImage;

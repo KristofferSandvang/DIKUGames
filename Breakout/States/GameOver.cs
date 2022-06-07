@@ -4,14 +4,12 @@ using DIKUArcade.Entities;
 using DIKUArcade.Input;
 using DIKUArcade.Math;
 using DIKUArcade.Events;
-using DIKUArcade.Timers;
-using System.IO;
-using Breakout;
+
 
 
 namespace Breakout.BreakoutStates {
     /// <summary>
-    /// A class of MainMenu, that contains all information needed for MainMenu to work.
+    /// A state for when the game is lost. 
     /// </summary>
     public class GameOver: IGameState {
         private Entity backGroundImage;

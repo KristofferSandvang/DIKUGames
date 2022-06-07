@@ -5,12 +5,11 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Events;
 using DIKUArcade.State;
-using Breakout;
 using Breakout.Levels;
 
 namespace Breakout.BreakoutStates {
     /// <summary>
-    /// A class of GameRunning, that contains all information needed for the game to run.
+    ///  A state for when the Game is running
     /// </summary>
     public class GameRunning : IGameState {
         private Player player;
@@ -25,6 +24,7 @@ namespace Breakout.BreakoutStates {
         private Score score; 
         private GameControl controller;
         private GameTime timer;
+        private PowerUpSpawner powerUps;
         
         public GameRunning() {
             player = new Player(
@@ -35,10 +35,11 @@ namespace Breakout.BreakoutStates {
             balls = new EntityContainer<Ball>();
             timer = new GameTime(level.GetTime());
             controller = new GameControl();
+            powerUps = new PowerUpSpawner();
 
             BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
             BreakoutBus.GetBus().Subscribe(GameEventType.StatusEvent, score);
-            BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, controller);
+            BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, powerUps);
             BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, timer);
         }
         /// <summary>
@@ -47,7 +48,7 @@ namespace Breakout.BreakoutStates {
         public void ResetState() {
             BreakoutBus.GetBus().Unsubscribe(GameEventType.StatusEvent, score);
             BreakoutBus.GetBus().Unsubscribe(GameEventType.PlayerEvent, player);
-            BreakoutBus.GetBus().Unsubscribe(GameEventType.ControlEvent, controller);
+            BreakoutBus.GetBus().Unsubscribe(GameEventType.ControlEvent, powerUps);
             BreakoutBus.GetBus().Unsubscribe(GameEventType.ControlEvent, timer);
             player = new Player(
                      new DynamicShape(new Vec2F(0.435f, 0.1f), new Vec2F(0.15f, 0.03f)),
@@ -59,8 +60,9 @@ namespace Breakout.BreakoutStates {
             controller = new GameControl();
             balls = new EntityContainer<Ball>();
             timer = new GameTime(level.GetTime());
+            powerUps = new PowerUpSpawner();
 
-            BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, controller);
+            BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, powerUps);
             BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
             BreakoutBus.GetBus().Subscribe(GameEventType.StatusEvent, score);
             BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, timer);
@@ -74,7 +76,8 @@ namespace Breakout.BreakoutStates {
             score.Update(); 
             timer.Update();
             controller.GameOver(timer, player, level.GetEC());
-            controller.Update(player);
+            powerUps.Update(player);
+            level.Update(timer);
         }
         /// <summary>
         /// Renders the elements
@@ -85,7 +88,7 @@ namespace Breakout.BreakoutStates {
             balls.RenderEntities();
             score.Render();
             timer.Render();
-            controller.Render();
+            powerUps.Render();
         }
         /// <summary>
         /// Changes the active level, that is being played

@@ -4,13 +4,12 @@ using DIKUArcade.Entities;
 using DIKUArcade.Input;
 using DIKUArcade.Math;
 using DIKUArcade.Events;
-using System.IO;
-using Breakout;
+
 
 
 namespace Breakout.BreakoutStates {
     /// <summary>
-    /// A class of LevelSelector, that contains all information needed for LevelSelector to work.
+    ///  A state for when the level is being chosen. 
     /// </summary>
     public class LevelSelector : IGameState {
         private Entity backGroundImage;

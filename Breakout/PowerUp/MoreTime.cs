@@ -4,6 +4,9 @@ using DIKUArcade.Events;
 using DIKUArcade.Physics;
 
 namespace Breakout.PowerUps{
+    /// <summary>
+    /// This powerup adds more time to the current gametimer upon pickup
+    /// </summary>
     public class MoreTime : PowerUp {
         /// <summary>
         /// Determines what happens when the powerUp is collected by the player

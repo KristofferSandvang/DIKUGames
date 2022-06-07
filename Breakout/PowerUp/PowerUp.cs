@@ -2,6 +2,11 @@ using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 
 namespace Breakout.PowerUps {
+    /// <summary>
+    /// The PowerUp is an abstract class that every individual powerup inherits from
+    /// a PowerUp is an item spawned from destroying certain blocks, that changes certain
+    /// things in the game when touched by the player shape
+    /// </summary>
     public abstract class PowerUp : Entity {
         protected DynamicShape shape;
 

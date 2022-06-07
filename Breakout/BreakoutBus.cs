@@ -1,6 +1,9 @@
 using DIKUArcade.Events;
 
 namespace Breakout {
+    /// <summary>   
+    /// A singleton GameEventBus making it possible registering events across all classes  
+    /// </summary> 
     public static class BreakoutBus {
         private static GameEventBus? eventBus;
         /// <summary>

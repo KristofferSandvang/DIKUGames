@@ -1,12 +1,14 @@
 using DIKUArcade.Entities;
-using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using Breakout.Blocks;
 using DIKUArcade.Physics;
 using DIKUArcade.Events;
-using System;
-namespace Breakout {
 
+namespace Breakout {
+    /// <summary>   
+    /// A moving ball, which on collision will destroy blocks, and bounce
+    /// after hitting a block, a player, a wall or the roof 
+    /// </summary>   
     public class Ball : Entity, IGameEventProcessor {
         private DynamicShape shape;
         private Random rand;

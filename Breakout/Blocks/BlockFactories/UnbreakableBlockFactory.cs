@@ -2,7 +2,11 @@ using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using DIKUArcade.Utilities;
+
 namespace Breakout.Blocks.BlockFactories {
+            /// <summary>
+            /// The UnbreakableBlockFactory will instansiate the UnbreakableBlock Type.
+            /// </summary>
     public class UnbreakableBlockFactory : BlockFactory {
         /// <summary>
         /// Creates a BreakoutBlock

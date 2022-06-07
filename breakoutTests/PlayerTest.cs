@@ -124,7 +124,7 @@ public class TestPlayer {
     }
 
 
-    //Tests if the player will be stay in the initial position, when no functions is called
+    //Tests if the player will stay in the initial position, when no functions is called
     [Test]
     public void NoMoveTest(){
         Assert.AreEqual(dummy.XPosition(), tester.XPosition());

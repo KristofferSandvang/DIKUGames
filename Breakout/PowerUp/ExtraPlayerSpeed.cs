@@ -5,6 +5,9 @@ using DIKUArcade.Events;
 using DIKUArcade.Timers;
 
 namespace Breakout.PowerUps {
+    /// <summary>
+    /// This PowerUp temporarily increases the movement speed of the player upon pickup
+    /// </summary>
     public class ExtraPlayerSpeed : PowerUp {
         /// <summary>
         /// Determines what happens when the powerUp is collected by the player

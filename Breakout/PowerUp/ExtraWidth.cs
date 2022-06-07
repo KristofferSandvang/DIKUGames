@@ -5,6 +5,9 @@ using DIKUArcade.Physics;
 using DIKUArcade.Timers;
 
 namespace Breakout.PowerUps {
+    /// <summary>
+    /// This powerup increases the width of the player (shape) for a finite time upon pickup
+    /// </summary>
     public class ExtraWidth : PowerUp {
         /// <summary>
         /// Determines what happens when the powerUp is collected by the player

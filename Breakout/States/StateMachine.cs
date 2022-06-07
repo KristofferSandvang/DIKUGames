@@ -1,9 +1,12 @@
 using DIKUArcade.Events;
 using DIKUArcade.State;
 using DIKUArcade.Timers;
-using System;
 
 namespace Breakout.BreakoutStates {
+    /// <summary>   
+    /// A statemachine following the StateMachine pattern, which controlls
+    /// what state is the active state and the switching of states.
+    /// </summary> 
     public class StateMachine : IGameEventProcessor {
         public IGameState ActiveState { get; private set; }
         private IGameState[] States = { new MainMenu(), new LevelSelector(), new GameRunning(),

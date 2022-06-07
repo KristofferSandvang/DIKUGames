@@ -2,7 +2,11 @@ using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using DIKUArcade.Utilities;
+
 namespace Breakout.Blocks.BlockFactories {
+            /// <summary>
+            /// The SwitchBlockFactory will instansiate the SwitchBlock Type.
+            /// </summary>
     public class SwitchBlockFactory : BlockFactory {
         /// <summary>
         /// Creates a BreakoutBlock

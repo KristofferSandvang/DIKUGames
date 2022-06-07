@@ -1,15 +1,14 @@
-using System.IO;
-using System;
-using System.Collections.Generic;
-using DIKUArcade.Entities;
 using DIKUArcade.Math;
-using DIKUArcade.Graphics;
-using DIKUArcade.Events;
 using DIKUArcade.Utilities;
+using DIKUArcade.Entities;
 using Breakout.Blocks.BlockFactories;
 using Breakout.Blocks;
 
 namespace Breakout.Levels {
+    /// <summary>   
+    /// A LevelLoader that can read all the information from the level.txt file and produce
+    /// an object of the Level class.
+    /// </summary> 
     public class LevelLoader {
         private int mapStart = 0;
         private int mapEnd = 0;

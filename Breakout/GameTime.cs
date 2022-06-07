@@ -3,6 +3,10 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Events;
 using DIKUArcade.Math;
 namespace Breakout {
+    /// <summary>   
+    /// A class which controlls if the game is still ongoing, lost or won.
+    /// If a game is won or lost it will register an event to switch states.
+    /// </summary> 
     public class GameTime : IGameEventProcessor {
         public double timeRemaining { get; private set;}
         private Text timeDisplay;

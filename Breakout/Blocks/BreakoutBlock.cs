@@ -1,11 +1,12 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
-using Breakout.PowerUps;
 using DIKUArcade.Events;
-using System.Collections.Generic;
-using System.IO;
+
 
 namespace Breakout.Blocks {
+        /// <summary>
+        /// The BreakoutBlock is an abstract class that other type blocks will inherit
+        /// </summary>
     public abstract class BreakoutBlock : Entity {
         public DynamicShape shape;
         public int value {get; protected set;}
@@ -38,7 +39,6 @@ namespace Breakout.Blocks {
                 }
             }
         }
-        
         public BreakoutBlock(DynamicShape Shape, IBaseImage image, bool PowerUp) : base(Shape, image) {
             shape = Shape;
             powerUp = PowerUp;

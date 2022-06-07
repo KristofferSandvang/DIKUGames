@@ -2,19 +2,13 @@ using DIKUArcade.Entities;
 using Breakout.Blocks;
 using DIKUArcade.Events;
 using Breakout.PowerUps;
-using DIKUArcade.Timers;
 using Breakout.PowerUps.PowerUpFactories;
 using DIKUArcade.Math;
 namespace Breakout {
-    public class GameControl : IGameEventProcessor {
-        private EntityContainer<PowerUp> powerUps;
-        private Random rand;
-        private PowerUpFactory[] powers = {new ExtraLifeFactory(), new ExtraPlayerSpeedFactory(),
-            new ExtraWidthFactory(), new MoreTimeFactory(), new ExtraBallSpeedFactory() };
-        public GameControl() {
-            powerUps = new EntityContainer<PowerUp>();
-            rand = new Random();
-        }
+    /// <summary>   
+    /// Decides if the game is won, lost or still ongoing. 
+    /// </summary> 
+    public class GameControl {
         /// <summary>
         /// Checks if the game is over and creates events for state switching if so.
         /// </summary>
@@ -45,50 +39,6 @@ namespace Breakout {
                     }
                 );
             }
-        }
-        /// <summary>
-        /// Processes a GameEvent based on the GameEvent.Message
-        /// </summary>
-        /// <param name='gameEvent'>
-        /// A GameEvent
-        /// </param>
-        public void ProcessEvent(GameEvent gameEvent) {
-            PowerUpFactory powerUp = powers[rand.Next(powers.Length)];
-            if (gameEvent.EventType == GameEventType.ControlEvent) {
-                switch (gameEvent.Message) {
-                    case "SpawnPowerUp": 
-                        if (gameEvent.ObjectArg1 is BreakoutBlock) {
-                            BreakoutBlock block = (BreakoutBlock)gameEvent.ObjectArg1;
-                            Vec2F pos = block.shape.Position;
-                            powerUps.AddEntity(powerUp.CreatePowerUp(pos));
-                        }
-                    break;
-                }
-            }
-        }
-        /// <summary>
-        /// Renders the PowerUps
-        /// </summary>
-        public void Render() {
-            powerUps.RenderEntities();
-        }
-        /// <summary>
-        /// Updates the PowerUps and check if they're being collected by a player.
-        /// </summary>
-        /// <param name='player'>
-        /// A player
-        /// </param>
-        public void Update(Player player){
-            powerUps.Iterate(powerUp => {
-                powerUp.Move();
-                powerUp.Collected(player);
-            } ); 
-        }
-        /// <summary>
-        /// Gets the EntityContainer of PowerUps
-        /// </summary>
-        public EntityContainer<PowerUp> GetPowerUps() {
-            return powerUps;
         }
         /// <summary>
         /// Determines whether the time is out or not

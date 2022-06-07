@@ -6,10 +6,9 @@ using DIKUArcade.Math;
 using DIKUArcade.Events;
 
 
-
 namespace Breakout.BreakoutStates {
     /// <summary>
-    /// A class of MainMenu, that contains all information needed for MainMenu to work.
+    /// A state for when the game is won
     /// </summary>
     public class GameWin : IGameState {
         private Entity backGroundImage;

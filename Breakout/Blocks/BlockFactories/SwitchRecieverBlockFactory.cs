@@ -2,10 +2,11 @@ using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using DIKUArcade.Utilities;
-using Breakout.Blocks; 
-using System.Collections.Generic;
 
 namespace Breakout.Blocks.BlockFactories {
+            /// <summary>
+            /// The SwitchRecieverBlockFactory will instansiate the SwitchRecieverBlock Type.
+            /// </summary>
     public class SwitchRecieverBlockFactory : BlockFactory {
         /// <summary>
         /// Creates a BreakoutBlock
@@ -18,8 +19,6 @@ namespace Breakout.Blocks.BlockFactories {
 
             SwitchRecieverBlock Reciever = new SwitchRecieverBlock(new DynamicShape(pos, new Vec2F(0.08334f, 0.028f)), 
                 new Image(fileName), PowerUp);
-
-            SwitchBlock.switchRecieverList.Add(Reciever);
             return Reciever;
         }
     }

@@ -1,9 +1,10 @@
 using DIKUArcade.Math;
-using Breakout.PowerUps;
-using DIKUArcade.Graphics;
 using DIKUArcade.Entities;
 
 namespace Breakout.PowerUps.PowerUpFactories {
+    /// <summary>
+    /// A factory that creates the ExtraPlayerSpeed Powerup
+    /// </summary>
     public class ExtraPlayerSpeedFactory : PowerUpFactory {
         /// <summary>
         /// Creates a PowerUP

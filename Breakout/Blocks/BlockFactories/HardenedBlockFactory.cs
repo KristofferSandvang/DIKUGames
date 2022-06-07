@@ -4,7 +4,9 @@ using DIKUArcade.Math;
 using DIKUArcade.Utilities;
 
 namespace Breakout.Blocks.BlockFactories {
-    
+        /// <summary>
+        /// The HardenedBlockFactory will instansiate the HardenedBlock Type.
+        /// </summary>
     public class HardenedBlockFactory : BlockFactory {
         /// <summary>
         /// Creates a BreakoutBlock

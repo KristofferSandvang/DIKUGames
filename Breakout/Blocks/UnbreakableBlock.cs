@@ -1,14 +1,12 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Events;
-using System.Collections.Generic;
-using System.IO;
 
 namespace Breakout.Blocks{
+    /// <summary>
+    /// The Unbreakable is a type of block that can never be destroyed
+    /// </summary>
     public class UnbreakableBlock : BreakoutBlock {
-        /// <summary>
-        /// Determines what happens with a block when hit.
-        /// </summary>
         public override void Hit() {}
         
         /// <summary>

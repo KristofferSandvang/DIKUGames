@@ -2,7 +2,11 @@ using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using DIKUArcade.Utilities;
+
 namespace Breakout.Blocks.BlockFactories {
+        /// <summary>
+        /// The StandardBlockFactory will instansiate the StandardBlock Type.
+        /// </summary>
     public class StandardBlockFactory : BlockFactory {
         /// <summary>
         /// Creates a BreakoutBlock

@@ -5,7 +5,8 @@ using DIKUArcade.Events;
 
 namespace Breakout {
     /// <summary>   
-    /// A subclass of Entity, containing information about Player.
+    /// A player class which allows contains all the information about the player and
+    /// its methods. 
     /// </summary>
     public class Player : IGameEventProcessor {
         private float moveLeft = 0.0f; 

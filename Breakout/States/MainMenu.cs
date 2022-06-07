@@ -4,13 +4,13 @@ using DIKUArcade.Entities;
 using DIKUArcade.Input;
 using DIKUArcade.Math;
 using DIKUArcade.Events;
-using System.IO;
 
 
 
 namespace Breakout.BreakoutStates {
     /// <summary>
-    /// A class of MainMenu, that contains all information needed for MainMenu to work.
+    ///  A state for when the game is first started, allowing the user to select if they wish
+    /// to run the game or quit it. 
     /// </summary>
     public class MainMenu : IGameState {
         private Entity backGroundImage;

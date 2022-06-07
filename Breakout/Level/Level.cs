@@ -2,8 +2,11 @@ using DIKUArcade.Entities;
 using Breakout.Blocks;
 
 namespace Breakout.Levels {
-
-    public class Level{
+    /// <summary>   
+    /// A class that contains all information from the level.txt file, as well 
+    /// as the blocks from the level. 
+    /// </summary> 
+    public class Level {
         private double time;
         private string name;
         private char powerUp;
@@ -20,6 +23,17 @@ namespace Breakout.Levels {
         /// </summary>
         public void Render() {
             blocks.RenderEntities();
+        }
+        /// <summary>
+        /// Updates the level
+        /// </summary>
+        public void Update(GameTime time) {
+            foreach (BreakoutBlock block in blocks) {
+                if (block is HealableBlock) {
+                    HealableBlock healBlock = (HealableBlock) block;
+                    healBlock.IterateHeal(time);
+                }
+            }
         }
         /// <summary>
         /// Gets the EntityContainer of blocks

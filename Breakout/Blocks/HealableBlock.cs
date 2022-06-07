@@ -1,14 +1,14 @@
 using DIKUArcade.Timers;
-using static DIKUArcade.Events.TimedGameEvent;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
-using System.Collections.Generic;
-using System.IO;
 using DIKUArcade.Events;
 
 namespace Breakout.Blocks{
+    /// <summary>
+    /// The HealableBlock is a type of block that will heal with 2 hitpoints every 3rd second, if the health is lover than the max health
+    /// </summary>
     public class HealableBlock : BreakoutBlock {
-
+        private static int lastHeal = 0;
         public HealableBlock(DynamicShape Shape, IBaseImage image, bool power) : base(Shape, image, power) {
             hitPoints = 15;
             value = 200;
@@ -18,7 +18,6 @@ namespace Breakout.Blocks{
         /// </summary>
         public override void Hit() {
            hitPoints -= 5;
-           IterateHeal();
         }
         /// <summary>
         /// Determines whether the block is dead or not and adds its value to the score. 
@@ -38,15 +37,26 @@ namespace Breakout.Blocks{
         /// Heals the blocks, by changing its hitpoints to 10. 
         /// </summary>
         private void Heal() {
-            hitPoints = 10;
+            if (hitPoints + 5 <= 10) {
+                System.Console.WriteLine("HEAL");
+                hitPoints += 5;
+            }
         }
         /// <summary>
         /// Heals the block if 3 seconds has passed. 
         /// </summary>
-        public void IterateHeal() {
-        var Timer = StaticTimer.GetElapsedSeconds();
-        if (Timer % 3.0 == 0.0) {Heal(); }  
+        public void IterateHeal(GameTime time) {
+            if (AllowedToHeal(time)) {
+                Heal();
+                lastHeal = (int) time.timeRemaining;
+            }  
         }
-    }
+        public bool AllowedToHeal(GameTime time) {
+            if (lastHeal - 10 < Math.Floor(time.timeRemaining) &&
+                Math.Floor(time.timeRemaining) < lastHeal) {
+                return false;
+            } else {return true;}
+        }
+    }   
 }
 

@@ -1,20 +1,20 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Events;
-using System.Collections.Generic;
-using System.IO;
 
 namespace Breakout.Blocks{
+    /// <summary>
+    /// The SwitchBlock is a type of block that deletes all the SwitchRecieverBlocks, when a ball collission occured.
+    /// </summary>
     public class SwitchBlock : BreakoutBlock{
-        public static List<SwitchRecieverBlock> switchRecieverList = new List<SwitchRecieverBlock>(); 
+        public static EntityContainer<SwitchRecieverBlock> switchRecieverList =
+            new EntityContainer<SwitchRecieverBlock>(); 
         /// <summary>
         /// Determines what happens with a block when hit.
         /// </summary>
         public override void Hit() {
             hitPoints -= 10;
-            foreach(SwitchRecieverBlock b in switchRecieverList) {
-                b.DeleteEntity(); 
-            }
+            switchRecieverList.Iterate(block => block.DeleteEntity());
         }
         /// <summary>
         /// Determines whether the block is dead or not and adds its value to the score. 

@@ -4,6 +4,9 @@ using DIKUArcade.Events;
 using DIKUArcade.Physics;
 
 namespace Breakout.PowerUps{
+    /// <summary>
+    /// This powerup adds an additional life to the user's amount of lives upon pickup
+    /// </summary>
     public class ExtraLife : PowerUp {
         /// <summary>
         /// Determines what happens when the powerUp is collected by the player

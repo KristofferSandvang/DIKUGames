@@ -55,7 +55,6 @@ public class GameControlTest {
     
         BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
         BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, stateMachine);
-        BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, gameControl);
     }
     //Tests that you can lose the game by having no lives. 
     [Test]
@@ -99,18 +98,5 @@ public class GameControlTest {
         BreakoutBus.GetBus().ProcessEventsSequentially();
 
         Assert.IsInstanceOf<GameWin>(stateMachine.ActiveState);
-    }
-    //Tests the spawning of PowerUps
-    [Test]
-    public void TestSpawnPowerUp() {
-        for (int i = 0; i < 10; i++) {
-            blocks.Iterate(block => {
-                block.Hit();
-                block.Dead();
-            } );
-        }
-
-        BreakoutBus.GetBus().ProcessEventsSequentially();
-        Assert.Greater(gameControl.GetPowerUps().CountEntities(), 0);
     }
 }

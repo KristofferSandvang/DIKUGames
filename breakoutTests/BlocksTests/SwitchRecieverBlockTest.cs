@@ -20,21 +20,21 @@ using Breakout.Blocks;
 
 namespace breakoutTests;
 
-public class UnbreakableBlockTest {
+public class SwitchRecieverBlockTest {
 
-private UnbreakableBlock dummy;
+private SwitchRecieverBlock dummy;
 private StandardBlock standardDummy; 
-private UnbreakableBlock tester;
+private SwitchRecieverBlock tester;
 
 
     [SetUp]
     public void InitializeBlocks() {
         Window.CreateOpenGLContext();
-        dummy = new UnbreakableBlock( 
+        dummy = new SwitchRecieverBlock( 
             new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new ImageStride(80, ImageStride.CreateStrides(4,
             Path.Combine("Assets", "Images", "red-block.png"))), false);
-        tester = new UnbreakableBlock(
+        tester = new SwitchRecieverBlock(
             new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new ImageStride(80, ImageStride.CreateStrides(4,
             Path.Combine("Assets", "Images", "red-block.png"))), false);
@@ -44,23 +44,22 @@ private UnbreakableBlock tester;
             Path.Combine("Assets", "Images", "red-block.png"))), false);
     }
 
-    //Test that the UnbreakableBlock is instaniziated at the full hp, 
-    //And that the UnbreakableBlock is not detected as dead at this point.
+    //Test that the SwitchRecieverBlock is instaniziated at the full hp, 
+    //And that the SwitchRecieverBlock is not detected as dead at this point.
     [Test]
     public void InitialHPTest() {
         Assert.AreEqual(tester.hitPoints, dummy.hitPoints);
         Assert.False(tester.IsDead());
     }
 
-    //Test that the UnbreakableBlock loses no health after getting hit.
+    //Test that the SwitchRecieverBlock loses no health after getting hit as it can only die after switch.
     [Test]
     public void NoDamageTest() {
         tester.Hit();
         Assert.AreEqual(tester.hitPoints, dummy.hitPoints);
     }
 
-    //Tests that the UnbreakableBlock takes less damage (as it should take none)
-    //But the standard block does take damage
+    //Tests that the SwitchRecieverBlock takes less damage than a normal block (as it should take none)
     [Test]
     public void LessDamageTest() {
         Assert.AreEqual(tester.hitPoints, standardDummy.hitPoints);
@@ -71,7 +70,7 @@ private UnbreakableBlock tester;
 
     //Tests that the UnbreakableBlock never dies and has taken no damage
     [Test]
-    public void IsNotDeadTest() {
+    public void NotDeadTest() {
         for (int i = 0; i <= 10000; i++){
             tester.Hit();
         }
@@ -79,15 +78,15 @@ private UnbreakableBlock tester;
         Assert.AreEqual(tester.hitPoints, dummy.hitPoints);; 
     }
     
-    //Tests that the UnbreakableBlock is given a value property as per the requirements
+    //Tests that the SwitchRecieverBlock is given a value property as per the requirements
     [Test]
     public void HasValue() {
         Assert.True(tester.value != null);
     }
     
     
-    //Tests that the UnbreakableBlock is an entity, by testing that it has a shape
-    //Testing of Image is done by playtesting, when running the game
+    //Tests that the SwitchRecievreBlock is an entity, by testing that it has a shape
+    //Testing of Image is done by hand, when running the game
     [Test]
     public void IsEntity() {
         Assert.True(tester.shape != null);

@@ -1,7 +1,7 @@
-using System;
-
 namespace Breakout.BreakoutStates {
-    
+    /// <summary>   
+    /// A class that can transform strings to GameStateTypes and GameStateTypes to strings. 
+    /// </summary> 
     public class StateTransformer {
         /// <summary>
         /// Transforms a string in to GameStateType

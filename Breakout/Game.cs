@@ -5,6 +5,9 @@ using DIKUArcade.Input;
 using Breakout.BreakoutStates;
 
 namespace Breakout {
+    /// <summary>   
+    /// A game class which allows the game to run across the different states. 
+    /// </summary> 
     public class Game : DIKUGame, IGameEventProcessor {
         private StateMachine stateMachine;
         public Game(WindowArgs windowArgs) : base(windowArgs) {

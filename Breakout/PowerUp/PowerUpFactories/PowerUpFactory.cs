@@ -1,9 +1,11 @@
 using DIKUArcade.Math;
-using Breakout.PowerUps;
 using DIKUArcade.Graphics;
 using DIKUArcade.Utilities;
 
 namespace Breakout.PowerUps.PowerUpFactories {
+    /// <summary>
+    /// PowerUpFactory is the abstract class that all factories creating powerups inherit from. 
+    /// </summary>
     public abstract class PowerUpFactory {
         protected IBaseImage extraLifeImg = new Image (
             Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "LifePickUp.png"));

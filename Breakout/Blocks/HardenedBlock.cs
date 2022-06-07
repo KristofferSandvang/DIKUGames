@@ -4,7 +4,14 @@ using DIKUArcade.Events;
 
 
 namespace Breakout.Blocks{
+    /// <summary>
+    /// Sets the Shape and Powerup of the Block
+    /// </summary>
     public class HardenedBlock : BreakoutBlock {
+        /// <summary>
+        /// The HardenedBlock is a type of block that recieves half the damage when hit
+        /// The HardenedBlock will change image when hitPoints is halved
+        /// </summary>
         private IBaseImage Broken;
         private int maxHP;
         /// <summary>

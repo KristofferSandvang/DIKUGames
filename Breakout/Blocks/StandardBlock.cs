@@ -1,10 +1,11 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Events;
-using System.Collections.Generic;
-using System.IO;
 
 namespace Breakout.Blocks {
+    /// <summary>
+    /// The StandardBlock is the standard block type, which will be deleted, when enough damage is taken
+    /// </summary>
     public class StandardBlock : BreakoutBlock {
 
         public StandardBlock(DynamicShape Shape, IBaseImage image, bool powerUp) : base(Shape, image, powerUp) {

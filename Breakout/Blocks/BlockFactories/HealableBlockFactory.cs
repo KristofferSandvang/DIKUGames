@@ -2,7 +2,11 @@ using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using DIKUArcade.Utilities;
+
 namespace Breakout.Blocks.BlockFactories {
+        /// <summary>
+        /// The HealableBlockFactory will instansiate the HealableBlock Type.
+        /// </summary>
     public class HealAbleBlockFactory : BlockFactory {
         /// <summary>
         /// Creates a BreakoutBlock

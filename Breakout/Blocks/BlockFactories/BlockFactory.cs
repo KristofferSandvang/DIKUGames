@@ -1,7 +1,9 @@
-using Breakout.Blocks;
 using DIKUArcade.Math;
 
 namespace Breakout.Blocks.BlockFactories {
+        /// <summary>
+        /// The BlockFactory is a class that other factories will inherit
+        /// </summary>
     public abstract class BlockFactory {
         /// <summary>
         /// Creates a BreakoutBlock

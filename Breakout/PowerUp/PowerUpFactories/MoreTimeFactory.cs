@@ -1,9 +1,10 @@
 using DIKUArcade.Math;
-using Breakout.PowerUps;
-using DIKUArcade.Graphics;
 using DIKUArcade.Entities;
 
 namespace Breakout.PowerUps.PowerUpFactories {
+    /// <summary>
+    /// A factory that creates the MoreTime Powerup
+    /// </summary>
     public class MoreTimeFactory : PowerUpFactory {
         /// <summary>
         /// Creates a PowerUP
