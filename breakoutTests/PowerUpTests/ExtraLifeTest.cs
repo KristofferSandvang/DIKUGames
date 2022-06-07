@@ -11,14 +11,24 @@ using System.IO;
 using Breakout;
 using Breakout.PowerUps;
 
-#pragma warning disable 8618
 
-namespace breakoutTests;
+namespace BreakoutTests.PowerUpTests;
 
 public class ExtraLifeTest {
     private ExtraLife powerUp;
     private Player dummy; 
     private Player tester;
+
+    public ExtraLifeTest() {
+        Window.CreateOpenGLContext();
+        powerUp = new ExtraLife(new DynamicShape(new Vec2F(0.1f, 0.2f), new Vec2F(0.1f, 0.1f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images",
+                "LifePickUp.png")));
+        dummy = new Player(new DynamicShape(new Vec2F(0.0f, 0.0f), new Vec2F(0.1f, 0.1f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "player.png")));
+        tester = new Player(new DynamicShape(new Vec2F(0.1f, 0.1f), new Vec2F(1.1f, 0.1f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "player.png")));
+    }
 
     [OneTimeSetUp]
     public void InitalizeBreakoutBus() {

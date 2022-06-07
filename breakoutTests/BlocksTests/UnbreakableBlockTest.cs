@@ -1,31 +1,33 @@
 using NUnit.Framework;
-using System;
 using System.IO;
-using DIKUArcade;
 using DIKUArcade.GUI;
-using DIKUArcade.Input;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using DIKUArcade.Physics;
-using System.Security.Principal;
-using System.Collections.Generic;
-using DIKUArcade.Events;
-using DIKUArcade.State;
-using Breakout;
 using Breakout.Blocks; 
 
-#pragma warning disable 0472
-#pragma warning disable 8618
-
-namespace breakoutTests;
+namespace BreakoutTests.BlockTests;
 
 public class UnbreakableBlockTest {
 
 private UnbreakableBlock dummy;
 private StandardBlock standardDummy; 
 private UnbreakableBlock tester;
-
+    public UnbreakableBlockTest() {
+        Window.CreateOpenGLContext();
+        dummy = new UnbreakableBlock( 
+            new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
+            new ImageStride(80, ImageStride.CreateStrides(4,
+            Path.Combine("Assets", "Images", "red-block.png"))), false);
+        tester = new UnbreakableBlock(
+            new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
+            new ImageStride(80, ImageStride.CreateStrides(4,
+            Path.Combine("Assets", "Images", "red-block.png"))), false);
+        standardDummy = new StandardBlock(
+            new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
+            new ImageStride(80, ImageStride.CreateStrides(4,
+            Path.Combine("Assets", "Images", "red-block.png"))), false);
+    }
 
     [SetUp]
     public void InitializeBlocks() {
@@ -82,7 +84,7 @@ private UnbreakableBlock tester;
     //Tests that the UnbreakableBlock is given a value property as per the requirements
     [Test]
     public void HasValue() {
-        Assert.True(tester.value != null);
+        Assert.NotNull(tester.value);
     }
     
     
@@ -90,6 +92,6 @@ private UnbreakableBlock tester;
     //Testing of Image is done by playtesting, when running the game
     [Test]
     public void IsEntity() {
-        Assert.True(tester.shape != null);
+        Assert.NotNull(tester.shape);
     }
 }

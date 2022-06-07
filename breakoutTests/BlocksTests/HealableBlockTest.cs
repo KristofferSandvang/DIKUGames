@@ -1,27 +1,40 @@
 using NUnit.Framework;
 using System.IO;
+
 using DIKUArcade.GUI;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using DIKUArcade.Events;
-using DIKUArcade.Utilities;
+
 using Breakout.Blocks; 
 using Breakout;
 
 
-#pragma warning disable 8618
-#pragma warning disable 0472
-
-namespace breakoutTests;
+namespace BreakoutTests.BlockTests;
 
 public class HealableBlockTest {
 private HealableBlock dummy;
 private StandardBlock standardDummy; 
 private HealableBlock tester;
 private GameTime gameTime;
+    public HealableBlockTest() {
+        Window.CreateOpenGLContext();
+        dummy = new HealableBlock( 
+            new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
+            new ImageStride(80, ImageStride.CreateStrides(4,
+            Path.Combine("Assets", "Images", "red-block.png"))), true);
+        tester = new HealableBlock(
+            new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
+            new ImageStride(80, ImageStride.CreateStrides(4,
+            Path.Combine("Assets", "Images", "red-block.png"))), true);
+        standardDummy = new StandardBlock(
+            new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
+            new ImageStride(80, ImageStride.CreateStrides(4,
+            Path.Combine("Assets", "Images", "red-block.png"))), false);
+        gameTime = new GameTime(300.0);
+    }
 
-[SetUp]
+    [SetUp]
     public void InitializeTests() {
         Window.CreateOpenGLContext();
         dummy = new HealableBlock( 
@@ -88,18 +101,17 @@ private GameTime gameTime;
         }
         Assert.True(tester.IsDead());
     }
-    
 
     //Tests that the HealableBlock is given a value property as per the requirements
     [Test]
     public void HasValue() {
-        Assert.True(tester.value != null);
+        Assert.NotNull(tester.value);
     }
     
     //Tests that the HealableBlock is an entity, by testing that it has a shape
     //Testing of Image is done by hand, when running the game
     [Test]
     public void IsEntity() {
-        Assert.True(tester.shape != null);
+        Assert.NotNull(tester.shape);
     }
 }

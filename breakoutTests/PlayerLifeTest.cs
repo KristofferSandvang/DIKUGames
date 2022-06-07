@@ -3,16 +3,18 @@ using DIKUArcade.GUI;
 using System.Collections.Generic;
 using DIKUArcade.Events;
 using Breakout;
-using Breakout.PowerUps;
 
-#pragma warning disable 8618
-
-namespace breakoutTests;
+namespace BreakoutTests;
 
 public class PlayerLifeTest {
     private PlayerLife dummy; 
     private PlayerLife tester;
-
+    public PlayerLifeTest() {
+        Window.CreateOpenGLContext();
+        dummy = new PlayerLife();
+        tester = new PlayerLife();
+    }
+    
     [OneTimeSetUp]
     public void InitalizeBreakoutBus() {
         BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> { GameEventType.PlayerEvent } );
@@ -30,6 +32,7 @@ public class PlayerLifeTest {
         tester = new PlayerLife();
         BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, tester);
     }
+
     //Tests that you can lose a life
     [Test]
     public void TestLoseLife() {
@@ -42,6 +45,7 @@ public class PlayerLifeTest {
         BreakoutBus.GetBus().ProcessEventsSequentially();
         Assert.Less(tester.LivesLeft(), dummy.LivesLeft());
     }
+
     //Tests that you can never have negative lives.
     [Test]
     public void TestNoNegativeLives() {
@@ -55,6 +59,7 @@ public class PlayerLifeTest {
         BreakoutBus.GetBus().ProcessEventsSequentially();
         Assert.GreaterOrEqual(tester.LivesLeft(), 0);
     }
+
     //Tests that you can gain a life
     [Test]
     public void TestGainLife() {

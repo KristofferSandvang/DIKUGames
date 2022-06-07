@@ -7,13 +7,20 @@ using DIKUArcade.Utilities;
 using System.IO;
 using NUnit.Framework;
 
-namespace breakoutTests;
-#pragma warning disable 8618
+namespace BreakoutTests.BlockTests.BlockFactoriesTests;
 
 [TestFixture]
 public class SwitchRecieverBlockFactoryTest {
     private SwitchRecieverBlockFactory factory;
     private SwitchRecieverBlock exampleBlock;
+
+    public SwitchRecieverBlockFactoryTest() {
+        factory = new SwitchRecieverBlockFactory();
+        exampleBlock =  new SwitchRecieverBlock(
+            new DynamicShape(new Vec2F(1.0f, 1.0f),  new Vec2F(0.08333334f, 0.028f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "red-block.png")),
+            true);
+    }
 
     [SetUp]
     public void InitalizeFactory() {

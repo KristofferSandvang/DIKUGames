@@ -1,31 +1,34 @@
 using NUnit.Framework;
-using System;
 using System.IO;
-using DIKUArcade;
 using DIKUArcade.GUI;
-using DIKUArcade.Input;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using DIKUArcade.Physics;
-using System.Security.Principal;
-using System.Collections.Generic;
-using DIKUArcade.Events;
-using DIKUArcade.State;
-using Breakout;
 using Breakout.Blocks; 
-using Breakout.Blocks.BlockFactories;
 
-namespace breakoutTests;
 
-#pragma warning disable 0472
-#pragma warning disable 8618
+namespace BreakoutTests.BlockTests;
 
 public class SwitchBlockTest {
 
-private SwitchBlock dummy;
-private SwitchBlock tester; 
-private SwitchRecieverBlock switchReciever; 
+    private SwitchBlock dummy;
+    private SwitchBlock tester; 
+    private SwitchRecieverBlock switchReciever; 
+    public SwitchBlockTest() {
+        Window.CreateOpenGLContext();
+        dummy = new SwitchBlock( 
+            new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
+            new ImageStride(80, ImageStride.CreateStrides(4,
+            Path.Combine("Assets", "Images", "red-block.png"))), false);
+        tester = new SwitchBlock(
+            new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
+            new ImageStride(80, ImageStride.CreateStrides(4,
+            Path.Combine("Assets", "Images", "red-block.png"))), false);
+        switchReciever = new SwitchRecieverBlock(
+            new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
+            new ImageStride(80, ImageStride.CreateStrides(4,
+            Path.Combine("Assets", "Images", "red-block.png"))), false);
+    }
 
     [SetUp]
     public void InitializeBlocks() {
@@ -67,14 +70,14 @@ private SwitchRecieverBlock switchReciever;
     //Tests that the SwitchBlock is given a value property as per the specificiations
     [Test]
     public void HasValue() {
-        Assert.True(tester.value != null);
+        Assert.NotNull(tester.value);
     }
     
     //Tests that the SwitchBlock is an entity, by testing that it has a shape
     //Testing of Image is done by playtesting, when running the game
     [Test]
     public void IsEntity() {
-        Assert.True(tester.shape != null);
+        Assert.NotNull(tester.shape);
     }
 
     //Tests that the SwitchRecieverBlock is deleted from the entitycontainer
@@ -89,7 +92,5 @@ private SwitchRecieverBlock switchReciever;
         tester.Hit(); 
         Assert.AreNotEqual(beforeCount, 0);
         Assert.AreEqual(SwitchBlock.switchRecieverList.CountEntities(), 0);
-        
     }
-
 }

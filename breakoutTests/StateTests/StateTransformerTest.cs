@@ -1,9 +1,8 @@
 using Breakout.BreakoutStates;
 using NUnit.Framework;
 using System;
-#pragma warning disable 8618
 
-namespace breakoutTests;
+namespace BreakoutTests.StateTests;
 
 [TestFixture]
 public class StateTransformerTests {

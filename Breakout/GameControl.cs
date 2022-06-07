@@ -1,9 +1,6 @@
 using DIKUArcade.Entities;
 using Breakout.Blocks;
 using DIKUArcade.Events;
-using Breakout.PowerUps;
-using Breakout.PowerUps.PowerUpFactories;
-using DIKUArcade.Math;
 namespace Breakout {
     /// <summary>   
     /// Decides if the game is won, lost or still ongoing. 

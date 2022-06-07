@@ -11,19 +11,39 @@ using System.Collections.Generic;
 using Breakout;
 using Breakout.PowerUps;
 using Breakout.Blocks; 
-using DIKUArcade.Timers;
 
-#pragma warning disable 8618
-
-namespace breakoutTests;
+namespace BreakoutTests.PowerUpTests;
 
 public class ExtraBallSpeedTest {
-private Ball dummy;
-private Ball tester;
-private Player player; 
-private ExtraBallSpeed powerUp; 
-private ExtraBallSpeed powerUpDummy; 
-private EntityContainer<BreakoutBlock> entityContainer; 
+    private Ball dummy;
+    private Ball tester;
+    private Player player; 
+    private ExtraBallSpeed powerUp; 
+    private ExtraBallSpeed powerUpDummy; 
+    private EntityContainer<BreakoutBlock> entityContainer; 
+
+    public ExtraBallSpeedTest() {
+        Window.CreateOpenGLContext();
+        dummy = new Ball(
+        new DynamicShape(new Vec2F(0.425f, 0.1f), new Vec2F(0.15f, 0.03f), new Vec2F(0.0f, 0.02f)),
+        new Image(Path.Combine("Assets", "Images", "ball.png")));
+
+        tester = new Ball(
+        new DynamicShape(new Vec2F(0.425f, 0.1f), new Vec2F(0.15f, 0.03f), new Vec2F(0.0f, 1.0f)),
+        new Image(Path.Combine("Assets", "Images", "ball.png")));
+        
+        player = new Player(new DynamicShape(new Vec2F(0.1f, 0.1f), new Vec2F(1.0f, 0.1f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "player.png")));
+
+        powerUp = new ExtraBallSpeed(
+            new DynamicShape(new Vec2F(0.1f, 0.2f), new Vec2F(0.1f, 0.1f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "SpeedPickUp.png")));
+
+        powerUpDummy = new ExtraBallSpeed(new DynamicShape(new Vec2F(0.1f, 0.2f), new Vec2F(0.1f, 0.1f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images",
+                "SpeedPickUp.png")));
+        entityContainer = new EntityContainer<BreakoutBlock>();     
+    }
 
     [OneTimeSetUp]
     public void InitalizeBreakoutBus() {

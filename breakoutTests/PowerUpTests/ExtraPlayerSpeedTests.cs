@@ -11,14 +11,26 @@ using System.IO;
 using Breakout;
 using Breakout.PowerUps;
 
-#pragma warning disable 8618
-
-namespace breakoutTests;
+namespace BreakoutTests.PowerUpTests;
 
 public class PlayerSpeedTest {
     private ExtraPlayerSpeed powerUp;
     private ExtraPlayerSpeed powerUpDummy; 
     private Player player;
+
+    public PlayerSpeedTest() {
+        Window.CreateOpenGLContext();
+        powerUp = new ExtraPlayerSpeed(new DynamicShape(new Vec2F(0.1f, 0.2f), new Vec2F(0.1f, 0.1f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images",
+                "ClockPickUp.png")));
+
+        powerUpDummy = new ExtraPlayerSpeed(new DynamicShape(new Vec2F(0.1f, 0.2f), new Vec2F(0.1f, 0.1f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images",
+                "ClockPickUp.png")));
+                
+        player = new Player(new DynamicShape(new Vec2F(0.1f, 0.1f), new Vec2F(1.0f, 0.1f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "player.png")));
+    }
 
     [OneTimeSetUp]
     public void InitalizeBreakoutBus() {

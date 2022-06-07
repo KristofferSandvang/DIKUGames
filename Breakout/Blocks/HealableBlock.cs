@@ -1,4 +1,3 @@
-using DIKUArcade.Timers;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Events;

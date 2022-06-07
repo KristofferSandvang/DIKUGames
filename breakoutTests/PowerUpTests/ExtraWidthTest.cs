@@ -11,14 +11,24 @@ using System.Collections.Generic;
 using Breakout;
 using Breakout.PowerUps;
 
-#pragma warning disable 8618
-
-namespace breakoutTests;
+namespace BreakoutTests.PowerUpTests;
 
     public class ExtraWidthTest {
     private ExtraWidth powerUp;
     private Player dummy; 
     private Player tester;
+    
+    public ExtraWidthTest() {
+        Window.CreateOpenGLContext();
+        powerUp = new ExtraWidth(new DynamicShape(new Vec2F(0.1f, 0.2f), new Vec2F(0.1f, 0.1f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "LifePickUp.png")));
+
+        dummy = new Player(new DynamicShape(new Vec2F(0.1f, 0.2f), new Vec2F(0.1f, 0.1f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "player.png")));
+
+        tester = new Player(new DynamicShape(new Vec2F(0.1f, 0.1f), new Vec2F(1.0f, 0.1f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "player.png")));
+    }
 
     [OneTimeSetUp]
     public void InitalizeBreakoutBus() {

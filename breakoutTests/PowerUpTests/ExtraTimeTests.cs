@@ -11,17 +11,28 @@ using System.IO;
 using Breakout;
 using Breakout.PowerUps;
 
-#pragma warning disable 8618
-#pragma warning disable 0169
-
-namespace breakoutTests;
+namespace BreakoutTests.PowerUpTests;
 
 public class ExtraTimeTest {
     private MoreTime powerUp;
     private MoreTime powerUpDummy; 
-    private GameTime Time;
     private GameTime TimeTester;
     private Player player;
+    public ExtraTimeTest() {
+        Window.CreateOpenGLContext();
+        powerUp = new MoreTime(new DynamicShape(new Vec2F(0.1f, 0.2f), new Vec2F(0.1f, 0.1f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images",
+                "ClockPickUp.png")));
+
+        powerUpDummy = new MoreTime(new DynamicShape(new Vec2F(0.1f, 0.2f), new Vec2F(0.1f, 0.1f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images",
+                "ClockPickUp.png")));
+                
+        player = new Player(new DynamicShape(new Vec2F(0.1f, 0.1f), new Vec2F(1.0f, 0.1f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "player.png")));
+
+        TimeTester = new GameTime(60.0);
+    }
 
     [OneTimeSetUp]
     public void InitalizeBreakoutBus() {

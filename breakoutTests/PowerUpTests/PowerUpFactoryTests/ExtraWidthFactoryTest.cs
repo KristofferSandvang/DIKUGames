@@ -7,13 +7,21 @@ using DIKUArcade.Utilities;
 using System.IO;
 using NUnit.Framework;
 
-namespace breakoutTests;
-#pragma warning disable 8618
+namespace BreakoutTests.PowerUpTests.PowerUpFactoriesTest;
 
 [TestFixture]
 public class ExtraWidthFactoryTest {
     private ExtraWidthFactory factory;
     private ExtraWidth examplePowerUp;
+
+    public ExtraWidthFactoryTest() {
+        factory = new ExtraWidthFactory();
+        examplePowerUp =  new ExtraWidth(
+            new DynamicShape(new Vec2F(1.0f, 1.0f), new Vec2F(0.025f, 0.025f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", 
+                "WidePowerUp.png"))
+        );
+    }
 
     [SetUp]
     public void InitalizeFactory() {

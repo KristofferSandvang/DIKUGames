@@ -3,14 +3,13 @@ using System.IO;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using System.Collections.Generic;
 using DIKUArcade.Events;
 using DIKUArcade.Utilities;
+using System.Collections.Generic;
 using Breakout;
 using Breakout.Blocks; 
-#pragma warning disable 8618
 
-namespace breakoutTests;
+namespace BreakoutTests;
 
 [TestFixture]
 public class ScoreTest {
@@ -18,6 +17,21 @@ public class ScoreTest {
     private Score tester;
     private StandardBlock block;
     private HardenedBlock hardenedBlock;
+
+    public ScoreTest() {
+        tester = new Score(new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.15f));
+        block = new StandardBlock( 
+            new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
+            new ImageStride(80, ImageStride.CreateStrides(4,
+            Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "red-block.png"))),
+            false);
+        hardenedBlock = new HardenedBlock(
+            new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "red-block.png")),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images",
+                      "red-block-damaged.png")),
+            false);
+    }
 
     [OneTimeSetUp]
     public void InitalizeBreakoutBus() {

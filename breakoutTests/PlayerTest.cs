@@ -1,36 +1,38 @@
 using NUnit.Framework;
-using System;
 using System.IO;
-using DIKUArcade;
 using DIKUArcade.GUI;
-using DIKUArcade.Input;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using DIKUArcade.Physics;
-using System.Security.Principal;
-using System.Collections.Generic;
 using DIKUArcade.Events;
-using DIKUArcade.State;
 using Breakout;
-#pragma warning disable 8618
 
-namespace breakoutTests;
+namespace BreakoutTests;
 
-public class TestPlayer {
-
+public class PlayerTest {
     private Player dummy;
     private Player tester;
+
+    public PlayerTest() {
+        Window.CreateOpenGLContext();
+        dummy = new Player(
+            new DynamicShape(new Vec2F(0.425f, 0.1f), new Vec2F(0.15f, 0.03f)),
+            new Image(Path.Combine("Assets", "Images", "player.png")));
+
+        tester = new Player(
+            new DynamicShape(new Vec2F(0.425f, 0.1f), new Vec2F(0.15f, 0.03f)),
+            new Image(Path.Combine("Assets", "Images", "player.png")));
+    }
     [SetUp]
     public void Setup() {
         Window.CreateOpenGLContext();
         dummy = new Player(
-        new DynamicShape(new Vec2F(0.425f, 0.1f), new Vec2F(0.15f, 0.03f)),
-        new Image(Path.Combine("Assets", "Images", "player.png")));
+            new DynamicShape(new Vec2F(0.425f, 0.1f), new Vec2F(0.15f, 0.03f)),
+            new Image(Path.Combine("Assets", "Images", "player.png")));
 
         tester = new Player(
-        new DynamicShape(new Vec2F(0.425f, 0.1f), new Vec2F(0.15f, 0.03f)),
-        new Image(Path.Combine("Assets", "Images", "player.png")));
+            new DynamicShape(new Vec2F(0.425f, 0.1f), new Vec2F(0.15f, 0.03f)),
+            new Image(Path.Combine("Assets", "Images", "player.png")));
     }
 
 

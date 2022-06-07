@@ -7,13 +7,19 @@ using DIKUArcade.Utilities;
 using System.IO;
 using NUnit.Framework;
 
-namespace breakoutTests;
-#pragma warning disable 8618
+namespace BreakoutTests.BlockTests.BlockFactoriesTests;
 
 [TestFixture]
 public class HealableBlockFactoryTest {
     private HealAbleBlockFactory factory;
     private HealableBlock exampleBlock;
+    public HealableBlockFactoryTest() {
+        factory = new HealAbleBlockFactory();
+        exampleBlock =  new HealableBlock(
+            new DynamicShape(new Vec2F(1.0f, 1.0f),  new Vec2F(0.08333334f, 0.028f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "red-block.png")),
+            true);
+    }
 
     [SetUp]
     public void InitalizeFactory() {

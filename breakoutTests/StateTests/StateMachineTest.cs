@@ -1,21 +1,24 @@
 using NUnit.Framework;
 using Breakout.BreakoutStates;
 using DIKUArcade.Events;
-using DIKUArcade;
 using DIKUArcade.GUI;
 using Breakout;
 using System;
 using System.Collections.Generic;
-#pragma warning disable 8618
 
-namespace breakoutTests;
+namespace BreakoutTests.StateTests;
 
    [TestFixture]
-    public class StateMachineTesting {
+    public class StateMachineTest {
         private StateMachine stateMachine;
+
+        public StateMachineTest() {
+            stateMachine = new StateMachine();
+        }
 
         [OneTimeSetUp]
         public void InitializeEventBus() {
+            Window.CreateOpenGLContext();
             BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent,
             GameEventType.PlayerEvent, GameEventType.GameStateEvent, GameEventType.StatusEvent,
             GameEventType.ControlEvent, GameEventType.MovementEvent } );

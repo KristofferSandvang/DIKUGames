@@ -5,13 +5,17 @@ using System.Collections.Generic;
 using NUnit.Framework;
 
 
-#pragma warning disable 8618
 
-namespace breakoutTests;
+namespace BreakoutTests;
 public class GameTimeTest {
+    private GameTime dummy;
+    private GameTime tester;
 
-        private GameTime dummy;
-        private GameTime tester;
+    public GameTimeTest() {
+        Window.CreateOpenGLContext();
+        dummy = new GameTime(0.0);
+        tester = new GameTime(0.0);
+    }
 
     [OneTimeSetUp]
     public void InitializeEventBus() {

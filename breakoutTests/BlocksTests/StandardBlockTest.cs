@@ -1,30 +1,30 @@
 using NUnit.Framework;
-using System;
 using System.IO;
-using DIKUArcade;
 using DIKUArcade.GUI;
-using DIKUArcade.Input;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using DIKUArcade.Physics;
-using System.Security.Principal;
-using System.Collections.Generic;
-using DIKUArcade.Events;
-using DIKUArcade.State;
-using Breakout;
 using Breakout.Blocks; 
 
-namespace breakoutTests;
+namespace BreakoutTests.BlockTests;
 
-#pragma warning disable 0472
-#pragma warning disable 8618
 
 public class StandardBlockTest {
 
-private StandardBlock dummy;
-private StandardBlock tester;
+    private StandardBlock dummy;
+    private StandardBlock tester;
 
+    public StandardBlockTest() {
+        Window.CreateOpenGLContext();
+        dummy = new StandardBlock( 
+            new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
+            new ImageStride(80, ImageStride.CreateStrides(4,
+            Path.Combine("Assets", "Images", "red-block.png"))), false);
+        tester = new StandardBlock(
+            new DynamicShape( new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
+            new ImageStride(80, ImageStride.CreateStrides(4,
+            Path.Combine("Assets", "Images", "red-block.png"))), false);
+    }
 
     [SetUp]
     public void InitializeBlocks() {
@@ -70,7 +70,7 @@ private StandardBlock tester;
     //Tests that the StandardBlock is given a value property as per the requirements
     [Test]
     public void HasValue() {
-        Assert.True(tester.value != null);
+        Assert.NotNull(tester.value);
     }
     
     
@@ -78,7 +78,7 @@ private StandardBlock tester;
     //Testing of Image is done by hand, when running the game
     [Test]
     public void IsEntity() {
-        Assert.True(tester.shape != null);
+        Assert.NotNull(tester.shape);
     }
     
 }

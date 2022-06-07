@@ -14,15 +14,29 @@ using System.Collections.Generic;
 using NUnit.Framework;
 
 
-#pragma warning disable 8618
-
-namespace breakoutTests;
+namespace BreakoutTests;
 public class GameControlTest {
     private StateMachine stateMachine;
     private GameControl gameControl;
     private Player player;
     private GameTime gameTime;
     private EntityContainer<BreakoutBlock> blocks;
+
+    public GameControlTest() {
+        Window.CreateOpenGLContext();
+        stateMachine = new StateMachine();
+        gameControl = new GameControl();
+        gameTime = new GameTime(1);
+        player = new Player(
+                 new DynamicShape(new Vec2F(0.435f, 0.1f), new Vec2F(0.15f, 0.03f)),
+                 new Image(Path.Combine("Assets", "Images", "player.png")));
+
+        blocks = new EntityContainer<BreakoutBlock>();
+        blocks.AddEntity(new StandardBlock(
+            new DynamicShape(new Vec2F(1.0f, 1.0f), new Vec2F(0.1f, 0.1f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "red-block.png")),
+            true));
+    }
 
     [OneTimeSetUp]
     public void InitializeEventBus() {

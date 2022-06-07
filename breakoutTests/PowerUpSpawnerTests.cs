@@ -1,5 +1,4 @@
 using Breakout;
-using Breakout.BreakoutStates;
 using Breakout.Blocks;
 
 using DIKUArcade.GUI;
@@ -14,14 +13,27 @@ using System.Collections.Generic;
 using NUnit.Framework;
 
 
-#pragma warning disable 8618
-
-namespace breakoutTests;
+namespace BreakoutTests;
 public class PowerUpSpawnerTests {
-
     private PowerUpSpawner powerUpSpawner;
     private EntityContainer<BreakoutBlock> powerUpBlocks;
     private EntityContainer<BreakoutBlock> noPowerUpBlocks;
+
+    public PowerUpSpawnerTests() {
+        Window.CreateOpenGLContext();
+        powerUpSpawner = new PowerUpSpawner();
+        powerUpBlocks = new EntityContainer<BreakoutBlock>();
+        powerUpBlocks.AddEntity(new StandardBlock(
+            new DynamicShape(new Vec2F(1.0f, 1.0f), new Vec2F(0.1f, 0.1f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "red-block.png")),
+            true));
+
+        noPowerUpBlocks = new EntityContainer<BreakoutBlock>();
+        noPowerUpBlocks.AddEntity(new StandardBlock(
+            new DynamicShape(new Vec2F(1.0f, 1.0f), new Vec2F(0.1f, 0.1f)),
+            new Image(Path.Combine(FileIO.GetProjectPath(), "Assets", "Images", "red-block.png")),
+            false));
+    }
 
     [OneTimeSetUp]
     public void InitializeEventBus() {
