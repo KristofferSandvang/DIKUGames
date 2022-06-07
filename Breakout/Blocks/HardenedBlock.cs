@@ -32,8 +32,8 @@ namespace Breakout.Blocks{
         /// Determines what happens with a block when hit.
         /// </summary>
         public override void Hit() {
-            hitPoints -= 2; 
-            if (hitPoints < maxHP * 0.5) {Image = Broken;}
+            hitPoints -= 5; 
+            if (hitPoints <= maxHP * 0.5) {Image = Broken;}
         }
         public HardenedBlock(DynamicShape Shape, IBaseImage image, IBaseImage brokenImage, bool powerUp) : base(Shape, image, powerUp) {
             hitPoints = 10;

@@ -14,7 +14,7 @@ namespace Breakout.BreakoutStates {
     public class GameRunning : IGameState {
         private Player player;
         private static LevelLoader[] levelLoaders = {
-            new LevelLoader("test.txt"),
+            new LevelLoader("level1.txt"),
             new LevelLoader("level2.txt"),
             new LevelLoader("level3.txt"),
             new LevelLoader("level4.txt")
