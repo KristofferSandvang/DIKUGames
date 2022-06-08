@@ -37,13 +37,6 @@ namespace Breakout.Levels {
             ReadMeta();
         }
         /// <summary>
-        /// Initializes the levelLoader
-        /// </summary>
-        public void InitializeLevelLoader() {
-            FindCheckpoints();
-            legend = new Dictionary<char, string>();
-        }
-        /// <summary>
         /// Finds all checkpoints meaning the lines where map, meta, legend have their start/ends
         /// by reading through the level document in its entirity, 
         /// </summary>

@@ -50,11 +50,10 @@ namespace Breakout.BreakoutStates {
             BreakoutBus.GetBus().Unsubscribe(GameEventType.PlayerEvent, player);
             BreakoutBus.GetBus().Unsubscribe(GameEventType.ControlEvent, powerUps);
             BreakoutBus.GetBus().Unsubscribe(GameEventType.ControlEvent, timer);
+
             player = new Player(
                      new DynamicShape(new Vec2F(0.435f, 0.1f), new Vec2F(0.15f, 0.03f)),
                      new Image(Path.Combine("Assets", "Images", "player.png")));
-
-            
             score = new Score(new Vec2F(0.0f, 0.7f), new Vec2F(0.3f, 0.3f));
             score.ResetScore();
             controller = new GameControl();
@@ -94,7 +93,7 @@ namespace Breakout.BreakoutStates {
         /// Changes the active level, that is being played
         /// </summary>
         /// <param name='lvl'>
-        /// The level to switch to.
+        /// The level to switch to - 1.
         /// </param>
         public static void ChangeLevel(int lvl) {
             level = levelLoaders[lvl].CreateLevel();

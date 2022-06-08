@@ -53,14 +53,16 @@ namespace Breakout {
         private void CollideBlock(EntityContainer<BreakoutBlock> blocks)  {
             blocks.Iterate( (EntityContainer<BreakoutBlock>.IteratorMethod) (block => {
                 var temp = CollisionDetection.Aabb(shape.AsDynamicShape(), block.shape);
-                if (temp.Collision && (temp.CollisionDir == CollisionDirection.CollisionDirUp || temp.CollisionDir == CollisionDirection.CollisionDirDown)) {
+                if (temp.Collision && (temp.CollisionDir == CollisionDirection.CollisionDirUp ||
+                    temp.CollisionDir == CollisionDirection.CollisionDirDown)) {
                     block.Hit();
                     block.Dead();
                     float noise = (float)rand.NextDouble() / 1000.0f;
                     shape.Direction.Y = shape.Direction.Y * -1.0f;
                     shape.Direction.X = shape.Direction.X + noise;
                 }
-                if (temp.Collision && (temp.CollisionDir == CollisionDirection.CollisionDirLeft || temp.CollisionDir == CollisionDirection.CollisionDirRight)) {
+                if (temp.Collision && (temp.CollisionDir == CollisionDirection.CollisionDirLeft ||
+                    temp.CollisionDir == CollisionDirection.CollisionDirRight)) {
                     block.Hit();
                     block.Dead();
                     shape.Direction.X = shape.Direction.X * -1.0f;
